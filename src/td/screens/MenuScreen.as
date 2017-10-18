@@ -10,6 +10,7 @@ import td.constants.Images;
 import td.constants.TextIds;
 
 import td.particles.ParticlesExample;
+import td.screens.levels.stage.first.LevelOne;
 import td.ui.MenuTextButton;
 import td.ui.TextButton;
 import td.Context;
@@ -71,13 +72,12 @@ import com.greensock.TweenLite;
 			
 			particles.start();
 
-			/*background.scale = 0;
-            TweenLite.to(background, 1.5, { ease: Power4.easeInOut, scale: 1 });*/
-            onPlay();
+			background.scale = 0;
+            TweenLite.to(background, 1.5, { ease: Power4.easeInOut, scale: 1 });
 		}
 		
 		private static function onPlay() : void {
-			Context.screenManager.showScreen(new LevelScreen(Context.text(TextIds.Stage1Level1Intro), Images.S1L1_BACKGROUND));
+			Context.screenManager.showScreen(new LevelOne());
 		}
 
 		private static function onCredits() : void {

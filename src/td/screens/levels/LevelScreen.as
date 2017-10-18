@@ -1,19 +1,16 @@
-package td.screens {
+package td.screens.levels {
 
 import com.greensock.TweenLite;
 import com.greensock.easing.Power0;
-import com.greensock.easing.Power4;
 
 import flash.events.Event;
-
-import starling.animation.Tween;
 
 import starling.core.Starling;
     import starling.text.TextField;
     import starling.display.Sprite;
-import starling.text.TextFieldAutoSize;
+    import starling.text.TextFieldAutoSize;
 
-import td.Context;
+    import td.Context;
     import td.buildings.CannonTower;
     import td.buildings.RockTower;
     import td.buildings.WatchTower;
