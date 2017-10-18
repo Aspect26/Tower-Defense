@@ -7,9 +7,11 @@ package td.screens {
     import starling.display.Sprite;
 
     import td.Context;
+    import td.buildings.CannonTower;
+    import td.buildings.RockTower;
+    import td.buildings.WatchTower;
     import td.constants.Colors;
-import td.constants.Images;
-import td.ui.ImageButton;
+    import td.ui.NewTowerButton;
 
     public class LevelScreen extends Sprite
     {
@@ -18,6 +20,9 @@ import td.ui.ImageButton;
 
         private var introTextField: TextField;
         private var background: Sprite;
+        private var watchTowerButton: NewTowerButton;
+        private var rockTowerButton: NewTowerButton;
+        private var cannonTowerButton: NewTowerButton;
 
         public function LevelScreen(introText: String, backgroundPath: String)
         {
@@ -26,7 +31,7 @@ import td.ui.ImageButton;
             this.introText = introText;
         }
 
-        private function onAddedToStage(e: * = null) : void {
+        private function onAddedToStage(event: * = null) : void {
             removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 
             this.initialize();
@@ -35,7 +40,9 @@ import td.ui.ImageButton;
         }
 
         private function initialize() : void {
+            this.initializeIntroText();
             this.initializeBackground();
+            this.initializeTowerButtons();
         }
 
         private function initializeBackground() : void {
@@ -46,14 +53,21 @@ import td.ui.ImageButton;
             background.height = 500;
             background.addChild(Context.newImage(this.backgroundPath));
             background.alignPivot();
+        }
 
+        private function initializeIntroText(): void {
             introTextField = new TextField(200, 50, this.introText);
             introTextField.format.color = Colors.WHITE;
         }
 
+        private function initializeTowerButtons(): void {
+            watchTowerButton = new NewTowerButton(new WatchTower(), 20, Context.stage.stageHeight - 90, newTowerClicked);
+            rockTowerButton = new NewTowerButton(new RockTower(), 100, Context.stage.stageHeight - 90, newTowerClicked);
+            cannonTowerButton = new NewTowerButton(new CannonTower(), 180, Context.stage.stageHeight - 90, newTowerClicked);
+        }
+
         private function getIntroTextTime() : int {
-            // return this.introText.length / 7;
-            return 0;
+            return this.introText.length / 7;
         }
 
         private function playIntro() : void {
@@ -63,14 +77,13 @@ import td.ui.ImageButton;
         private function startLevel() : void {
             this.removeChild(introTextField);
             this.addChild(background);
-
-            this.addChild(new ImageButton(Images.TOWER_WATCH, 20, Context.stage.height - 70 - 20, 70, 70, onClick));
-            this.addChild(new ImageButton(Images.TOWER_ROCK, 100, Context.stage.height - 70 - 20, 70, 70, onClick));
-            this.addChild(new ImageButton(Images.TOWER_CANNON, 180, Context.stage.height - 70 - 20, 70, 70, onClick));
+            this.addChild(watchTowerButton);
+            this.addChild(rockTowerButton);
+            this.addChild(cannonTowerButton);
         }
 
-        private function onClick() : void {
-
+        private function newTowerClicked(event) : void {
+            var a = 5;
         }
 
     }

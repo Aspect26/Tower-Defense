@@ -38,7 +38,7 @@ package td.ui
 		
 		override public function onClick(event: TouchEvent) : void {
 			if (this.onClickHandler != null) {
-				onClickHandler();
+				onClickHandler(event);
 			}
 		}
 		

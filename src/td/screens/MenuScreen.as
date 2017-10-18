@@ -73,8 +73,6 @@ import com.greensock.TweenLite;
 
 			background.scale = 0;
             TweenLite.to(background, 1.5, { ease: Power4.easeInOut, scale: 1 });
-
-			onPlay();
 		}
 		
 		private static function onPlay() : void {

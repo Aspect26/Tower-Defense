@@ -8,12 +8,11 @@ package
 	import td.Game;
 	
 	import com.furusystems.dconsole2.DConsole;
-	import com.demonsters.debugger.MonsterDebugger;
 
 	/**
 	 * Entry point of the application.
 	 */
-	[SWF(width="800", height="600", frameRate="60", backgroundColor="#0")]
+	[SWF(width="800", height="500", frameRate="60", backgroundColor="#0")]
 	public class Main extends Sprite 
 	{
 		
@@ -65,7 +64,7 @@ package
 			Starling.multitouchEnabled = false; 
 			
 			Game.starter = this;
-			_starling = new Starling( Game, this.stage, new Rectangle(0, 0, stageWidth,  stageHeight));
+			_starling = new Starling(Game, this.stage, new Rectangle(0, 0, stageWidth,  stageHeight));
 			_starling.simulateMultitouch = false;
 			_starling.enableErrorChecking = false;
 			_starling.start();

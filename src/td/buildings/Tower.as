@@ -29,6 +29,10 @@ package td.buildings {
 
         }
 
+        public function getImagePath(): String {
+            return this.imagePath;
+        }
+
     }
 
 }
