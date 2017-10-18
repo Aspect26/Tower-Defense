@@ -1,0 +1,3 @@
+<TextureAtlas imagePath="menu-background.png">
+	<SubTexture name="menu/background.png" x="0" y="0" width="800" height="500"/>
+</TextureAtlas>

@@ -20,7 +20,7 @@ package td.ui
 			
 			this.onClickHandler = onClick;
 			
-			textField = new TextField(width, fontSize, text, new TextFormat(Fonts.PRIMARY, fontSize, Colors.BLACK));
+			textField = new TextField(width, fontSize + 10, text, new TextFormat(Fonts.PRIMARY, fontSize, Colors.BLACK));
 			textField.touchable = true;
 			
 			rectangle(0, 0, textField.width + 10, textField.height + 10, Colors.WHITE, border, Colors.PRIMARY);

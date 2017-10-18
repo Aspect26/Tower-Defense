@@ -101,8 +101,8 @@ package td
 			
 			Context.assets.loadAssets(
 				loadProgress,
-				"assets/background.png",
-				"assets/background.xml",
+				"assets/menu-background.png",
+				"assets/menu-background.xml",
 				"assets/sprites.png",
 				"assets/sprites.xml",
                 "assets/levels/stage1/level1.png",
