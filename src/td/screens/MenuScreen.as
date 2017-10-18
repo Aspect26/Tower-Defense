@@ -1,0 +1,86 @@
+package td.screens 
+{
+import com.greensock.easing.Bounce;
+
+import flash.events.Event;
+
+import td.constants.Images;
+
+import td.constants.TextIds;
+
+import td.particles.ParticlesExample;
+import td.ui.TextButton;
+import td.Context;
+
+import starling.display.Image;
+import starling.display.Sprite;
+
+import com.greensock.TweenLite;
+
+	public class MenuScreen extends Sprite
+	{
+		private var background: Sprite;
+		private var backgroundImg: Image;
+		private var playButton: TextButton;
+		private var creditsButton: TextButton;
+		private var particles: ParticlesExample;
+	
+		public function MenuScreen()
+		{
+			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage); 
+		}
+		
+		private function onAddedToStage(e: * = null) : void {
+			removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage); 
+			
+			background = new Sprite();
+			background.x = Context.assets.stageWidth / 2;
+			background.y = Context.assets.stageHeight / 2;
+			background.width = 800;
+			background.height = 512;
+			addChild(background);		
+			
+			backgroundImg = Context.newImage(Images.MENU_BACKGROUND);
+			background.addChild(backgroundImg);
+			
+			background.alignPivot();
+						
+			playButton = new TextButton(Context.text(TextIds.ButtonPlay), 10, onPlay);
+			playButton.x = Context.assets.stageWidth / 2 - playButton.width / 2;
+			playButton.y = 250;
+			addChild(playButton);
+
+			creditsButton = new TextButton(Context.text(TextIds.ButtonCredits), 10, onCredits);
+			creditsButton.x =  Context.assets.stageWidth / 2 - creditsButton.width / 2;
+			creditsButton.y = 280;
+			addChild(creditsButton);
+			
+			// USE MONSTER DEBUGGER TO FIND CORRECT X,Y,SCALE
+			// TO FIT PARTICLES ONTO THE PLANE IN THE UPPER-RIGHT PART
+			// OF BACKGROUND IMAGE
+			particles = new ParticlesExample();
+			particles.x = 487;
+			particles.y = 40;
+			particles.scale = 0.4;
+			
+			// TRY TO ATTACH PARTICLES ONTO DIFFERENT CONTAINER
+			//addChild(particles);
+			background.addChild(particles);
+			
+			particles.start();
+
+			background.scale = 0;
+            TweenLite.to(background, 2.5, { ease: Bounce.easeInOut, scale: 1 });
+		}
+		
+		private static function onPlay() : void {
+			Context.screenManager.showScreen(new LevelScreen(Context.text(TextIds.Stage1Level1Intro), Images.MENU_BACKGROUND));
+		}
+
+		private static function onCredits() : void {
+			Context.screenManager.showScreen(new CreditsScreen());
+		}
+		
+	}
+
+}

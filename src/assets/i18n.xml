@@ -1,0 +1,16 @@
+<i18n>
+    <cze>
+		<button-play value="Hraj!" />
+	    <button-back value="Spät" />
+    	<button-credits value="Credits" />
+
+        <s1l1i value="Welcome to Legend of Zax I" />
+    </cze>
+    <eng>
+        <button-play value="Play!" />
+	    <button-back value="Back" />
+	    <button-credits value="Credits" />
+
+        <s1l1i value="Welcome to Legend of Zax I" />
+    </eng>
+</i18n>
