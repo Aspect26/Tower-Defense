@@ -1,12 +1,19 @@
 package td.screens {
 
-    import flash.events.Event;
+import com.greensock.TweenLite;
+import com.greensock.easing.Power0;
+import com.greensock.easing.Power4;
 
-    import starling.core.Starling;
+import flash.events.Event;
+
+import starling.animation.Tween;
+
+import starling.core.Starling;
     import starling.text.TextField;
     import starling.display.Sprite;
+import starling.text.TextFieldAutoSize;
 
-    import td.Context;
+import td.Context;
     import td.buildings.CannonTower;
     import td.buildings.RockTower;
     import td.buildings.WatchTower;
@@ -56,8 +63,19 @@ package td.screens {
         }
 
         private function initializeIntroText(): void {
-            introTextField = new TextField(200, 50, this.introText);
+            var padding: int = 220;
+            var fontSize: int = 20;
+
+            introTextField = new TextField(Context.stage.stageWidth - 2 * padding, 0, this.introText);
             introTextField.format.color = Colors.WHITE;
+            introTextField.format.size = fontSize;
+            introTextField.autoSize = TextFieldAutoSize.VERTICAL;
+            introTextField.x = padding;
+            introTextField.y = Context.stage.stageHeight;
+            introTextField.alpha = 0;
+
+            TweenLite.to(introTextField, getIntroTextTime(), { ease: Power0.easeNone, y: -introTextField.height });
+            TweenLite.to(introTextField, 5, { ease: Power0.easeNone, alpha: 1});
         }
 
         private function initializeTowerButtons(): void {
@@ -67,7 +85,8 @@ package td.screens {
         }
 
         private function getIntroTextTime() : int {
-            return this.introText.length / 7;
+            var scrollPathLength: int = Context.stage.stageHeight + introTextField.height;
+            return scrollPathLength / 30;
         }
 
         private function playIntro() : void {

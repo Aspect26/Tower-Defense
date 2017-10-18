@@ -2,7 +2,7 @@
     <cze>
 		<button-play value="Hraj!" />
 	    <button-back value="Spät" />
-    	<button-credits value="Credits" />
+    	<button-credits value="Zásluhy" />
 
         <s1l1i value="Welcome to Legend of Zax I" />
     </cze>
@@ -11,6 +11,6 @@
 	    <button-back value="Back" />
 	    <button-credits value="Credits" />
 
-        <s1l1i value="Welcome to Legend of Zax I" />
+        <s1l1i value="War! Hordes of Glaqnax warriors have appeared on the western shores of Qar kingdom. They sacked most of the seaside villages and started to assemble their forces near The First Gates to the kingdom. Stop them before they reach it!" />
     </eng>
 </i18n>

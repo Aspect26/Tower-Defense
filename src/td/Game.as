@@ -82,7 +82,7 @@ package td
 			new ParticlesManager();
 			
 			// SETS LANGUAGE
-			Context.texts.setLanguage("cze");
+			Context.texts.setLanguage("eng");
 			
 			//UNCAUGHT ERROR EVENTS	
 			starter.loaderInfo.uncaughtErrorEvents.addEventListener(
