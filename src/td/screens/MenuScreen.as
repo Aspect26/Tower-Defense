@@ -10,6 +10,7 @@ import td.constants.Images;
 import td.constants.TextIds;
 
 import td.particles.ParticlesExample;
+import td.ui.MenuTextButton;
 import td.ui.TextButton;
 import td.Context;
 
@@ -46,15 +47,15 @@ import com.greensock.TweenLite;
 			
 			background.alignPivot();
 						
-			playButton = new TextButton(Context.text(TextIds.ButtonPlay), 10, onPlay);
+			playButton = new MenuTextButton(Context.text(TextIds.ButtonPlay), onPlay);
 			playButton.x = Context.assets.stageWidth / 2 - playButton.width / 2;
 			playButton.y = 250;
-			addChild(playButton);
+            background.addChild(playButton);
 
-			creditsButton = new TextButton(Context.text(TextIds.ButtonCredits), 10, onCredits);
+			creditsButton = new MenuTextButton(Context.text(TextIds.ButtonCredits), onCredits);
 			creditsButton.x =  Context.assets.stageWidth / 2 - creditsButton.width / 2;
-			creditsButton.y = 280;
-			addChild(creditsButton);
+			creditsButton.y = 300;
+            background.addChild(creditsButton);
 			
 			// USE MONSTER DEBUGGER TO FIND CORRECT X,Y,SCALE
 			// TO FIT PARTICLES ONTO THE PLANE IN THE UPPER-RIGHT PART

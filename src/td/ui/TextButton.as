@@ -2,34 +2,33 @@ package td.ui
 {
 	import starling.events.TouchEvent;
 	import starling.text.TextFormat;
+
+	import td.constants.Colors;
+	import td.constants.Fonts;
 	import td.utils.draw.Primitive;
 	
-	import starling.display.Sprite;
-	import starling.events.Touch;
 	import starling.text.TextField;
-	import starling.utils.Color;
 
 	public class TextButton extends Primitive
 	{
 		private var onClickHandler: Function;
+		private var textField: TextField;
 		
-		private var tf:TextField;
-		
-		public function TextButton(text: String, fontSize: int, onClick: Function)
+		public function TextButton(text: String, fontSize: int, width: int, onClick: Function)
 		{
 			setTouchable(true);
 			
 			this.onClickHandler = onClick;
 			
-			tf = new TextField(text.length * 22, fontSize * 2, text, new TextFormat("Verdana", fontSize));
-			tf.touchable = true;
+			textField = new TextField(width, fontSize, text, new TextFormat(Fonts.PRIMARY, fontSize, Colors.BLACK));
+			textField.touchable = true;
 			
-			rectangle(0, 0, tf.textBounds.width + 10, tf.textBounds.height + 10, Color.WHITE, 2, Color.BLACK);
+			rectangle(0, 0, textField.width + 10, textField.height + 10, Colors.WHITE, 2, Colors.PRIMARY);
 			
-			tf.x = width / 2 - tf.width / 2;
-			tf.y = height / 2 - tf.height / 2;
+			textField.x = width / 2 - textField.width / 2;
+			textField.y = height / 2 - textField.height / 2;
 			
-			addChild(tf);
+			addChild(textField);
 		}
 		
 		override public function onClick(event: TouchEvent) : void {

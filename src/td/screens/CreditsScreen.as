@@ -9,6 +9,7 @@ import td.Context;
 
 import td.constants.Colors;
 import td.constants.TextIds;
+import td.ui.MenuTextButton;
 import td.ui.TextButton;
 
 public class CreditsScreen extends Sprite
@@ -35,7 +36,7 @@ public class CreditsScreen extends Sprite
             introTextField = new TextField(200, 50, this.creditsText);
             introTextField.format.color = Colors.WHITE;
 
-            backButton = new TextButton(Context.text(TextIds.ButtonBack), 10, onBack);
+            backButton = new MenuTextButton(Context.text(TextIds.ButtonBack), onBack);
             backButton.x = 10;
             backButton.y = 50;
         }
