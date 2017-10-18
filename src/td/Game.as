@@ -104,7 +104,9 @@ package td
 				"assets/background.png",
 				"assets/background.xml",
 				"assets/sprites.png",
-				"assets/sprites.xml"
+				"assets/sprites.xml",
+                "assets/levels/stage1/level1.png",
+                "assets/levels/stage1/level1.xml"
 			);
 		}
 		

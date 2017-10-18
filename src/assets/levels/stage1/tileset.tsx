@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset name="ice-snow" tilewidth="20" tileheight="20" tilecount="16" columns="0">
+<tileset name="snow-tileset" tilewidth="20" tileheight="20" tilecount="16" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="0">
   <image width="20" height="20" source="tiles/tile_01.bmp"/>
@@ -46,7 +46,7 @@
  <tile id="14">
   <image width="20" height="20" source="tiles/tile_15.bmp"/>
  </tile>
- <tile id="16">
+ <tile id="15">
   <image width="20" height="20" source="tiles/tile_16.bmp"/>
  </tile>
 </tileset>

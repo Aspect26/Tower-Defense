@@ -44,7 +44,7 @@ package td.screens {
             background.x = Context.assets.stageWidth / 2;
             background.y = Context.assets.stageHeight / 2;
             background.width = 800;
-            background.height = 512;
+            background.height = 500;
             background.addChild(Context.newImage(this.backgroundPath));
             background.alignPivot();
 
@@ -53,7 +53,7 @@ package td.screens {
         }
 
         private function getIntroTextTime() : int {
-            return this.introText.length / 6;
+            return this.introText.length / 7;
         }
 
         private function playIntro() : void {
@@ -63,9 +63,6 @@ package td.screens {
         private function startLevel() : void {
             this.removeChild(introTextField);
             this.addChild(background);
-
-            background.scale = 0;
-            TweenLite.to(background, 2.5, { ease: Bounce.easeInOut, scale: 1 });
         }
 
     }

@@ -1,6 +1,7 @@
 package td.screens 
 {
 import com.greensock.easing.Bounce;
+import com.greensock.easing.Power4;
 
 import flash.events.Event;
 
@@ -37,7 +38,7 @@ import com.greensock.TweenLite;
 			background.x = Context.assets.stageWidth / 2;
 			background.y = Context.assets.stageHeight / 2;
 			background.width = 800;
-			background.height = 512;
+			background.height = 500;
 			addChild(background);		
 			
 			backgroundImg = Context.newImage(Images.MENU_BACKGROUND);
@@ -70,11 +71,11 @@ import com.greensock.TweenLite;
 			particles.start();
 
 			background.scale = 0;
-            TweenLite.to(background, 2.5, { ease: Bounce.easeInOut, scale: 1 });
+            TweenLite.to(background, 1.5, { ease: Power4.easeInOut, scale: 1 });
 		}
 		
 		private static function onPlay() : void {
-			Context.screenManager.showScreen(new LevelScreen(Context.text(TextIds.Stage1Level1Intro), Images.MENU_BACKGROUND));
+			Context.screenManager.showScreen(new LevelScreen(Context.text(TextIds.Stage1Level1Intro), Images.S1L1_BACKGROUND));
 		}
 
 		private static function onCredits() : void {
