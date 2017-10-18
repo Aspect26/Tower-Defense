@@ -1,0 +1,5 @@
+<TextureAtlas imagePath="towers.png">
+	<SubTexture name="towers/rock_tower.png" x="0" y="0" width="84" height="115"/>
+	<SubTexture name="towers/cannon_tower.png" x="156" y="0" width="62" height="121"/>
+	<SubTexture name="towers/watch_tower.png" x="86" y="0" width="68" height="94"/>
+</TextureAtlas>

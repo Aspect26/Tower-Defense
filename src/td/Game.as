@@ -100,13 +100,15 @@ package td
 			loadProgressBar.width = 0;
 			
 			Context.assets.loadAssets(
-				loadProgress, 
+				loadProgress,
 				"assets/background.png",
 				"assets/background.xml",
 				"assets/sprites.png",
 				"assets/sprites.xml",
                 "assets/levels/stage1/level1.png",
-                "assets/levels/stage1/level1.xml"
+                "assets/levels/stage1/level1.xml",
+                "assets/towers.png",
+                "assets/towers.xml"
 			);
 		}
 		

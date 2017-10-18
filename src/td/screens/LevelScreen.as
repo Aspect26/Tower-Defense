@@ -1,8 +1,5 @@
 package td.screens {
 
-    import com.greensock.easing.Bounce;
-    import com.greensock.TweenLite;
-
     import flash.events.Event;
 
     import starling.core.Starling;
@@ -11,6 +8,8 @@ package td.screens {
 
     import td.Context;
     import td.constants.Colors;
+import td.constants.Images;
+import td.ui.ImageButton;
 
     public class LevelScreen extends Sprite
     {
@@ -53,7 +52,8 @@ package td.screens {
         }
 
         private function getIntroTextTime() : int {
-            return this.introText.length / 7;
+            // return this.introText.length / 7;
+            return 0;
         }
 
         private function playIntro() : void {
@@ -63,6 +63,14 @@ package td.screens {
         private function startLevel() : void {
             this.removeChild(introTextField);
             this.addChild(background);
+
+            this.addChild(new ImageButton(Images.TOWER_WATCH, 20, Context.stage.height - 70 - 20, 70, 70, onClick));
+            this.addChild(new ImageButton(Images.TOWER_ROCK, 100, Context.stage.height - 70 - 20, 70, 70, onClick));
+            this.addChild(new ImageButton(Images.TOWER_CANNON, 180, Context.stage.height - 70 - 20, 70, 70, onClick));
+        }
+
+        private function onClick() : void {
+
         }
 
     }

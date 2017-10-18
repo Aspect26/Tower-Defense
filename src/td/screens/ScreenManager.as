@@ -11,14 +11,14 @@ package td.screens
 	{
 		
 		private var currentScreen: Sprite;
-		
+
 		public function ScreenManager() 
 		{
 			Context.screenManager = this;
 		}
 		
 		public function showScreen( screen:Sprite ):void {
-			if( currentScreen ){
+			if(currentScreen){
 				Context.game.removeChild(currentScreen,true);
 			}
 			currentScreen = screen;

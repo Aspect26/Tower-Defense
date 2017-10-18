@@ -30,7 +30,7 @@ package td
 			for each( var item:String in items ){
 				manager.enqueue( item );
 			}
-			manager.loadQueue( onProgress );
+			manager.loadQueue(onProgress);
 		}
 		
 		/**

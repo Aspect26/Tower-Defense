@@ -1,9 +1,10 @@
 package td.buildings {
+import td.constants.Images;
 
-    public class RockTower extends Tower {
+public class RockTower extends Tower {
 
         public function RockTower() {
-            super('towerDefense_tile230.png', 15, 1.3);
+            super(Images.TOWER_ROCK, 15, 1.3);
         }
     }
 
