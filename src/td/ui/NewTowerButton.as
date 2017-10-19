@@ -12,6 +12,11 @@ package td.ui {
             this.tower = tower;
         }
 
+        public function getNewTower(): Tower {
+            // TO DO: we need a new object
+            return tower;
+        }
+
     }
 
 }

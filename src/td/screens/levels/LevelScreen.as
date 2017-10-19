@@ -1,24 +1,36 @@
 package td.screens.levels {
 
-import com.greensock.TweenLite;
-import com.greensock.easing.Power0;
+    import com.greensock.TweenLite;
+    import com.greensock.easing.Power0;
 
-import flash.events.Event;
+    import flash.events.Event;
+import flash.events.MouseEvent;
 
 import starling.core.Starling;
-    import starling.text.TextField;
+import starling.display.Image;
+import starling.events.Touch;
+import starling.events.TouchEvent;
+import starling.events.TouchPhase;
+import starling.text.TextField;
     import starling.display.Sprite;
     import starling.text.TextFieldAutoSize;
 
     import td.Context;
     import td.buildings.CannonTower;
     import td.buildings.RockTower;
-    import td.buildings.WatchTower;
+import td.buildings.Tower;
+import td.buildings.WatchTower;
     import td.constants.Colors;
     import td.map.Map;
+import td.states.BuyingTowerState;
+import td.states.IntroState;
+import td.states.NormalState;
+import td.states.State;
     import td.ui.NewTowerButton;
+import td.utils.Position;
+import td.utils.draw.Primitive;
 
-    public class LevelScreen extends Sprite
+public class LevelScreen extends Sprite
     {
         private var backgroundPath: String;
         private var introText: String;
@@ -30,10 +42,12 @@ import starling.core.Starling;
         private var cannonTowerButton: NewTowerButton;
 
         private var map: Map;
+        private var state: State;
 
         public function LevelScreen(map: Map, introText: String, backgroundPath: String)
         {
             addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+            addEventListener(TouchEvent.TOUCH, onTouch);
             this.backgroundPath = backgroundPath;
             this.introText = introText;
             this.map = map;
@@ -91,11 +105,13 @@ import starling.core.Starling;
             return 0;
         }
 
-        private function playIntro() : void {
+        private function playIntro(): void {
+            this.state = new IntroState();
             this.addChild(introTextField);
         }
 
         private function startLevel() : void {
+            this.state = new NormalState();
             this.removeChild(introTextField);
             this.addChild(background);
             this.addChild(watchTowerButton);
@@ -103,8 +119,61 @@ import starling.core.Starling;
             this.addChild(cannonTowerButton);
         }
 
-        private function newTowerClicked(event) : void {
+        private function newTowerClicked(event): void {
+            // TODO: refactor this method
+            this.state = new BuyingTowerState(event.currentTarget.getNewTower());
             this.addChild(this.map.getOccupationOverlay());
+
+            var towerImage: Image = (state as BuyingTowerState).getTowerImage();
+            var towerOverlay: Primitive = (state as BuyingTowerState).getTowerOverlay();
+
+            var touch: Touch = event.getTouch(Context.stage);
+            var position: Position = new Position(touch.globalX - touch.globalX % Map.TILE_SIZE, touch.globalY - touch.globalY % Map.TILE_SIZE);
+            (state as BuyingTowerState).setPosition(position);
+
+            this.addChild(towerImage);
+            this.addChild(towerOverlay);
+        }
+
+        private function onTouch(event: TouchEvent): void {
+            var touch: Touch = event.getTouch(Context.stage);
+            if (touch) {
+                trace(touch.phase);
+                switch (touch.phase) {
+                    case TouchPhase.HOVER:
+                    case TouchPhase.MOVED:
+                        this.onHover(touch);
+                        break;
+                    case TouchPhase.BEGAN:
+                        this.onClick(touch);
+                        break;
+                }
+            }
+        }
+
+        private function onHover(touch: Touch): void {
+            if (state is BuyingTowerState) {
+                // TODO: refactor
+                var buyingTowerState: BuyingTowerState = state as BuyingTowerState;
+                var position: Position = new Position(touch.globalX - touch.globalX % Map.TILE_SIZE, touch.globalY - touch.globalY % Map.TILE_SIZE);
+                buyingTowerState.setPosition(position);
+            }
+        }
+
+        private function onClick(touch: Touch): void {
+            if (state is IntroState) {
+                // TODO: skip intro
+            } else if (state is BuyingTowerState) {
+                var tower: Tower = (state as BuyingTowerState).getTower();
+                var towerPosition: Position = new Position(touch.globalX / Map.TILE_SIZE, touch.globalY / Map.TILE_SIZE);
+                if (!map.addTower(tower, towerPosition)) {
+                    return;
+                }
+
+                this.removeChild(map.getOccupationOverlay());
+                this.removeChild((state as BuyingTowerState).getTowerOverlay());
+                state = new NormalState();
+            }
         }
 
     }

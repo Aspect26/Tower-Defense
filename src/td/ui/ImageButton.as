@@ -40,6 +40,7 @@ package td.ui
 			if (this.onClickHandler != null) {
 				onClickHandler(event);
 			}
+            event.stopImmediatePropagation();
 		}
 		
 	}
