@@ -15,6 +15,7 @@ import starling.core.Starling;
     import td.buildings.RockTower;
     import td.buildings.WatchTower;
     import td.constants.Colors;
+    import td.map.Map;
     import td.ui.NewTowerButton;
 
     public class LevelScreen extends Sprite
@@ -28,11 +29,14 @@ import starling.core.Starling;
         private var rockTowerButton: NewTowerButton;
         private var cannonTowerButton: NewTowerButton;
 
-        public function LevelScreen(introText: String, backgroundPath: String)
+        private var map: Map;
+
+        public function LevelScreen(map: Map, introText: String, backgroundPath: String)
         {
             addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
             this.backgroundPath = backgroundPath;
             this.introText = introText;
+            this.map = map;
         }
 
         private function onAddedToStage(event: * = null) : void {
@@ -83,7 +87,8 @@ import starling.core.Starling;
 
         private function getIntroTextTime() : int {
             var scrollPathLength: int = Context.stage.stageHeight + introTextField.height;
-            return scrollPathLength / 30;
+            // return scrollPathLength / 30;
+            return 0;
         }
 
         private function playIntro() : void {
@@ -99,7 +104,7 @@ import starling.core.Starling;
         }
 
         private function newTowerClicked(event) : void {
-            var a = 5;
+            this.addChild(this.map.getOccupationOverlay());
         }
 
     }

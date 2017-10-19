@@ -33,14 +33,18 @@ import td.utils.draw.Primitive;
             return this.occupiedTiles[x][y];
         }
 
-        public function setRectangleOccupied(x: int, y: int, width: int, height: int) {
+        public function getOccupationOverlay(): Primitive {
+            return this.occupiedTilesOverlay;
+        }
+
+        public function setRectangleOccupied(x: int, y: int, width: int, height: int): void {
             for (var i: int = x; i < width + x; ++i) {
                 for (var j: int = y; j < height + y; ++j) {
                     this.occupiedTiles[i][j] = true;
                 }
             }
             this.occupiedTilesOverlay.addChild(this.occupiedTilesOverlay.rectangle(x * TILE_SIZE, y * TILE_SIZE, (x+width) * TILE_SIZE,
-                    (y + height) * TILE_SIZE, Colors.RED));
+                    (y + height) * TILE_SIZE, Colors.OCCUPATION_OVERLAY, 0, 0, 0.2));
         }
 
     }

@@ -56,10 +56,11 @@ package td.utils.draw
 			return l;
 		}
 		
-		public function rectangle(x1: Number, y1: Number, x2: Number, y2: Number, color: uint = 0, thickness: int = -1, lineColor: uint = 0) : Rectangle {
+		public function rectangle(x1: Number, y1: Number, x2: Number, y2: Number, color: uint = 0, thickness: int = -1, lineColor: uint = 0, alpha: Number = 1) : Rectangle {
 			var r: Rectangle = new Rectangle(x2 - x1, y2 - y1, color, lineColor, thickness);
 			r.x = x1;
 			r.y = y1;
+			r.alpha = alpha;
 			addChild(r);
 			
 			r.touchable = this.touchable;

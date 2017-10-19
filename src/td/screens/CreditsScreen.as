@@ -41,12 +41,12 @@ public class CreditsScreen extends Sprite
             backButton.y = 50;
         }
 
-        private function show() : void {
+        private function show(): void {
             this.addChild(introTextField);
             addChild(backButton);
         }
 
-        private static function onBack() {
+        private static function onBack(): void {
             Context.screenManager.showScreen(new MenuScreen());
         }
 
