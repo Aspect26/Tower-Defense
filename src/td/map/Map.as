@@ -1,13 +1,11 @@
 package td.map {
-    import starling.display.Sprite;
+    import td.buildings.Tower;
 
-import td.buildings.Tower;
+    import td.constants.Colors;
+    import td.utils.Position;
+    import td.utils.Size;
 
-import td.constants.Colors;
-import td.utils.Position;
-import td.utils.Size;
-
-import td.utils.draw.Primitive;
+    import td.utils.draw.Primitive;
 
     public class Map {
 

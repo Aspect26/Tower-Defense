@@ -5,8 +5,8 @@ package td.states {
     import td.buildings.Tower;
     import td.constants.Colors;
     import td.map.Map;
-import td.utils.Position;
-import td.utils.draw.Primitive;
+    import td.utils.Position;
+    import td.utils.draw.Primitive;
 
     public class BuyingTowerState extends State {
 

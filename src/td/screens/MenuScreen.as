@@ -1,24 +1,23 @@
 package td.screens 
 {
-import com.greensock.easing.Bounce;
-import com.greensock.easing.Power4;
+	import com.greensock.easing.Power4;
 
-import flash.events.Event;
+	import flash.events.Event;
 
-import td.constants.Images;
+	import td.constants.Images;
 
-import td.constants.TextIds;
+	import td.constants.TextIds;
+	import td.levels.LevelManager;
 
-import td.particles.ParticlesExample;
-import td.screens.levels.stage.first.LevelOne;
-import td.ui.MenuTextButton;
-import td.ui.TextButton;
-import td.Context;
+	import td.particles.ParticlesExample;
+	import td.ui.MenuTextButton;
+	import td.ui.TextButton;
+	import td.Context;
 
-import starling.display.Image;
-import starling.display.Sprite;
+	import starling.display.Image;
+	import starling.display.Sprite;
 
-import com.greensock.TweenLite;
+	import com.greensock.TweenLite;
 
 	public class MenuScreen extends Sprite
 	{
@@ -77,7 +76,7 @@ import com.greensock.TweenLite;
 		}
 		
 		private static function onPlay() : void {
-			Context.screenManager.showScreen(new LevelOne());
+			Context.screenManager.showScreen(new LevelScreen(LevelManager.createLevel(1)));
 		}
 
 		private static function onCredits() : void {

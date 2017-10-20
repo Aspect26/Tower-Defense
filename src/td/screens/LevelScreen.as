@@ -1,36 +1,36 @@
-package td.screens.levels {
+package td.screens {
 
     import com.greensock.TweenLite;
     import com.greensock.easing.Power0;
 
     import flash.events.Event;
-import flash.events.MouseEvent;
 
-import starling.core.Starling;
-import starling.display.Image;
-import starling.events.Touch;
-import starling.events.TouchEvent;
-import starling.events.TouchPhase;
-import starling.text.TextField;
+    import starling.core.Starling;
+    import starling.display.Image;
+    import starling.events.Touch;
+    import starling.events.TouchEvent;
+    import starling.events.TouchPhase;
+    import starling.text.TextField;
     import starling.display.Sprite;
     import starling.text.TextFieldAutoSize;
 
     import td.Context;
     import td.buildings.CannonTower;
     import td.buildings.RockTower;
-import td.buildings.Tower;
-import td.buildings.WatchTower;
+    import td.buildings.Tower;
+    import td.buildings.WatchTower;
     import td.constants.Colors;
+    import td.levels.Level;
     import td.map.Map;
-import td.states.BuyingTowerState;
-import td.states.IntroState;
-import td.states.NormalState;
-import td.states.State;
+    import td.states.BuyingTowerState;
+    import td.states.IntroState;
+    import td.states.NormalState;
+    import td.states.State;
     import td.ui.NewTowerButton;
-import td.utils.Position;
-import td.utils.draw.Primitive;
+    import td.utils.Position;
+    import td.utils.draw.Primitive;
 
-public class LevelScreen extends Sprite
+    public class LevelScreen extends Sprite
     {
         private var backgroundPath: String;
         private var introText: String;
@@ -41,16 +41,16 @@ public class LevelScreen extends Sprite
         private var rockTowerButton: NewTowerButton;
         private var cannonTowerButton: NewTowerButton;
 
-        private var map: Map;
+        private var level: Level;
         private var state: State;
 
-        public function LevelScreen(map: Map, introText: String, backgroundPath: String)
+        public function LevelScreen(level: Level)
         {
             addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
             addEventListener(TouchEvent.TOUCH, onTouch);
-            this.backgroundPath = backgroundPath;
-            this.introText = introText;
-            this.map = map;
+            this.level = level;
+            this.backgroundPath = level.getBackgroundPath();
+            this.introText = level.getIntroText();
         }
 
         private function onAddedToStage(event: * = null) : void {
@@ -101,8 +101,7 @@ public class LevelScreen extends Sprite
 
         private function getIntroTextTime() : int {
             var scrollPathLength: int = Context.stage.stageHeight + introTextField.height;
-            // return scrollPathLength / 30;
-            return 0;
+            return scrollPathLength / 30;
         }
 
         private function playIntro(): void {
@@ -122,7 +121,7 @@ public class LevelScreen extends Sprite
         private function newTowerClicked(event): void {
             // TODO: refactor this method
             this.state = new BuyingTowerState(event.currentTarget.getNewTower());
-            this.addChild(this.map.getOccupationOverlay());
+            this.addChild(this.level.getOccupationOverlay());
 
             var towerImage: Image = (state as BuyingTowerState).getTowerImage();
             var towerOverlay: Primitive = (state as BuyingTowerState).getTowerOverlay();
@@ -153,7 +152,6 @@ public class LevelScreen extends Sprite
 
         private function onHover(touch: Touch): void {
             if (state is BuyingTowerState) {
-                // TODO: refactor
                 var buyingTowerState: BuyingTowerState = state as BuyingTowerState;
                 var position: Position = new Position(touch.globalX - touch.globalX % Map.TILE_SIZE, touch.globalY - touch.globalY % Map.TILE_SIZE);
                 buyingTowerState.setPosition(position);
@@ -166,11 +164,11 @@ public class LevelScreen extends Sprite
             } else if (state is BuyingTowerState) {
                 var tower: Tower = (state as BuyingTowerState).getTower();
                 var towerPosition: Position = new Position(touch.globalX / Map.TILE_SIZE, touch.globalY / Map.TILE_SIZE);
-                if (!map.addTower(tower, towerPosition)) {
+                if (!level.addTower(tower, towerPosition)) {
                     return;
                 }
 
-                this.removeChild(map.getOccupationOverlay());
+                this.removeChild(level.getOccupationOverlay());
                 this.removeChild((state as BuyingTowerState).getTowerOverlay());
                 state = new NormalState();
             }
