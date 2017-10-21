@@ -8,7 +8,8 @@ package td
 	import flash.events.UncaughtErrorEvent;
 	import flash.system.LoaderContext;
 	import td.particles.ParticlesManager;
-	import td.screens.MenuScreen;
+    import td.player.Player;
+    import td.screens.MenuScreen;
 	import td.screens.ScreenManager;
 		
 	import starling.core.Starling;
@@ -35,6 +36,8 @@ package td
 		
 		/** For load() progress... */
 		private var loadProgressBar:Quad;
+
+		public var player: Player;
 		
 		public function Game()
         {    
@@ -110,6 +113,9 @@ package td
                 "assets/towers.png",
                 "assets/towers.xml"
 			);
+
+            // TODO: add player load
+            this.player = new Player();
 		}
 		
 		

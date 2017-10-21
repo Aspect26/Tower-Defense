@@ -109,6 +109,11 @@ package td.screens {
             this.addChild(introTextField);
         }
 
+        private function skipIntro(): void {
+            Starling.juggler.removeDelayedCalls(this.startLevel);
+            this.startLevel();
+        }
+
         private function startLevel() : void {
             this.state = new NormalState();
             this.removeChild(introTextField);
@@ -160,7 +165,7 @@ package td.screens {
 
         private function onClick(touch: Touch): void {
             if (state is IntroState) {
-                // TODO: skip intro
+                this.skipIntro();
             } else if (state is BuyingTowerState) {
                 var tower: Tower = (state as BuyingTowerState).getTower();
                 var towerPosition: Position = new Position(touch.globalX / Map.TILE_SIZE, touch.globalY / Map.TILE_SIZE);

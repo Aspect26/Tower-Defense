@@ -14,6 +14,10 @@ package td.player {
             }
         }
 
+        public function getUnlockedLevels(): int {
+            return this.currentLevel;
+        }
+
     }
 
 }

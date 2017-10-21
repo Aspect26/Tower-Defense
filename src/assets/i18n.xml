@@ -3,13 +3,21 @@
 		<button-play value="Hraj!" />
 	    <button-back value="Spät" />
     	<button-credits value="Zásluhy" />
+		<button-level-select value="Level" />
 
-        <s1l1i value="Welcome to Legend of Zax I" />
+		<level value="Level" />
+		<stage value="Štádium" />
+		
+        <s1l1i value="Nedokonceny preklad" />
     </cze>
     <eng>
         <button-play value="Play!" />
 	    <button-back value="Back" />
 	    <button-credits value="Credits" />
+		<button-level-select value="Level" />
+		
+		<level value="Level" />
+		<stage value="Stage" />
 
         <s1l1i value="War! Hordes of Glaqnax warriors have appeared on the western shores of Qar kingdom. They sacked most of the seaside villages and started to assemble their forces near The First Gates to the kingdom. Stop them before they reach it!" />
     </eng>

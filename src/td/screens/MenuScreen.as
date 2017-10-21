@@ -25,6 +25,7 @@ package td.screens
 		private var backgroundImg: Image;
 		private var playButton: TextButton;
 		private var creditsButton: TextButton;
+		private var levelSelectButton: TextButton;
 		private var particles: ParticlesExample;
 	
 		public function MenuScreen()
@@ -49,13 +50,18 @@ package td.screens
 						
 			playButton = new MenuTextButton(Context.text(TextIds.ButtonPlay), onPlay);
 			playButton.x = Context.assets.stageWidth / 2 - playButton.width / 2;
-			playButton.y = 250;
+			playButton.y = 200;
             background.addChild(playButton);
 
 			creditsButton = new MenuTextButton(Context.text(TextIds.ButtonCredits), onCredits);
 			creditsButton.x =  Context.assets.stageWidth / 2 - creditsButton.width / 2;
-			creditsButton.y = 300;
+			creditsButton.y = 250;
             background.addChild(creditsButton);
+
+            levelSelectButton = new MenuTextButton(Context.text(TextIds.ButtonLevelSelect), onLevelSelect);
+            levelSelectButton.x = Context.assets.stageWidth / 2 - playButton.width / 2;
+            levelSelectButton.y = 300;
+            background.addChild(levelSelectButton);
 			
 			// USE MONSTER DEBUGGER TO FIND CORRECT X,Y,SCALE
 			// TO FIT PARTICLES ONTO THE PLANE IN THE UPPER-RIGHT PART
@@ -82,7 +88,11 @@ package td.screens
 		private static function onCredits() : void {
 			Context.screenManager.showScreen(new CreditsScreen());
 		}
-		
+
+        private static function onLevelSelect(): void {
+            Context.screenManager.showScreen(new LevelSelectScreen());
+        }
+
 	}
 
 }
