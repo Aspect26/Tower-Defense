@@ -36,6 +36,7 @@ package td.screens {
         private var introText: String;
 
         private var introTextField: TextField;
+        private var moneyTextField: TextField;
         private var background: Sprite;
         private var watchTowerButton: NewTowerButton;
         private var rockTowerButton: NewTowerButton;
@@ -49,6 +50,7 @@ package td.screens {
             addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
             addEventListener(TouchEvent.TOUCH, onTouch);
             this.level = level;
+            this.level.setScreen(this);
             this.backgroundPath = level.getBackgroundPath();
             this.introText = level.getIntroText();
         }
@@ -63,6 +65,7 @@ package td.screens {
 
         private function initialize() : void {
             this.initializeIntroText();
+            this.initializeMoneyText();
             this.initializeBackground();
             this.initializeTowerButtons();
         }
@@ -93,6 +96,16 @@ package td.screens {
             TweenLite.to(introTextField, 5, { ease: Power0.easeNone, alpha: 1});
         }
 
+        private function initializeMoneyText(): void {
+            var fontSize: int = 20;
+
+            moneyTextField = new TextField(10, 10, this.level.getMoney() + " €");
+            moneyTextField.format.color = Colors.YELLOW;
+            moneyTextField.format.size = fontSize;
+            moneyTextField.autoSize = TextFieldAutoSize.BOTH_DIRECTIONS;
+
+        }
+
         private function initializeTowerButtons(): void {
             watchTowerButton = new NewTowerButton(new WatchTower(), 20, Context.stage.stageHeight - 90, newTowerClicked);
             rockTowerButton = new NewTowerButton(new RockTower(), 100, Context.stage.stageHeight - 90, newTowerClicked);
@@ -121,6 +134,7 @@ package td.screens {
             this.addChild(watchTowerButton);
             this.addChild(rockTowerButton);
             this.addChild(cannonTowerButton);
+            this.addChild(moneyTextField);
         }
 
         private function newTowerClicked(event): void {
@@ -177,6 +191,10 @@ package td.screens {
                 this.removeChild((state as BuyingTowerState).getTowerOverlay());
                 state = new NormalState();
             }
+        }
+
+        public function setMoney(money: int): void {
+            this.moneyTextField.text = money + " €";
         }
 
     }

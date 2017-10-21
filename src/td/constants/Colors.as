@@ -11,6 +11,7 @@ package td.constants {
 
         public static const WHITE: uint = 0xFFFFFF;
         public static const BLACK: uint = 0x000000;
+        public static const YELLOW: uint = 0xF6FF00;
 
     }
 
