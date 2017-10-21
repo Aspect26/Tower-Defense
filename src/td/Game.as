@@ -108,8 +108,14 @@ package td
 				"assets/menu-background.xml",
 				"assets/sprites.png",
 				"assets/sprites.xml",
+
                 "assets/levels/stage1/level1.png",
                 "assets/levels/stage1/level1.xml",
+                "assets/levels/stage1/level2.png",
+                "assets/levels/stage1/level2.xml",
+                "assets/levels/stage1/level3.png",
+                "assets/levels/stage1/level3.xml",
+
                 "assets/towers.png",
                 "assets/towers.xml"
 			);
