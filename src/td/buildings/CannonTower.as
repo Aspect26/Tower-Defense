@@ -5,7 +5,7 @@ import td.utils.Size;
 public class CannonTower extends Tower {
 
         public function CannonTower() {
-            super(Images.TOWER_CANNON, 30, 2.0, new Size(5, 5));
+            super(Images.TOWER_CANNON, 100, 30, 2.0, new Size(5, 5));
         }
     }
 

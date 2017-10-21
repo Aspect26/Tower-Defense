@@ -5,7 +5,7 @@ import td.utils.Size;
 public class RockTower extends Tower {
 
         public function RockTower() {
-            super(Images.TOWER_ROCK, 15, 1.3, new Size(5, 5));
+            super(Images.TOWER_ROCK, 40, 15, 1.3, new Size(5, 5));
         }
     }
 

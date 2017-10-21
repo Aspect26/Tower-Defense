@@ -14,10 +14,12 @@ package td.buildings {
         private var imagePath: String;
 
         private var damage: int;
+        private var cost: int;
         private var cooldawn: Number;
         private var size: Size;
 
-        public function Tower(imagePath: String, damage: int, cooldawn: int, size: Size) {
+        public function Tower(imagePath: String, cost: int, damage: int, cooldawn: int, size: Size) {
+            this.cost = cost;
             this.imagePath = imagePath;
             this.damage = damage;
             this.cooldawn = cooldawn;
@@ -37,6 +39,10 @@ package td.buildings {
             ImageUtils.resize(image, this.size.width * Map.TILE_SIZE, this.size.height * Map.TILE_SIZE);
 
             return image;
+        }
+
+        public function getCost(): int {
+            return this.cost;
         }
 
     }

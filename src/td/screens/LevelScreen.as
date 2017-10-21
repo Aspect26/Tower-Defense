@@ -139,7 +139,12 @@ package td.screens {
 
         private function newTowerClicked(event): void {
             // TODO: refactor this method
-            this.state = new BuyingTowerState(event.currentTarget.getNewTower());
+            var tower: Tower = event.currentTarget.getNewTower();
+            if (tower.getCost() > this.level.getMoney()) {
+                return;
+            }
+
+            this.state = new BuyingTowerState(tower);
             this.addChild(this.level.getOccupationOverlay());
 
             var towerImage: Image = (state as BuyingTowerState).getTowerImage();

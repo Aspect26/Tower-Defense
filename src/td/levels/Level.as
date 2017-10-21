@@ -46,11 +46,17 @@ package td.levels {
         }
 
         public function addTower(tower: Tower, position: Position): Boolean {
-            return this.map.addTower(tower, position);
+            if (this.map.addTower(tower, position)) {
+                this.addMoney(-tower.getCost());
+                return true;
+            }
+
+            return false;
         }
 
-        public function addMoney(money: int) {
-            this.screen.setMoney(money);
+        public function addMoney(money: int): void {
+            this.actualMoney += money;
+            this.screen.setMoney(this.actualMoney);
         }
 
     }
