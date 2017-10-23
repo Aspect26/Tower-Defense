@@ -5,6 +5,12 @@ package td.screens {
 
     import flash.events.Event;
 
+    import io.arkeus.tiled.TiledLayer;
+
+    import io.arkeus.tiled.TiledMap;
+    import io.arkeus.tiled.TiledTile;
+    import io.arkeus.tiled.TiledTileLayer;
+
     import starling.core.Starling;
     import starling.display.Image;
     import starling.events.Touch;
@@ -37,7 +43,6 @@ package td.screens {
 
         private var introTextField: TextField;
         private var moneyTextField: TextField;
-        private var background: Sprite;
         private var watchTowerButton: NewTowerButton;
         private var rockTowerButton: NewTowerButton;
         private var cannonTowerButton: NewTowerButton;
@@ -66,18 +71,7 @@ package td.screens {
         private function initialize() : void {
             this.initializeIntroText();
             this.initializeMoneyText();
-            this.initializeBackground();
             this.initializeTowerButtons();
-        }
-
-        private function initializeBackground() : void {
-            background = new Sprite();
-            background.x = Context.assets.stageWidth / 2;
-            background.y = Context.assets.stageHeight / 2;
-            background.width = 800;
-            background.height = 500;
-            background.addChild(Context.newImage(this.backgroundPath));
-            background.alignPivot();
         }
 
         private function initializeIntroText(): void {
@@ -130,11 +124,35 @@ package td.screens {
         private function startLevel() : void {
             this.state = new NormalState();
             this.removeChild(introTextField);
-            this.addChild(background);
+            this.drawMap();
             this.addChild(watchTowerButton);
             this.addChild(rockTowerButton);
             this.addChild(cannonTowerButton);
             this.addChild(moneyTextField);
+        }
+
+        private function drawMap(): void {
+            var tiledMap: TiledMap = this.level.getMap().getMapData();
+            for (var layerIndex: int = 0; layerIndex < tiledMap.layers.getAllLayers().length; ++layerIndex) {
+                var layer: TiledTileLayer = tiledMap.layers.layers[layerIndex] as TiledTileLayer;
+                if (layer == null) {
+                    // TODO: handle omg
+                    continue;
+                }
+                for (var x: int = 0; x < layer.width; ++x) {
+                    for (var y: int = 0; y < layer.height; ++y) {
+                        var tileData: TiledTile = layer.data[x][y];
+                        if (tileData == null) {
+                            // TODO: handle omg
+                        } else {
+                            var image: Image = Context.newImage(tileData.image.source);
+                            image.x = x * tiledMap.tileWidth;
+                            image.y = y * tiledMap.tileHeight;
+                            addChild(image);
+                        }
+                    }
+                }
+            }
         }
 
         private function newTowerClicked(event): void {

@@ -119,6 +119,9 @@ package td
                 "assets/levels/stage1/level3.png",
                 "assets/levels/stage1/level3.xml",
 
+                "assets/stage_one_tiles.png",
+                "assets/stage_one_tiles.xml",
+
                 "assets/towers.png",
                 "assets/towers.xml"
 			);
