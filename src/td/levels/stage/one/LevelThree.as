@@ -8,12 +8,15 @@ package td.levels.stage.one {
 
     public class LevelThree extends Level {
 
+        [Embed(source="../../../../assets/levels/stage1/level3.tmx", mimeType="application/octet-stream")]
+        protected const mapFile: Class;
+
         public function LevelThree() {
             super(Images.S1L3_BACKGROUND, Context.text(TextIds.Stage1Level3Intro));
         }
 
         protected override function createMap(): Map {
-            var map: Map = new Map();
+            var map: Map = new Map(this.mapFile);
 
             map.setRectangleOccupied(34, 0, 4, 7);
             map.setRectangleOccupied(4, 3, 30, 4);

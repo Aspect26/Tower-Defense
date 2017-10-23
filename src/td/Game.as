@@ -7,7 +7,9 @@ package td
 	import flash.display.MovieClip;
 	import flash.events.UncaughtErrorEvent;
 	import flash.system.LoaderContext;
-	import td.particles.ParticlesManager;
+
+    import td.map.MapLoader;
+    import td.particles.ParticlesManager;
     import td.player.Player;
     import td.screens.MenuScreen;
 	import td.screens.ScreenManager;
@@ -83,6 +85,7 @@ package td
 			new Texts();
 			new Values();
 			new ParticlesManager();
+            new MapLoader();
 			
 			// SETS LANGUAGE
 			Context.texts.setLanguage("eng");
