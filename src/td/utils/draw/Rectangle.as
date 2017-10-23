@@ -26,7 +26,7 @@ package td.utils.draw
 			}
 		}
 
-		public function changeBorderColor(color: uint) {
+		public function changeBorderColor(color: uint): void {
 			for (var i: uint = 0; i < this.lines.length; ++i) {
 				this.lines[i].color = color;
 			}
