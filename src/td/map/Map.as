@@ -1,4 +1,8 @@
 package td.map {
+    import io.arkeus.tiled.TiledMap;
+
+    import td.Context;
+
     import td.buildings.Tower;
 
     import td.constants.Colors;
@@ -15,11 +19,17 @@ package td.map {
         private var occupiedTiles: Array;
         private var occupiedTilesOverlay: Primitive;
 
-        public function Map() {
+        private var mapData: TiledMap;
+        private var map: Class;
+
+        public function Map(map: Class) {
+            this.map = map;
             this.initialize();
         }
 
         private function initialize(): void {
+            mapData = Context.mapLoader.loadMap(this);
+
             occupiedTiles = [];
             for (var x: int = 0 ; x < WIDTH; ++x) {
                 occupiedTiles.push([]);
@@ -36,6 +46,14 @@ package td.map {
                 return true;
             }
             return this.occupiedTiles[x][y];
+        }
+
+        public function getMapXMLClass() : Class {
+            return map;
+        }
+
+        public function getMapData(): TiledMap {
+            return this.mapData;
         }
 
         public function getOccupationOverlay(): Primitive {

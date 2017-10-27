@@ -2,7 +2,9 @@ package td
 {
 	import starling.display.Sprite;
 	import starling.display.Stage;
-	import td.screens.ScreenManager;
+
+    import td.map.MapLoader;
+    import td.screens.ScreenManager;
 	import starling.textures.Texture;
 	import starling.display.Image;
 	
@@ -30,6 +32,9 @@ package td
 		
 		/** Gateway to dynamic constants */
 		public static var values: Values;
+
+        /** Gateway to map loading. */
+        public static var mapLoader: MapLoader;
 		
 		/** Shortcut for values.v */
 		public static var v: * ;

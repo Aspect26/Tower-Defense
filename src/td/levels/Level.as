@@ -22,7 +22,7 @@ package td.levels {
         }
 
         protected virtual function createMap(): Map {
-            return new Map();
+            throw new Error("The class Level is abstract and should not be instantiated!");
         }
 
         public function getBackgroundPath(): String {
@@ -39,6 +39,10 @@ package td.levels {
 
         public function getMoney(): int {
             return this.actualMoney;
+        }
+
+        public function getMap(): Map {
+            return this.map;
         }
 
         public function setScreen(screen: LevelScreen): void {
