@@ -1,3 +1,5 @@
 <TextureAtlas imagePath="enemies.png">
-	<SubTexture name="enemies/stage_one/glaq.png" x="0" y="0" width="35" height="28"/>
+	<SubTexture name="enemies/stage_one/glaq.png" x="44" y="0" width="35" height="28"/>
+	<SubTexture name="enemies/stage_one/glaqnax_blood_knight.png" x="0" y="0" width="42" height="44"/>
+	<SubTexture name="enemies/stage_one/spawn_of_zax.png" x="44" y="30" width="23" height="30"/>
 </TextureAtlas>

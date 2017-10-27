@@ -4,6 +4,8 @@ package td.levels.stage.one {
 
     import td.enemies.Enemy;
     import td.enemies.Glaq;
+    import td.enemies.GlaqnaxBloodKnight;
+    import td.enemies.SpawnOfZax;
     import td.levels.*;
     import td.Context;
     import td.constants.TextIds;
@@ -38,7 +40,7 @@ package td.levels.stage.one {
             enemies.push(new Glaq(path, pathOffset, 5.0));
             enemies.push(new Glaq(path, pathOffset, 7.0));
             enemies.push(new Glaq(path, pathOffset, 9.0));
-
+            
             return enemies;
         }
 
