@@ -3,7 +3,7 @@ package td.player {
     public class Player {
 
         // TODO: change on release to 1
-        private var currentLevel: int = 9;
+        private var currentLevel: int = 2;
 
         public function Player() {
 

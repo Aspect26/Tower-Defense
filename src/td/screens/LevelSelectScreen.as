@@ -15,7 +15,6 @@ package td.screens {
 
     public class LevelSelectScreen extends Sprite {
         private var backButton: TextButton;
-        private var titleText: String;
         private var introTextField: TextField;
 
         public function LevelSelectScreen()
@@ -68,7 +67,7 @@ package td.screens {
                             onLevelSelected, {'level': level * stage});
                     button.x = 150 + level * (button.width + 10);
                     button.y = 100 + stage * (button.height + 10);
-                    button.setEnable(Context.game.player.getUnlockedLevels() >= stage * level);
+                    button.setEnable(Context.game.player.getUnlockedLevels() >= level + ((stage - 1 ) * 3));
                     this.addChild(button);
                 }
             }
