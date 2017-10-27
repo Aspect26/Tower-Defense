@@ -112,15 +112,14 @@ package td
 				"assets/sprites.png",
 				"assets/sprites.xml",
 
+				"assets/levels/stage1/tiles.png",
+				"assets/levels/stage1/tiles.xml",
                 "assets/levels/stage1/level1.png",
                 "assets/levels/stage1/level1.xml",
                 "assets/levels/stage1/level2.png",
                 "assets/levels/stage1/level2.xml",
                 "assets/levels/stage1/level3.png",
                 "assets/levels/stage1/level3.xml",
-
-                "assets/stage_one_tiles.png",
-                "assets/stage_one_tiles.xml",
 
                 "assets/towers.png",
                 "assets/towers.xml"
