@@ -12,7 +12,7 @@ package td.levels.stage.one {
         protected const mapFile: Class;
 
         public function LevelTwo() {
-            super(Images.S1L2_BACKGROUND, Context.text(TextIds.Stage1Level2Intro));
+            super(Context.text(TextIds.Stage1Level2Intro));
         }
 
         protected override function createMap(): Map {

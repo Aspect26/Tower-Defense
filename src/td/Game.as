@@ -109,11 +109,11 @@ package td
 				loadProgress,
 				"assets/menu-background.png",
 				"assets/menu-background.xml",
-				"assets/sprites.png",
-				"assets/sprites.xml",
 
 				"assets/levels/stage1/tiles.png",
 				"assets/levels/stage1/tiles.xml",
+                "assets/levels/stage1/enemies.png",
+                "assets/levels/stage1/enemies.xml",
                 "assets/levels/stage1/level1.png",
                 "assets/levels/stage1/level1.xml",
                 "assets/levels/stage1/level2.png",

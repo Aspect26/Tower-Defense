@@ -5,8 +5,6 @@ package td.screens {
 
     import flash.events.Event;
 
-    import io.arkeus.tiled.TiledLayer;
-
     import io.arkeus.tiled.TiledMap;
     import io.arkeus.tiled.TiledTile;
     import io.arkeus.tiled.TiledTileLayer;
@@ -27,6 +25,7 @@ package td.screens {
     import td.buildings.WatchTower;
     import td.constants.Colors;
     import td.levels.Level;
+    import td.levels.LevelEnemyData;
     import td.map.Map;
     import td.states.BuyingTowerState;
     import td.states.IntroState;
@@ -38,7 +37,6 @@ package td.screens {
 
     public class LevelScreen extends Sprite
     {
-        private var backgroundPath: String;
         private var introText: String;
 
         private var introTextField: TextField;
@@ -56,7 +54,6 @@ package td.screens {
             addEventListener(TouchEvent.TOUCH, onTouch);
             this.level = level;
             this.level.setScreen(this);
-            this.backgroundPath = level.getBackgroundPath();
             this.introText = level.getIntroText();
         }
 
@@ -125,6 +122,7 @@ package td.screens {
             this.state = new NormalState();
             this.removeChild(introTextField);
             this.drawMap();
+            this.insertEnemies();
             this.addChild(watchTowerButton);
             this.addChild(rockTowerButton);
             this.addChild(cannonTowerButton);
@@ -155,6 +153,16 @@ package td.screens {
             }
         }
 
+        private function insertEnemies(): void {
+            var enemies: Vector.<LevelEnemyData> = this.level.getEnemies();
+            for (var i: int = 0; i < enemies.length; ++i) {
+                var enemy: LevelEnemyData = enemies[i];
+                this.addChild(enemy.enemy);
+                // TODO: this should be called on correct time
+                enemy.enemy.start();
+            }
+        }
+
         private function newTowerClicked(event): void {
             // TODO: refactor this method
             var tower: Tower = event.currentTarget.getNewTower();
@@ -179,7 +187,6 @@ package td.screens {
         private function onTouch(event: TouchEvent): void {
             var touch: Touch = event.getTouch(Context.stage);
             if (touch) {
-                trace(touch.phase);
                 switch (touch.phase) {
                     case TouchPhase.HOVER:
                     case TouchPhase.MOVED:

@@ -1,8 +1,8 @@
 package td.levels.stage.one {
 
+    import td.enemies.Glaq;
     import td.levels.*;
     import td.Context;
-    import td.constants.Images;
     import td.constants.TextIds;
     import td.map.Map;
 
@@ -12,7 +12,7 @@ package td.levels.stage.one {
         protected const mapFile: Class;
 
         public function LevelOne() {
-            super(Images.S1L1_BACKGROUND, Context.text(TextIds.Stage1Level1Intro));
+            super(Context.text(TextIds.Stage1Level1Intro));
         }
 
         protected override function createMap(): Map {
@@ -23,6 +23,14 @@ package td.levels.stage.one {
             map.setRectangleOccupied(30, 19, 6, 7);
 
             return map;
+        }
+
+        protected override function createEnemies(): Vector.<LevelEnemyData> {
+            var enemies: Vector.<LevelEnemyData> = Vector.<LevelEnemyData>([]);
+
+            enemies.push(new LevelEnemyData(new Glaq(this.getEnemyPath(), this.getPathOffset()), 1));
+
+            return enemies;
         }
 
     }
