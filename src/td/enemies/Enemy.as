@@ -11,52 +11,63 @@ package td.enemies {
 
         private static const NEW_PATH_POINT_LAMBDA: Number = 3;
 
+        public var onReachedEnd: Function;
+
         private var image: Image;
         private var path: Vector.<Point>;
         private var speedFactor: Number;
         private var currentPathIndex: int;
         private var currentPosition: Point;
         private var pathOffset: Point;
+        private var timeOffset: Number;
 
-        public function Enemy(image: Image, path: Vector.<Point>, pathOffset: Point, speedFactor: Number) {
+        public function Enemy(image: Image, path: Vector.<Point>, pathOffset: Point, timeOffset: Number, speedFactor: Number) {
             this.image = image;
             this.path = path;
             this.pathOffset = pathOffset;
             this.speedFactor = speedFactor;
+            this.timeOffset = timeOffset;
             this.currentPathIndex = 1;
             addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
         }
 
         private function onAddedToStage(event:* = null): void {
             removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
-            setPosition(this.path[0]);
-            addChild(this.image);
-        }
-
-        public function advanceTime(time:Number): void {
-            this.checkIfNewPathIndex();
-            var movingDirection: Point = this.getMovingDirection();
-            movingDirection.normalize(0.9 * this.speedFactor);
-            this.moveBy(movingDirection);
-        }
-
-        public function start(): void {
+            setPosition(new Point(this.path[0].x, this.path[0].y));
             Starling.juggler.add(this);
         }
 
-        private function checkIfNewPathIndex(): void {
-            if (this.path.length - 1 == this.currentPathIndex) {
-                return;
-            }
-
-            var distance: Number = Math.abs(Point.distance(this.currentPosition, this.path[this.currentPathIndex]));
-            if (distance < NEW_PATH_POINT_LAMBDA) {
-                this.currentPathIndex++;
+        public function advanceTime(delta: Number): void {
+            if (this.timeOffset > 0) {
+                this.timeOffset -= delta;
+                if (this.timeOffset <= 0) {
+                    this.addChild(this.image);
+                }
+            } else {
+                this.checkIfNewPathIndex();
+                this.moveBy(this.getMovingDirection(delta));
             }
         }
 
-        private function getMovingDirection(): Point {
-            return this.path[this.currentPathIndex].subtract(this.currentPosition);
+        private function checkIfNewPathIndex(): void {
+            var distance: Number = Math.abs(Point.distance(this.currentPosition, this.path[this.currentPathIndex]));
+            if (distance < NEW_PATH_POINT_LAMBDA) {
+                if (this.path.length - 1 == this.currentPathIndex) {
+                    Starling.juggler.remove(this);
+                    this.removeChild(image);
+                    if (onReachedEnd) {
+                        onReachedEnd(this);
+                    }
+                } else {
+                    this.currentPathIndex++;
+                }
+            }
+        }
+
+        private function getMovingDirection(timeDelta: Number): Point {
+            var movingDirection: Point = this.path[this.currentPathIndex].subtract(this.currentPosition);
+            movingDirection.normalize(20.0 * timeDelta * this.speedFactor);
+            return movingDirection;
         }
 
         private function setPosition(position: Point): void {
@@ -66,12 +77,9 @@ package td.enemies {
         }
 
         private function moveBy(vector: Point): void {
-            // TODO: refactor these two functions (this and the above one)
             this.currentPosition.x += vector.x;
             this.currentPosition.y += vector.y;
-
-            this.x = this.currentPosition.x + this.pathOffset.x - this.width / 2;
-            this.y = this.currentPosition.y + this.pathOffset.y - this.height / 2;
+            this.setPosition(this.currentPosition);
         }
 
     }

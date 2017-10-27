@@ -24,8 +24,8 @@ package td.screens {
     import td.buildings.Tower;
     import td.buildings.WatchTower;
     import td.constants.Colors;
+    import td.enemies.Enemy;
     import td.levels.Level;
-    import td.levels.LevelEnemyData;
     import td.map.Map;
     import td.states.BuyingTowerState;
     import td.states.IntroState;
@@ -154,12 +154,10 @@ package td.screens {
         }
 
         private function insertEnemies(): void {
-            var enemies: Vector.<LevelEnemyData> = this.level.getEnemies();
+            var enemies: Vector.<Enemy> = this.level.getEnemies();
             for (var i: int = 0; i < enemies.length; ++i) {
-                var enemy: LevelEnemyData = enemies[i];
-                this.addChild(enemy.enemy);
-                // TODO: this should be called on correct time
-                enemy.enemy.start();
+                var enemy: Enemy = enemies[i];
+                this.addChild(enemy);
             }
         }
 

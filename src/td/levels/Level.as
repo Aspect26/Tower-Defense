@@ -3,9 +3,9 @@ package td.levels {
 
     import io.arkeus.tiled.TiledMap;
     import io.arkeus.tiled.TiledObjectLayer;
-    import io.arkeus.tiled.TiledTileLayer;
 
     import td.buildings.Tower;
+    import td.enemies.Enemy;
     import td.map.Map;
     import td.screens.LevelScreen;
     import td.utils.Position;
@@ -14,7 +14,7 @@ package td.levels {
     public class Level {
 
         private var map: Map;
-        private var enemies: Vector.<LevelEnemyData>;
+        private var enemies: Vector.<Enemy>;
         private var introText: String;
         private var actualMoney: int;
 
@@ -31,11 +31,11 @@ package td.levels {
             throw new Error("The class Level is abstract and should not be instantiated!");
         }
 
-        protected virtual function createEnemies(): Vector.<LevelEnemyData> {
+        protected virtual function createEnemies(): Vector.<Enemy> {
             throw new Error("The class Level is abstract and should not be instantiated!");
         }
 
-        public function getEnemies(): Vector.<LevelEnemyData> {
+        public function getEnemies(): Vector.<Enemy> {
             return this.enemies;
         }
 

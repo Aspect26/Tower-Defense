@@ -1,5 +1,8 @@
 package td.levels.stage.one {
 
+    import flash.geom.Point;
+
+    import td.enemies.Enemy;
     import td.enemies.Glaq;
     import td.levels.*;
     import td.Context;
@@ -25,10 +28,16 @@ package td.levels.stage.one {
             return map;
         }
 
-        protected override function createEnemies(): Vector.<LevelEnemyData> {
-            var enemies: Vector.<LevelEnemyData> = Vector.<LevelEnemyData>([]);
+        protected override function createEnemies(): Vector.<Enemy> {
+            var enemies: Vector.<Enemy> = Vector.<Enemy>([]);
+            var path: Vector.<Point> = this.getEnemyPath();
+            var pathOffset: Point = this.getPathOffset();
 
-            enemies.push(new LevelEnemyData(new Glaq(this.getEnemyPath(), this.getPathOffset()), 1));
+            enemies.push(new Glaq(path, pathOffset, 1.0));
+            enemies.push(new Glaq(path, pathOffset, 3.0));
+            enemies.push(new Glaq(path, pathOffset, 5.0));
+            enemies.push(new Glaq(path, pathOffset, 7.0));
+            enemies.push(new Glaq(path, pathOffset, 9.0));
 
             return enemies;
         }
