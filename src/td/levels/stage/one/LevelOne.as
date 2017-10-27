@@ -1,8 +1,13 @@
 package td.levels.stage.one {
 
+    import flash.geom.Point;
+
+    import td.enemies.Enemy;
+    import td.enemies.Glaq;
+    import td.enemies.GlaqnaxBloodKnight;
+    import td.enemies.SpawnOfZax;
     import td.levels.*;
     import td.Context;
-    import td.constants.Images;
     import td.constants.TextIds;
     import td.map.Map;
 
@@ -12,7 +17,7 @@ package td.levels.stage.one {
         protected const mapFile: Class;
 
         public function LevelOne() {
-            super(Images.S1L1_BACKGROUND, Context.text(TextIds.Stage1Level1Intro));
+            super(Context.text(TextIds.Stage1Level1Intro));
         }
 
         protected override function createMap(): Map {
@@ -23,6 +28,20 @@ package td.levels.stage.one {
             map.setRectangleOccupied(30, 19, 6, 7);
 
             return map;
+        }
+
+        protected override function createEnemies(): Vector.<Enemy> {
+            var enemies: Vector.<Enemy> = Vector.<Enemy>([]);
+            var path: Vector.<Point> = this.getEnemyPath();
+            var pathOffset: Point = this.getPathOffset();
+
+            enemies.push(new Glaq(path, pathOffset, 1.0));
+            enemies.push(new Glaq(path, pathOffset, 3.0));
+            enemies.push(new Glaq(path, pathOffset, 5.0));
+            enemies.push(new Glaq(path, pathOffset, 7.0));
+            enemies.push(new Glaq(path, pathOffset, 9.0));
+            
+            return enemies;
         }
 
     }

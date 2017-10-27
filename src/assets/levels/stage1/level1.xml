@@ -1,3 +1,0 @@
-<TextureAtlas imagePath="level1.png">
-	<SubTexture name="stage1/level1.png" x="0" y="0" width="800" height="500"/>
-</TextureAtlas>

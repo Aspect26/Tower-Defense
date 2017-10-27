@@ -1,5 +1,11 @@
 package td.levels {
+    import flash.geom.Point;
+
+    import io.arkeus.tiled.TiledMap;
+    import io.arkeus.tiled.TiledObjectLayer;
+
     import td.buildings.Tower;
+    import td.enemies.Enemy;
     import td.map.Map;
     import td.screens.LevelScreen;
     import td.utils.Position;
@@ -8,15 +14,15 @@ package td.levels {
     public class Level {
 
         private var map: Map;
-        private var backgroundPath: String;
+        private var enemies: Vector.<Enemy>;
         private var introText: String;
         private var actualMoney: int;
 
         private var screen: LevelScreen;
 
-        public function Level(backgroundPath: String, introText: String, startMoney: int = 50) {
+        public function Level(introText: String, startMoney: int = 50) {
             this.map = this.createMap();
-            this.backgroundPath = backgroundPath;
+            this.enemies = this.createEnemies();
             this.introText = introText;
             this.actualMoney = startMoney;
         }
@@ -25,8 +31,12 @@ package td.levels {
             throw new Error("The class Level is abstract and should not be instantiated!");
         }
 
-        public function getBackgroundPath(): String {
-            return this.backgroundPath;
+        protected virtual function createEnemies(): Vector.<Enemy> {
+            throw new Error("The class Level is abstract and should not be instantiated!");
+        }
+
+        public function getEnemies(): Vector.<Enemy> {
+            return this.enemies;
         }
 
         public function getIntroText(): String {
@@ -43,6 +53,32 @@ package td.levels {
 
         public function getMap(): Map {
             return this.map;
+        }
+
+        public function getEnemyPath(): Vector.<Point> {
+            // TODO: cache this function
+            var map: TiledMap = this.map.getMapData();
+            for (var layerIndex: int = 0; layerIndex < map.layers.getAllLayers().length; ++layerIndex) {
+                var layer: TiledObjectLayer = map.layers.layers[layerIndex] as TiledObjectLayer;
+                if (layer == null) {
+                    continue;
+                }
+                return layer.getObjectByIndex(0).points;
+            }
+            return null;
+        }
+
+        public function getPathOffset(): Point {
+            // TODO: cache this function
+            var map: TiledMap = this.map.getMapData();
+            for (var layerIndex: int = 0; layerIndex < map.layers.getAllLayers().length; ++layerIndex) {
+                var layer: TiledObjectLayer = map.layers.layers[layerIndex] as TiledObjectLayer;
+                if (layer == null) {
+                    continue;
+                }
+                return new Point(layer.getObjectByIndex(0).x, layer.getObjectByIndex(0).y);
+            }
+            return null;
         }
 
         public function setScreen(screen: LevelScreen): void {
