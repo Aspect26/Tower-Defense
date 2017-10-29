@@ -20,6 +20,7 @@ package td.enemies {
         private var currentPosition: Point;
         private var pathOffset: Point;
         private var timeOffset: Number;
+        private var alive: Boolean;
 
         public function Enemy(image: Image, path: Vector.<Point>, pathOffset: Point, timeOffset: Number, speedFactor: Number) {
             this.image = image;
@@ -27,6 +28,7 @@ package td.enemies {
             this.pathOffset = pathOffset;
             this.speedFactor = speedFactor;
             this.timeOffset = timeOffset;
+            this.alive = false;
             this.currentPathIndex = 1;
             addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
         }
@@ -37,11 +39,26 @@ package td.enemies {
             Starling.juggler.add(this);
         }
 
+        public function getDistanceFrom(position: Point): int {
+            var y: int = this.y + this.width / 2;
+            var x: int = this.x + this.height / 2;
+            return Math.sqrt(Math.pow(y - position.y, 2) + Math.pow(x - position.x, 2));
+        }
+
+        public function getPosition(): Point {
+            return new Point(this.x + this.width / 2, this.y + this.height / 2);
+        }
+
+        public function isAlive(): Boolean {
+            return this.alive;
+        }
+
         public function advanceTime(delta: Number): void {
             if (this.timeOffset > 0) {
                 this.timeOffset -= delta;
                 if (this.timeOffset <= 0) {
                     this.addChild(this.image);
+                    this.alive = true;
                 }
             } else {
                 this.checkIfNewPathIndex();

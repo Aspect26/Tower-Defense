@@ -1,4 +1,6 @@
 package td.map {
+    import flash.geom.Point;
+
     import io.arkeus.tiled.TiledMap;
 
     import td.Context;
@@ -70,7 +72,7 @@ package td.map {
                     (y + height) * TILE_SIZE, Colors.OCCUPATION_OVERLAY, 0, 0, 0.2));
         }
 
-        public function addTower(tower: Tower, position: Position): Boolean {
+        public function addTower(tower: Tower, position: Point): Boolean {
             if (isRectangleEmpty(position, tower.getSize())) {
                 this.setRectangleOccupied(position.x, position.y, tower.getSize().width, tower.getSize().height);
                 return true;
@@ -79,7 +81,7 @@ package td.map {
             }
         }
 
-        private function isRectangleEmpty(position: Position, size: Size): Boolean {
+        private function isRectangleEmpty(position: Point, size: Size): Boolean {
             for (var i:int = position.x; i < size.width + position.x; ++i) {
                 for (var j:int = position.y; j < size.height + position.y; ++j) {
                     if (this.isTileOccupied(i, j)) {

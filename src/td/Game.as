@@ -121,8 +121,11 @@ package td
                 "assets/levels/stage1/level3.png",
                 "assets/levels/stage1/level3.xml",
 
-                "assets/towers.png",
-                "assets/towers.xml"
+                "assets/towers/towers.png",
+                "assets/towers/towers.xml",
+
+                "assets/bullets/bullets.png",
+                "assets/bullets/bullets.xml"
 			);
 
             // TODO: add player load

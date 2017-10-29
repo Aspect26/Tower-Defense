@@ -7,8 +7,8 @@ package td.levels {
     import td.buildings.Tower;
     import td.enemies.Enemy;
     import td.map.Map;
+    import td.missiles.SimpleMissile;
     import td.screens.LevelScreen;
-    import td.utils.Position;
     import td.utils.draw.Primitive;
 
     public class Level {
@@ -85,7 +85,7 @@ package td.levels {
             this.screen = screen;
         }
 
-        public function addTower(tower: Tower, position: Position): Boolean {
+        public function addTower(tower: Tower, position: Point): Boolean {
             if (this.map.addTower(tower, position)) {
                 this.addMoney(-tower.getCost());
                 return true;
@@ -97,6 +97,11 @@ package td.levels {
         public function addMoney(money: int): void {
             this.actualMoney += money;
             this.screen.setMoney(this.actualMoney);
+        }
+
+        public function createMissile(source: Tower, target: Enemy): void {
+            var missile: SimpleMissile = new SimpleMissile(new Point(source.x + source.width / 2, source.y + source.height / 2), source, target, source.getMissileImage());
+            this.screen.addMissile(missile);
         }
 
     }

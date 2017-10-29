@@ -1,0 +1,6 @@
+<TextureAtlas imagePath="bullets.png">
+	<SubTexture name="bullets/blue.png" x="14" y="0" width="12" height="7"/>
+	<SubTexture name="bullets/green.png" x="0" y="0" width="12" height="7"/>
+	<SubTexture name="bullets/red.png" x="0" y="9" width="12" height="7"/>
+	<SubTexture name="bullets/yellow.png" x="0" y="18" width="12" height="7"/>
+</TextureAtlas>

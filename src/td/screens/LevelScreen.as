@@ -4,6 +4,7 @@ package td.screens {
     import com.greensock.easing.Power0;
 
     import flash.events.Event;
+    import flash.geom.Point;
 
     import io.arkeus.tiled.TiledMap;
     import io.arkeus.tiled.TiledTile;
@@ -22,18 +23,19 @@ package td.screens {
     import td.buildings.CannonTower;
     import td.buildings.RockTower;
     import td.buildings.Tower;
+    import td.buildings.TowerDescriptor;
     import td.buildings.WatchTower;
     import td.constants.Colors;
     import td.enemies.Enemy;
     import td.levels.Level;
     import td.map.Map;
+    import td.missiles.MissileHitTargetEvent;
+    import td.missiles.SimpleMissile;
     import td.states.BuyingTowerState;
     import td.states.IntroState;
     import td.states.NormalState;
     import td.states.State;
     import td.ui.NewTowerButton;
-    import td.utils.Position;
-    import td.utils.draw.Primitive;
 
     public class LevelScreen extends Sprite
     {
@@ -41,6 +43,7 @@ package td.screens {
 
         private var introTextField: TextField;
         private var moneyTextField: TextField;
+
         private var watchTowerButton: NewTowerButton;
         private var rockTowerButton: NewTowerButton;
         private var cannonTowerButton: NewTowerButton;
@@ -98,9 +101,9 @@ package td.screens {
         }
 
         private function initializeTowerButtons(): void {
-            watchTowerButton = new NewTowerButton(new WatchTower(), 20, Context.stage.stageHeight - 90, newTowerClicked);
-            rockTowerButton = new NewTowerButton(new RockTower(), 100, Context.stage.stageHeight - 90, newTowerClicked);
-            cannonTowerButton = new NewTowerButton(new CannonTower(), 180, Context.stage.stageHeight - 90, newTowerClicked);
+            watchTowerButton = new NewTowerButton(WatchTower.getDescriptor(), 20, Context.stage.stageHeight - 90, newTowerClicked);
+            rockTowerButton = new NewTowerButton(RockTower.getDescriptor(), 100, Context.stage.stageHeight - 90, newTowerClicked);
+            cannonTowerButton = new NewTowerButton(CannonTower.getDescriptor(), 180, Context.stage.stageHeight - 90, newTowerClicked);
         }
 
         private function getIntroTextTime() : int {
@@ -127,6 +130,7 @@ package td.screens {
             this.addChild(rockTowerButton);
             this.addChild(cannonTowerButton);
             this.addChild(moneyTextField);
+            this.addEventListener(MissileHitTargetEvent.MISSILE_HIT_TARGET, onMissileHitTarget);
         }
 
         private function drawMap(): void {
@@ -163,23 +167,22 @@ package td.screens {
 
         private function newTowerClicked(event): void {
             // TODO: refactor this method
-            var tower: Tower = event.currentTarget.getNewTower();
-            if (tower.getCost() > this.level.getMoney()) {
+            var towerDescriptor: TowerDescriptor = event.currentTarget.getTowerDescriptor();
+            if (towerDescriptor.getCost() > this.level.getMoney()) {
                 return;
             }
 
-            this.state = new BuyingTowerState(tower);
-            this.addChild(this.level.getOccupationOverlay());
+            var newState: BuyingTowerState = new BuyingTowerState(towerDescriptor);
+            this.state = newState;
 
-            var towerImage: Image = (state as BuyingTowerState).getTowerImage();
-            var towerOverlay: Primitive = (state as BuyingTowerState).getTowerOverlay();
+            this.addChild(this.level.getOccupationOverlay());
+            this.addChild(newState.getTowerOverlay());
 
             var touch: Touch = event.getTouch(Context.stage);
-            var position: Position = new Position(touch.globalX - touch.globalX % Map.TILE_SIZE, touch.globalY - touch.globalY % Map.TILE_SIZE);
-            (state as BuyingTowerState).setPosition(position);
+            var position: Point = new Point(touch.globalX - touch.globalX % Map.TILE_SIZE, touch.globalY - touch.globalY % Map.TILE_SIZE);
+            newState.setPosition(position);
 
-            this.addChild(towerImage);
-            this.addChild(towerOverlay);
+            this.addChild(newState.getTowerImage());
         }
 
         private function onTouch(event: TouchEvent): void {
@@ -200,29 +203,44 @@ package td.screens {
         private function onHover(touch: Touch): void {
             if (state is BuyingTowerState) {
                 var buyingTowerState: BuyingTowerState = state as BuyingTowerState;
-                var position: Position = new Position(touch.globalX - touch.globalX % Map.TILE_SIZE, touch.globalY - touch.globalY % Map.TILE_SIZE);
+                // TODO: creating new object!
+                var position: Point = new Point(touch.globalX - touch.globalX % Map.TILE_SIZE, touch.globalY - touch.globalY % Map.TILE_SIZE);
                 buyingTowerState.setPosition(position);
             }
         }
 
         private function onClick(touch: Touch): void {
-            if (state is IntroState) {
+            if (this.state is IntroState) {
                 this.skipIntro();
-            } else if (state is BuyingTowerState) {
-                var tower: Tower = (state as BuyingTowerState).getTower();
-                var towerPosition: Position = new Position(touch.globalX / Map.TILE_SIZE, touch.globalY / Map.TILE_SIZE);
+            } else if (this.state is BuyingTowerState) {
+                var state: BuyingTowerState = this.state as BuyingTowerState;
+                var tower: Tower = state.instantiateTower(this.level);
+                var towerPosition: Point = new Point((int)(touch.globalX / Map.TILE_SIZE), (int)(touch.globalY / Map.TILE_SIZE));
                 if (!level.addTower(tower, towerPosition)) {
                     return;
                 }
 
                 this.removeChild(level.getOccupationOverlay());
-                this.removeChild((state as BuyingTowerState).getTowerOverlay());
-                state = new NormalState();
+                this.removeChild(state.getTowerOverlay());
+                this.removeChild(state.getTowerImage());
+                this.state = new NormalState();
+
+                tower.setPosition(new Point(towerPosition.x * Map.TILE_SIZE, towerPosition.y * Map.TILE_SIZE));
+                this.addChild(tower);
             }
+        }
+
+        public function onMissileHitTarget(event: MissileHitTargetEvent): void {
+            var missile: SimpleMissile = event.data as SimpleMissile;
+            this.removeChild(missile);
         }
 
         public function setMoney(money: int): void {
             this.moneyTextField.text = money + " €";
+        }
+
+        public function addMissile(missile: SimpleMissile): void {
+            this.addChild(missile);
         }
 
     }

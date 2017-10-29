@@ -1,43 +1,50 @@
 package td.states {
 
+    import flash.geom.Point;
+
     import starling.display.Image;
 
+    import td.Context;
+
     import td.buildings.Tower;
+    import td.buildings.TowerDescriptor;
     import td.constants.Colors;
+    import td.levels.Level;
     import td.map.Map;
-    import td.utils.Position;
+    import td.utils.draw.ImageUtils;
     import td.utils.draw.Primitive;
 
     public class BuyingTowerState extends State {
 
-        private var tower: Tower;
+        private var towerDescriptor: TowerDescriptor;
         private var towerImage: Image;
         private var towerOccupationOverlay: Primitive;
 
-        public function BuyingTowerState(tower: Tower) {
-            this.tower = tower;
-            this.towerImage = tower.getNewImage();
+        public function BuyingTowerState(towerDescriptor: TowerDescriptor) {
+            this.towerDescriptor = towerDescriptor;
             this.towerOccupationOverlay = new Primitive();
-            this.towerOccupationOverlay.rectangle(0, 0, tower.getSize().width * Map.TILE_SIZE, tower.getSize().height * Map.TILE_SIZE, Colors.PRIMARY, 0, 0, 0.25);
-        }
-
-        public function getTower(): Tower {
-            return this.tower
-        }
-
-        public function getTowerImage(): Image {
-            return this.towerImage;
+            this.towerOccupationOverlay.rectangle(0, 0, towerDescriptor.getSize().width * Map.TILE_SIZE, towerDescriptor.getSize().height * Map.TILE_SIZE, Colors.PRIMARY, 0, 0, 0.25);
+            this.towerImage = Context.newImage(towerDescriptor.getImagePath());
+            ImageUtils.resize(this.towerImage, towerDescriptor.getSize().width * Map.TILE_SIZE, towerDescriptor.getSize().height * Map.TILE_SIZE);
         }
 
         public function getTowerOverlay(): Primitive {
             return this.towerOccupationOverlay;
         }
 
-        public function setPosition(position: Position): void {
-            towerImage.x = position.x;
-            towerImage.y = position.y;
-            towerOccupationOverlay.x = position.x;
-            towerOccupationOverlay.y = position.y;
+        public function getTowerImage(): Image {
+            return this.towerImage;
+        }
+
+        public function setPosition(position: Point): void {
+            this.towerImage.x = position.x;
+            this.towerImage.y = position.y;
+            this.towerOccupationOverlay.x = position.x;
+            this.towerOccupationOverlay.y = position.y;
+        }
+
+        public function instantiateTower(level: Level): Tower {
+            return this.towerDescriptor.getNewInstance(level);
         }
 
     }
