@@ -28,6 +28,7 @@ package td.buildings {
         private var size: Size;
         private var level: Level;
         private var position: Point;
+        private var centeredPosition: Point;
 
         private var currentCooldown: Number;
 
@@ -64,6 +65,10 @@ package td.buildings {
             return this.cost;
         }
 
+        public function getDamage(): int {
+            return this.damage;
+        }
+
         public function getImagePath(): String {
             return this.imagePath;
         }
@@ -74,6 +79,7 @@ package td.buildings {
 
         public function setPosition(position: Point): void {
             this.position = position;
+            this.centeredPosition = new Point(this.position.x + this.width / 2, this.position.y + this.height / 2);
             this.x = position.x;
             this.y = position.y;
         }
@@ -90,7 +96,7 @@ package td.buildings {
                     if (!enemy.isAlive()) {
                         continue;
                     }
-                    var enemyDistance: int = enemy.getDistanceFrom(this.position);
+                    var enemyDistance: int = enemy.getDistanceFrom(this.centeredPosition);
                     if (enemyDistance < nearestEnemyDistance) {
                         nearestEnemy = enemy;
                         nearestEnemyDistance = enemyDistance;

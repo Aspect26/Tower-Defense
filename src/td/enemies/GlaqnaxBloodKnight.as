@@ -7,7 +7,7 @@ package td.enemies {
     public class GlaqnaxBloodKnight extends Enemy {
 
         public function GlaqnaxBloodKnight(path: Vector.<Point>, pathOffset: Point, timeOffset: Number) {
-            super(Context.newImage(Images.ENEMY_GLAQNAX_BLOOD_KNIGHT), path, pathOffset, timeOffset, 0.7);
+            super(Context.newImage(Images.ENEMY_GLAQNAX_BLOOD_KNIGHT), 25, 25, path, pathOffset, timeOffset, 0.7);
         }
 
     }

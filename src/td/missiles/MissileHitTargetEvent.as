@@ -3,10 +3,10 @@ package td.missiles {
 
     public class MissileHitTargetEvent extends Event {
 
-        public static const MISSILE_HIT_TARGET: String = "missileHitTarget";
+        public static const TYPE: String = "missileHitTarget";
 
         public function MissileHitTargetEvent(bubbles: Boolean, data: SimpleMissile) {
-            super(MISSILE_HIT_TARGET, bubbles, data);
+            super(TYPE, bubbles, data);
         }
 
     }

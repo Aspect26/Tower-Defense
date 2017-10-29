@@ -7,7 +7,7 @@ package td.enemies {
     public class Glaq extends Enemy {
 
         public function Glaq(path: Vector.<Point>, pathOffset: Point, timeOffset: Number) {
-            super(Context.newImage(Images.ENEMY_GLAQ), path, pathOffset, timeOffset, 1.0);
+            super(Context.newImage(Images.ENEMY_GLAQ), 9, 9, path, pathOffset, timeOffset, 1.0);
         }
 
     }

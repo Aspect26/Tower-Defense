@@ -20,10 +20,14 @@ package td.enemies {
         private var currentPosition: Point;
         private var pathOffset: Point;
         private var timeOffset: Number;
+        private var life: int;
+        private var moneyReward: int;
         private var alive: Boolean;
 
-        public function Enemy(image: Image, path: Vector.<Point>, pathOffset: Point, timeOffset: Number, speedFactor: Number) {
+        public function Enemy(image: Image, life: int, moneyReward: int, path: Vector.<Point>, pathOffset: Point, timeOffset: Number, speedFactor: Number) {
             this.image = image;
+            this.life = life;
+            this.moneyReward = moneyReward;
             this.path = path;
             this.pathOffset = pathOffset;
             this.speedFactor = speedFactor;
@@ -49,6 +53,10 @@ package td.enemies {
             return new Point(this.x + this.width / 2, this.y + this.height / 2);
         }
 
+        public function getMoneyReward(): int {
+            return this.moneyReward;
+        }
+
         public function isAlive(): Boolean {
             return this.alive;
         }
@@ -63,6 +71,14 @@ package td.enemies {
             } else {
                 this.checkIfNewPathIndex();
                 this.moveBy(this.getMovingDirection(delta));
+            }
+        }
+
+        public function hit(damage: int): void {
+            this.life -= damage;
+            if (this.life < 0) {
+                this.alive = false;
+                dispatchEvent(new EnemyDiedEvent(true, this));
             }
         }
 

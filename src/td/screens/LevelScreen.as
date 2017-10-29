@@ -27,6 +27,7 @@ package td.screens {
     import td.buildings.WatchTower;
     import td.constants.Colors;
     import td.enemies.Enemy;
+    import td.enemies.EnemyDiedEvent;
     import td.levels.Level;
     import td.map.Map;
     import td.missiles.MissileHitTargetEvent;
@@ -130,7 +131,8 @@ package td.screens {
             this.addChild(rockTowerButton);
             this.addChild(cannonTowerButton);
             this.addChild(moneyTextField);
-            this.addEventListener(MissileHitTargetEvent.MISSILE_HIT_TARGET, onMissileHitTarget);
+            this.addEventListener(MissileHitTargetEvent.TYPE, onMissileHitTarget);
+            this.addEventListener(EnemyDiedEvent.TYPE, onEnemyDied);
         }
 
         private function drawMap(): void {
@@ -232,7 +234,14 @@ package td.screens {
 
         public function onMissileHitTarget(event: MissileHitTargetEvent): void {
             var missile: SimpleMissile = event.data as SimpleMissile;
+            missile.hitTarget();
             this.removeChild(missile);
+        }
+
+        public function onEnemyDied(event: EnemyDiedEvent): void {
+            var enemy: Enemy = event.data as Enemy;
+            this.level.addMoney(enemy.getMoneyReward());
+            this.removeChild(enemy);
         }
 
         public function setMoney(money: int): void {

@@ -48,6 +48,10 @@ package td.missiles {
             }
         }
 
+        public function hitTarget(): void {
+            this.target.hit(this.source.getDamage());
+        }
+
         private function moveBy(directionVector: Point): void {
             this.currentPosition.x += directionVector.x;
             this.currentPosition.y += directionVector.y;
