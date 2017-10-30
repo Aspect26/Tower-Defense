@@ -11,7 +11,7 @@ package td.buildings {
         }
 
         public static function getDescriptor(): TowerDescriptor {
-            return new TowerDescriptor(CannonTower, 100, new Size(5, 5), 30, 130, 2.0, Images.TOWER_CANNON, Images.MISSILE_CANNON_TOWER);
+            return new TowerDescriptor(CannonTower, 100, new Size(3, 3), 10, 150, 2.0, Images.TOWER_CANNON, Images.MISSILE_CANNON_TOWER);
         }
 
     }

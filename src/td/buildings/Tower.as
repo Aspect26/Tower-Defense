@@ -79,7 +79,7 @@ package td.buildings {
 
         public function setPosition(position: Point): void {
             this.position = position;
-            this.centeredPosition = new Point(this.position.x + this.width / 2, this.position.y + this.height / 2);
+            this.centeredPosition = new Point(position.x + this.width / 2, position.y + this.height / 2);
             this.x = position.x;
             this.y = position.y;
         }

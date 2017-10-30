@@ -10,7 +10,7 @@ package td.buildings {
         }
 
         public static function getDescriptor(): TowerDescriptor {
-            return new TowerDescriptor(RockTower, 40, new Size(5, 5), 15, 130, 1.3, Images.TOWER_ROCK, Images.MISSILE_ROCK_TOWER);
+            return new TowerDescriptor(RockTower, 50, new Size(3, 3), 5, 130, 1.3, Images.TOWER_ROCK, Images.MISSILE_ROCK_TOWER);
         }
     }
 

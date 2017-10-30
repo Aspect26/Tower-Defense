@@ -6,9 +6,13 @@ package td.levels {
 
     import td.buildings.Tower;
     import td.enemies.Enemy;
+    import td.enemies.Glaq;
+    import td.enemies.GlaqnaxBloodKnight;
+    import td.enemies.SpawnOfZax;
     import td.map.Map;
     import td.missiles.SimpleMissile;
     import td.screens.LevelScreen;
+    import td.utils.VectorUtils;
     import td.utils.draw.Primitive;
 
     public class Level {
@@ -102,6 +106,39 @@ package td.levels {
         public function createMissile(source: Tower, target: Enemy): void {
             var missile: SimpleMissile = new SimpleMissile(new Point(source.x + source.width / 2, source.y + source.height / 2), source, target, source.getMissileImage());
             this.screen.addMissile(missile);
+        }
+
+        public static function addGlaqs(enemies: Vector.<Enemy>, startTime: Number, count: int, path: Vector.<Point>, pathOffset: Point): void {
+            for (var i: int = 0; i < count; ++i) {
+                enemies.push(new Glaq(path, pathOffset, startTime + i * 2));
+            }
+        }
+
+        public static function addSpawnsOfZax(enemies: Vector.<Enemy>, startTime: Number, count: int, path: Vector.<Point>, pathOffset: Point): void {
+            for (var i: int = 0; i < count; ++i) {
+                enemies.push(new SpawnOfZax(path, pathOffset, startTime + i * 2));
+            }
+        }
+
+        public static function addGlaqnaxxBloodKnights(enemies: Vector.<Enemy>, startTime: Number, count: int, path: Vector.<Point>, pathOffset: Point): void {
+            for (var i: int = 0; i < count; ++i) {
+                enemies.push(new GlaqnaxBloodKnight(path, pathOffset, startTime + i * 2));
+            }
+        }
+
+        public static function addWave(enemies: Vector.<Enemy>, startTime: Number, path: Vector.<Point>, pathOffset: Point, glaqs: int, spawns: int, bloodKnights: int): void {
+            var currentTime: int = startTime;
+            for (var i: int = 0; i < spawns; ++i, currentTime += 2) {
+                enemies.push(new SpawnOfZax(path, pathOffset, currentTime));
+            }
+
+            for (i = 0; i < glaqs; ++i, currentTime += 1.2) {
+                enemies.push(new Glaq(path, pathOffset, currentTime));
+            }
+
+            for (i = 0; i < bloodKnights; ++i, currentTime += 2) {
+                enemies.push(new GlaqnaxBloodKnight(path, pathOffset, currentTime));
+            }
         }
 
     }

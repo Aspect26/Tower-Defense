@@ -76,7 +76,7 @@ package td.enemies {
 
         public function hit(damage: int): void {
             this.life -= damage;
-            if (this.life < 0) {
+            if (this.life <= 0) {
                 this.alive = false;
                 dispatchEvent(new EnemyDiedEvent(true, this));
             }
@@ -99,7 +99,7 @@ package td.enemies {
 
         private function getMovingDirection(timeDelta: Number): Point {
             var movingDirection: Point = this.path[this.currentPathIndex].subtract(this.currentPosition);
-            movingDirection.normalize(20.0 * timeDelta * this.speedFactor);
+            movingDirection.normalize(30.0 * timeDelta * this.speedFactor);
             return movingDirection;
         }
 

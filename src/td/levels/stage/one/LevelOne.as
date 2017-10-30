@@ -3,9 +3,6 @@ package td.levels.stage.one {
     import flash.geom.Point;
 
     import td.enemies.Enemy;
-    import td.enemies.Glaq;
-    import td.enemies.GlaqnaxBloodKnight;
-    import td.enemies.SpawnOfZax;
     import td.levels.*;
     import td.Context;
     import td.constants.TextIds;
@@ -35,12 +32,20 @@ package td.levels.stage.one {
             var path: Vector.<Point> = this.getEnemyPath();
             var pathOffset: Point = this.getPathOffset();
 
-            enemies.push(new Glaq(path, pathOffset, 1.0));
-            enemies.push(new Glaq(path, pathOffset, 3.0));
-            enemies.push(new Glaq(path, pathOffset, 5.0));
-            enemies.push(new Glaq(path, pathOffset, 7.0));
-            enemies.push(new Glaq(path, pathOffset, 9.0));
-            
+            addWave(enemies, 5.0, path, pathOffset, 3, 0, 0);
+
+            addWave(enemies, 35.0, path, pathOffset, 6, 0, 0);
+
+            addWave(enemies, 70.0, path, pathOffset, 10, 1, 0);
+
+            addWave(enemies, 115.0, path, pathOffset, 25, 3, 0);
+
+            addWave(enemies, 180.0, path, pathOffset, 15, 20, 5);
+
+            addWave(enemies, 270.0, path, pathOffset, 20, 15, 10);
+
+            addWave(enemies, 360.0, path, pathOffset, 50, 30, 25);
+
             return enemies;
         }
 
