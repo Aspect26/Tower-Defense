@@ -1,7 +1,9 @@
 package td.screens {
 
     import com.greensock.TweenLite;
+    import com.greensock.easing.Elastic;
     import com.greensock.easing.Power0;
+    import com.greensock.easing.Power1;
 
     import flash.events.Event;
     import flash.geom.Point;
@@ -26,17 +28,22 @@ package td.screens {
     import td.buildings.TowerDescriptor;
     import td.buildings.WatchTower;
     import td.constants.Colors;
+    import td.constants.Effects;
+    import td.constants.Game;
+    import td.dropable.MoneySprite;
     import td.enemies.Enemy;
-    import td.enemies.EnemyDiedEvent;
+    import td.events.EnemyDiedEvent;
+    import td.events.MoneyPickedEvent;
     import td.levels.Level;
     import td.map.Map;
-    import td.missiles.MissileHitTargetEvent;
+    import td.events.MissileHitTargetEvent;
     import td.missiles.SimpleMissile;
     import td.states.BuyingTowerState;
     import td.states.IntroState;
     import td.states.NormalState;
     import td.states.State;
     import td.ui.NewTowerButton;
+    import td.utils.MathUtils;
 
     public class LevelScreen extends Sprite
     {
@@ -133,6 +140,7 @@ package td.screens {
             this.addChild(moneyTextField);
             this.addEventListener(MissileHitTargetEvent.TYPE, onMissileHitTarget);
             this.addEventListener(EnemyDiedEvent.TYPE, onEnemyDied);
+            this.addEventListener(MoneyPickedEvent.TYPE, onMoneyPicked);
         }
 
         private function drawMap(): void {
@@ -232,16 +240,28 @@ package td.screens {
             }
         }
 
-        public function onMissileHitTarget(event: MissileHitTargetEvent): void {
+        private function onMissileHitTarget(event: MissileHitTargetEvent): void {
             var missile: SimpleMissile = event.data as SimpleMissile;
             missile.hitTarget();
             this.removeChild(missile);
         }
 
-        public function onEnemyDied(event: EnemyDiedEvent): void {
+        private function onEnemyDied(event: EnemyDiedEvent): void {
             var enemy: Enemy = event.data as Enemy;
             this.level.addMoney(enemy.getMoneyReward());
-            this.removeChild(enemy);
+            this.dropMoney(enemy.getPosition());
+
+            TweenLite.to(enemy, Effects.TIME_ENEMY_DISAPPEAR_ON_DEATH, { ease: Power0.easeNone, alpha: 0.0 });
+            Starling.juggler.delayCall(this.removeChild, Effects.TIME_ENEMY_DISAPPEAR_ON_DEATH, enemy);
+        }
+
+        private function onMoneyPicked(event: MoneyPickedEvent): void {
+            var amount: int = event.data as int;
+            var coinSprite: MoneySprite = event.moneySprite;
+            this.level.addMoney(amount);
+            TweenLite.to(coinSprite, Effects.TIME_COIN_DISAPPEAR_ON_PICK, { ease: Power0.easeNone, scale: Effects.SCALE_COIN_ON_PICK });
+            TweenLite.to(coinSprite, Effects.TIME_COIN_DISAPPEAR_ON_PICK, { ease: Power0.easeNone, alpha: 0.0 });
+            Starling.juggler.delayCall(this.removeChild, Effects.TIME_COIN_DISAPPEAR_ON_PICK, coinSprite);
         }
 
         public function setMoney(money: int): void {
@@ -250,6 +270,17 @@ package td.screens {
 
         public function addMissile(missile: SimpleMissile): void {
             this.addChild(missile);
+        }
+
+        private function dropMoney(position: Point): void {
+            if (MathUtils.randomInt(1, 100) < Game.ADDITIONAL_MONEY_DROP_CHANCE) {
+                var moneySprite: Sprite = new MoneySprite(position.x, position.y);
+                const finalY: int = moneySprite.y - 40;
+                const finalX: int = moneySprite.x + 20;
+                this.addChild(moneySprite);
+                TweenLite.to(moneySprite, 1.5, { ease: Elastic.easeOut.config(1, 0.3), y: finalY });
+                TweenLite.to(moneySprite, 1.5, { ease: Power1.easeOut, x: finalX});
+            }
         }
 
     }

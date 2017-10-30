@@ -1,4 +1,5 @@
-package td.enemies {
+package td.events {
+    import td.enemies.*;
     import starling.events.Event;
 
     public class EnemyDiedEvent extends Event {

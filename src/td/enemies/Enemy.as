@@ -7,6 +7,8 @@ package td.enemies {
     import starling.display.Sprite;
     import starling.events.Event;
 
+    import td.events.EnemyDiedEvent;
+
     public class Enemy extends Sprite implements IAnimatable {
 
         private static const NEW_PATH_POINT_LAMBDA: Number = 3;

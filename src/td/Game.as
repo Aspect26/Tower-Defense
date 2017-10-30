@@ -125,7 +125,10 @@ package td
                 "assets/towers/towers.xml",
 
                 "assets/bullets/bullets.png",
-                "assets/bullets/bullets.xml"
+                "assets/bullets/bullets.xml",
+
+                "assets/miscellaneous/miscellaneous.png",
+                "assets/miscellaneous/miscellaneous.xml"
 			);
 
             // TODO: add player load

@@ -1,4 +1,5 @@
-package td.missiles {
+package td.events {
+    import td.missiles.*;
     import starling.events.Event;
 
     public class MissileHitTargetEvent extends Event {

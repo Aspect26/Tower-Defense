@@ -10,12 +10,13 @@ package td.missiles {
 
     import td.buildings.Tower;
     import td.enemies.Enemy;
+    import td.events.MissileHitTargetEvent;
     import td.utils.VectorUtils;
 
     public class SimpleMissile extends Sprite implements IAnimatable {
 
         private static var speed: Number = 100.0;
-        private static var hitDistance: Number = 15.0;
+        private static var hitDistance: Number = 25.0;
 
         private var source: Tower;
         private var target: Enemy;
