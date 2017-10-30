@@ -4,29 +4,35 @@ package td.levels {
     import io.arkeus.tiled.TiledMap;
     import io.arkeus.tiled.TiledObjectLayer;
 
+    import starling.events.EventDispatcher;
+
     import td.buildings.Tower;
     import td.enemies.Enemy;
     import td.enemies.Glaq;
     import td.enemies.GlaqnaxBloodKnight;
     import td.enemies.SpawnOfZax;
+    import td.events.LevelFinishedEvent;
     import td.map.Map;
     import td.missiles.SimpleMissile;
     import td.screens.LevelScreen;
-    import td.utils.VectorUtils;
     import td.utils.draw.Primitive;
 
     public class Level {
 
+        private var levelNumber: int;
         private var map: Map;
         private var enemies: Vector.<Enemy>;
         private var introText: String;
         private var actualMoney: int;
+        private var remainingEnemies: int;
 
         private var screen: LevelScreen;
 
-        public function Level(introText: String, startMoney: int = 50) {
+        public function Level(levelNumber: int, introText: String, startMoney: int = 50) {
+            this.levelNumber = levelNumber;
             this.map = this.createMap();
             this.enemies = this.createEnemies();
+            this.remainingEnemies = this.enemies.length;
             this.introText = introText;
             this.actualMoney = startMoney;
         }
@@ -57,6 +63,10 @@ package td.levels {
 
         public function getMap(): Map {
             return this.map;
+        }
+
+        public function getLevelNumber(): int {
+            return this.levelNumber;
         }
 
         public function getEnemyPath(): Vector.<Point> {
@@ -101,6 +111,14 @@ package td.levels {
         public function addMoney(money: int): void {
             this.actualMoney += money;
             this.screen.setMoney(this.actualMoney);
+        }
+
+        public function killEnemy(enemy: Enemy): void {
+            this.addMoney(enemy.getMoneyReward());
+            this.remainingEnemies--;
+            if (this.remainingEnemies == 0) {
+                this.screen.dispatchEvent(new LevelFinishedEvent(true, this.levelNumber));
+            }
         }
 
         public function createMissile(source: Tower, target: Enemy): void {

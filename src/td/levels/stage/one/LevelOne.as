@@ -14,7 +14,7 @@ package td.levels.stage.one {
         protected const mapFile: Class;
 
         public function LevelOne() {
-            super(Context.text(TextIds.Stage1Level1Intro));
+            super(1, Context.text(TextIds.Stage1Level1Intro));
         }
 
         protected override function createMap(): Map {

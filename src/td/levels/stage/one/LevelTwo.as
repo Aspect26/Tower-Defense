@@ -1,8 +1,10 @@
 package td.levels.stage.one {
 
+    import flash.geom.Point;
+
+    import td.enemies.Enemy;
     import td.levels.*;
     import td.Context;
-    import td.constants.Images;
     import td.constants.TextIds;
     import td.map.Map;
 
@@ -12,7 +14,7 @@ package td.levels.stage.one {
         protected const mapFile: Class;
 
         public function LevelTwo() {
-            super(Context.text(TextIds.Stage1Level2Intro));
+            super(2, Context.text(TextIds.Stage1Level2Intro), 200);
         }
 
         protected override function createMap(): Map {
@@ -25,6 +27,16 @@ package td.levels.stage.one {
             map.setRectangleOccupied(28, 18, 12, 5);
 
             return map;
+        }
+
+        protected override function createEnemies(): Vector.<Enemy> {
+            var enemies: Vector.<Enemy> = Vector.<Enemy>([]);
+            var path: Vector.<Point> = this.getEnemyPath();
+            var pathOffset: Point = this.getPathOffset();
+
+            addWave(enemies, 5.0, path, pathOffset, 2, 0, 0);
+
+            return enemies;
         }
 
     }

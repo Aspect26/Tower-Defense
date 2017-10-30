@@ -11,7 +11,7 @@ package td.player {
 
         public function finishedLevel(level: int): void {
             if (level == currentLevel) {
-                this.currentLevel ++;
+                this.currentLevel++;
             }
         }
 

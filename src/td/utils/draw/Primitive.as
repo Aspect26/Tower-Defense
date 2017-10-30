@@ -57,16 +57,22 @@ package td.utils.draw
 		}
 		
 		public function rectangle(x1: Number, y1: Number, x2: Number, y2: Number, color: uint = 0, thickness: int = -1, lineColor: uint = 0, alpha: Number = 1) : Rectangle {
-			var r: Rectangle = new Rectangle(x2 - x1, y2 - y1, color, lineColor, thickness);
-			r.x = x1;
-			r.y = y1;
-			r.alpha = alpha;
+			var r: Rectangle = createRectangle(x1, y1, x2, y2, color, thickness, lineColor, alpha);
 			addChild(r);
 			
 			r.touchable = this.touchable;
 			return r;
 		}
-		
+
+        public static function createRectangle(x1: Number, y1: Number, x2: Number, y2: Number, color: uint = 0, thickness: int = -1, lineColor: uint = 0, alpha: Number = 1) : Rectangle {
+            var r: Rectangle = new Rectangle(x2 - x1, y2 - y1, color, lineColor, thickness);
+            r.x = x1;
+            r.y = y1;
+            r.alpha = alpha;
+
+            return r;
+        }
+
 		public function text(x: int, y: int, fontSize: int, text: String, color: uint = 0) : TextField {
 			var t: TextField = new TextField(text.length * 20, fontSize * 2, text, new TextFormat("Verdana", fontSize, color));
 			t.x = x;

@@ -33,8 +33,10 @@ package td.screens {
     import td.dropable.MoneySprite;
     import td.enemies.Enemy;
     import td.events.EnemyDiedEvent;
+    import td.events.LevelFinishedEvent;
     import td.events.MoneyPickedEvent;
     import td.levels.Level;
+    import td.levels.LevelManager;
     import td.map.Map;
     import td.events.MissileHitTargetEvent;
     import td.missiles.SimpleMissile;
@@ -44,6 +46,7 @@ package td.screens {
     import td.states.State;
     import td.ui.NewTowerButton;
     import td.utils.MathUtils;
+    import td.utils.draw.Primitive;
 
     public class LevelScreen extends Sprite
     {
@@ -141,6 +144,7 @@ package td.screens {
             this.addEventListener(MissileHitTargetEvent.TYPE, onMissileHitTarget);
             this.addEventListener(EnemyDiedEvent.TYPE, onEnemyDied);
             this.addEventListener(MoneyPickedEvent.TYPE, onMoneyPicked);
+            this.addEventListener(LevelFinishedEvent.TYPE, onLevelFinished);
         }
 
         private function drawMap(): void {
@@ -248,7 +252,7 @@ package td.screens {
 
         private function onEnemyDied(event: EnemyDiedEvent): void {
             var enemy: Enemy = event.data as Enemy;
-            this.level.addMoney(enemy.getMoneyReward());
+            this.level.killEnemy(enemy);
             this.dropMoney(enemy.getPosition());
 
             TweenLite.to(enemy, Effects.TIME_ENEMY_DISAPPEAR_ON_DEATH, { ease: Power0.easeNone, alpha: 0.0 });
@@ -262,6 +266,23 @@ package td.screens {
             TweenLite.to(coinSprite, Effects.TIME_COIN_DISAPPEAR_ON_PICK, { ease: Power0.easeNone, scale: Effects.SCALE_COIN_ON_PICK });
             TweenLite.to(coinSprite, Effects.TIME_COIN_DISAPPEAR_ON_PICK, { ease: Power0.easeNone, alpha: 0.0 });
             Starling.juggler.delayCall(this.removeChild, Effects.TIME_COIN_DISAPPEAR_ON_PICK, coinSprite);
+        }
+
+        private function onLevelFinished(event: LevelFinishedEvent): void {
+            // TODO: play some victory sound
+            Starling.juggler.delayCall(this.finishLevel, 1.0, event.data);
+        }
+
+        private function finishLevel(levelNumber: int): void {
+            var blackOverlay: Primitive = Primitive.createRectangle(0, 0, Context.stage.stageWidth, Context.stage.stageHeight, Colors.BLACK, -1, 0, 0.0);
+            this.addChild(blackOverlay);
+            TweenLite.to(blackOverlay, Effects.TIME_LEVEL_BLACKOUT, { ease: Power0.easeNone, alpha: 1.0 });
+            Starling.juggler.delayCall(startNextLevel, Effects.TIME_LEVEL_BLACKOUT);
+            Context.game.player.finishedLevel(levelNumber);
+        }
+
+        private function startNextLevel(): void {
+            Context.screenManager.showScreen(new LevelScreen(LevelManager.createLevel(this.level.getLevelNumber() + 1)))
         }
 
         public function setMoney(money: int): void {
