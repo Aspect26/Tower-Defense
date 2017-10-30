@@ -77,6 +77,9 @@ package td.enemies {
         }
 
         public function hit(damage: int): void {
+            if (this.life <= 0) {
+                return;
+            }
             this.life -= damage;
             if (this.life <= 0) {
                 this.alive = false;

@@ -5,7 +5,7 @@ package td.constants {
         /**
          * Chance of dropping additional money from killed enemy (in percents)
          */
-        public static const ADDITIONAL_MONEY_DROP_CHANCE: int = 100;
+        public static const ADDITIONAL_MONEY_DROP_CHANCE: int = 20;
 
         /**
          * Minimum amount of money gained from picked coin dropped from killed enemy
