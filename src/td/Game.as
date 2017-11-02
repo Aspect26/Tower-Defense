@@ -145,7 +145,7 @@ package td
 			
 			// -> When the ratio equals '1', we are finished.
 			if (ratio >= 1.0){
-				Starling.juggler.delayCall( startGame, 0.3 );
+				Starling.juggler.delayCall(startGame, 0.3);
 				TweenLite.to(loadProgressBar, 1, { ease: Expo.easeInOut, alpha: 0 });				
 			}
 		}

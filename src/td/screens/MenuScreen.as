@@ -30,13 +30,12 @@ package td.screens
 	
 		public function MenuScreen()
 		{
-			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage); 
+			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 		}
 		
 		private function onAddedToStage(e: * = null) : void {
-			removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage); 
-			
-			background = new Sprite();
+			removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+            background = new Sprite();
 			background.x = Context.assets.stageWidth / 2;
 			background.y = Context.assets.stageHeight / 2;
 			background.width = 800;

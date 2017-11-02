@@ -15,7 +15,6 @@ package
 	[SWF(width="800", height="500", frameRate="60", backgroundColor="#0")]
 	public class Main extends Sprite 
 	{
-		
 		private var _starling:Starling;
 		
 		public function Main() 
@@ -49,22 +48,20 @@ package
 			
 			
 			//this should remain here, because, this value might change after inicializing starling, keep this
-			var stageWidth:int  = stage.stageWidth;
+			var stageWidth:int  = stage.fullScreenWidth;
 			var stageHeight:int = stage.stageHeight;
-			
-			this.graphics.drawRect(0, 0, stageWidth-1, stageHeight-1);
 			
 			// Scaling of the graphics...
 			stage.scaleMode = "noScale"; // StageScaleMode.NO_SCALE ... See: http://help.adobe.com/en_US/FlashPlatform/reference/actionscript/3/flash/display/StageScaleMode.html
 			
 			// How "width,y" coords of sprites are treated...
 			stage.align = "TL"; // StageAlign.TOP_LEFT ... See: http://help.adobe.com/en_US/FlashPlatform/reference/actionscript/3/flash/display/StageAlign.html
-			
+
 			// (true - useful on mobile devices)
 			Starling.multitouchEnabled = false; 
 			
 			Game.starter = this;
-			_starling = new Starling(Game, this.stage, new Rectangle(0, 0, stageWidth,  stageHeight));
+			_starling = new Starling(Game, this.stage, new Rectangle(0, 0, this.stage.stageWidth,  this.stage.stageHeight));
 			_starling.simulateMultitouch = false;
 			_starling.enableErrorChecking = false;
 			_starling.start();
