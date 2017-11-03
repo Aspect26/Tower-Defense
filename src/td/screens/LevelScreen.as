@@ -7,6 +7,7 @@ package td.screens {
 
     import flash.events.Event;
     import flash.geom.Point;
+    import flash.system.Capabilities;
 
     import io.arkeus.tiled.TiledMap;
     import io.arkeus.tiled.TiledTile;
@@ -46,50 +47,71 @@ package td.screens {
     import td.states.State;
     import td.ui.NewTowerButton;
     import td.utils.MathUtils;
+    import td.utils.Utils;
+    import td.utils.draw.ImageUtils;
     import td.utils.draw.Primitive;
 
     public class LevelScreen extends Sprite
     {
-        private var introText: String;
+        private var content: Sprite;
 
         private var introTextField: TextField;
         private var moneyTextField: TextField;
-
-        private var watchTowerButton: NewTowerButton;
-        private var rockTowerButton: NewTowerButton;
-        private var cannonTowerButton: NewTowerButton;
 
         private var level: Level;
         private var state: State;
 
         public function LevelScreen(level: Level)
         {
+            this.level = level;
+            this.level.setScreen(this);  // TODO: refactor -> level should not know about screen (use event maybe)
+
             addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
             addEventListener(TouchEvent.TOUCH, onTouch);
-            this.level = level;
-            this.level.setScreen(this);
-            this.introText = level.getIntroText();
         }
 
         private function onAddedToStage(event: * = null) : void {
             removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 
-            this.initialize();
             this.playIntro();
             Starling.juggler.delayCall(this.startLevel, this.getIntroTextTime());
         }
 
-        private function initialize() : void {
-            this.initializeIntroText();
-            this.initializeMoneyText();
-            this.initializeTowerButtons();
+        private function playIntro(): void {
+            this.state = new IntroState();
+
+            this.drawIntroTextField(this);
+
+            TweenLite.to(introTextField, getIntroTextTime(), { ease: Power0.easeNone, y: -introTextField.height });
+            TweenLite.to(introTextField, 5, { ease: Power0.easeNone, alpha: 1});
         }
 
-        private function initializeIntroText(): void {
-            var padding: int = 220;
-            var fontSize: int = 20;
+        private function startLevel() : void {
+            this.state = new NormalState();
+            this.removeChild(introTextField);
 
-            introTextField = new TextField(Context.stage.stageWidth - 2 * padding, 0, this.introText);
+            this.content = new Sprite();
+            this.addChild(content);
+
+            this.drawMap(this.content);
+            this.drawMoneyText(this.content);
+            this.drawTowerButtons(this.content);
+            this.drawEnemies(this.content);
+
+
+            this.addEventListener(MissileHitTargetEvent.TYPE, onMissileHitTarget);
+            this.addEventListener(EnemyDiedEvent.TYPE, onEnemyDied);
+            this.addEventListener(MoneyPickedEvent.TYPE, onMoneyPicked);
+            this.addEventListener(LevelFinishedEvent.TYPE, onLevelFinished);
+
+            ImageUtils.resizeSprite(this.content, Context.stage.stageWidth, Context.stage.stageHeight);
+        }
+
+        private function drawIntroTextField(target: Sprite): void {
+            var padding: int = 220;
+            var fontSize: int = Utils.getFontSize(10);
+
+            introTextField = new TextField(Context.stage.stageWidth - 2 * padding, 0, this.level.getIntroText());
             introTextField.format.color = Colors.WHITE;
             introTextField.format.size = fontSize;
             introTextField.autoSize = TextFieldAutoSize.VERTICAL;
@@ -97,11 +119,10 @@ package td.screens {
             introTextField.y = Context.stage.stageHeight;
             introTextField.alpha = 0;
 
-            TweenLite.to(introTextField, getIntroTextTime(), { ease: Power0.easeNone, y: -introTextField.height });
-            TweenLite.to(introTextField, 5, { ease: Power0.easeNone, alpha: 1});
+            target.addChild(introTextField);
         }
 
-        private function initializeMoneyText(): void {
+        private function drawMoneyText(target: Sprite): void {
             var fontSize: int = 20;
 
             moneyTextField = new TextField(10, 10, this.level.getMoney() + " €");
@@ -109,45 +130,16 @@ package td.screens {
             moneyTextField.format.size = fontSize;
             moneyTextField.autoSize = TextFieldAutoSize.BOTH_DIRECTIONS;
 
+            target.addChild(moneyTextField);
         }
 
-        private function initializeTowerButtons(): void {
-            watchTowerButton = new NewTowerButton(WatchTower.getDescriptor(), 20, Context.stage.stageHeight - 90, newTowerClicked);
-            rockTowerButton = new NewTowerButton(RockTower.getDescriptor(), 100, Context.stage.stageHeight - 90, newTowerClicked);
-            cannonTowerButton = new NewTowerButton(CannonTower.getDescriptor(), 180, Context.stage.stageHeight - 90, newTowerClicked);
+        private function drawTowerButtons(target: Sprite): void {
+            target.addChild(new NewTowerButton(WatchTower.getDescriptor(), 20, this.content.height - 90, newTowerClicked));
+            target.addChild(new NewTowerButton(RockTower.getDescriptor(), 100, this.content.height - 90, newTowerClicked));
+            target.addChild(new NewTowerButton(CannonTower.getDescriptor(), 180, this.content.height - 90, newTowerClicked));
         }
 
-        private function getIntroTextTime() : int {
-            var scrollPathLength: int = Context.stage.stageHeight + introTextField.height;
-            return scrollPathLength / 30;
-        }
-
-        private function playIntro(): void {
-            this.state = new IntroState();
-            this.addChild(introTextField);
-        }
-
-        private function skipIntro(): void {
-            Starling.juggler.removeDelayedCalls(this.startLevel);
-            this.startLevel();
-        }
-
-        private function startLevel() : void {
-            this.state = new NormalState();
-            this.removeChild(introTextField);
-            this.drawMap();
-            this.insertEnemies();
-            this.addChild(watchTowerButton);
-            this.addChild(rockTowerButton);
-            this.addChild(cannonTowerButton);
-            this.addChild(moneyTextField);
-            this.addEventListener(MissileHitTargetEvent.TYPE, onMissileHitTarget);
-            this.addEventListener(EnemyDiedEvent.TYPE, onEnemyDied);
-            this.addEventListener(MoneyPickedEvent.TYPE, onMoneyPicked);
-            this.addEventListener(LevelFinishedEvent.TYPE, onLevelFinished);
-        }
-
-        private function drawMap(): void {
+        private function drawMap(target: Sprite): void {
             var tiledMap: TiledMap = this.level.getMap().getMapData();
             for (var layerIndex: int = 0; layerIndex < tiledMap.layers.getAllLayers().length; ++layerIndex) {
                 var layer: TiledTileLayer = tiledMap.layers.layers[layerIndex] as TiledTileLayer;
@@ -164,19 +156,29 @@ package td.screens {
                             var image: Image = Context.newImage(tileData.image.source);
                             image.x = x * tiledMap.tileWidth;
                             image.y = y * tiledMap.tileHeight;
-                            addChild(image);
+                            target.addChild(image);
                         }
                     }
                 }
             }
         }
 
-        private function insertEnemies(): void {
+        private function drawEnemies(target: Sprite): void {
             var enemies: Vector.<Enemy> = this.level.getEnemies();
             for (var i: int = 0; i < enemies.length; ++i) {
                 var enemy: Enemy = enemies[i];
-                this.addChild(enemy);
+                target.addChild(enemy);
             }
+        }
+
+        private function getIntroTextTime() : int {
+            var scrollPathLength: int = Context.stage.stageHeight + introTextField.height;
+            return scrollPathLength / 30;
+        }
+
+        private function skipIntro(): void {
+            Starling.juggler.removeDelayedCalls(this.startLevel);
+            this.startLevel();
         }
 
         private function newTowerClicked(event): void {
@@ -189,14 +191,18 @@ package td.screens {
             var newState: BuyingTowerState = new BuyingTowerState(towerDescriptor);
             this.state = newState;
 
-            this.addChild(this.level.getOccupationOverlay());
-            this.addChild(newState.getTowerOverlay());
+            this.content.addChild(this.level.getOccupationOverlay());
+            this.content.addChild(newState.getTowerOverlay());
 
             var touch: Touch = event.getTouch(Context.stage);
-            var position: Point = new Point(touch.globalX - touch.globalX % Map.TILE_SIZE, touch.globalY - touch.globalY % Map.TILE_SIZE);
+
+            var yPos: int = this.getContentLocalY(touch.globalY);
+            var xPos: int = this.getContentLocalX(touch.globalX);
+
+            var position: Point = new Point(xPos - xPos % Map.TILE_SIZE, yPos - yPos% Map.TILE_SIZE);
             newState.setPosition(position);
 
-            this.addChild(newState.getTowerImage());
+            this.content.addChild(newState.getTowerImage());
         }
 
         private function onTouch(event: TouchEvent): void {
@@ -217,8 +223,11 @@ package td.screens {
         private function onHover(touch: Touch): void {
             if (state is BuyingTowerState) {
                 var buyingTowerState: BuyingTowerState = state as BuyingTowerState;
-                // TODO: creating new object!
-                var position: Point = new Point(touch.globalX - touch.globalX % Map.TILE_SIZE, touch.globalY - touch.globalY % Map.TILE_SIZE);
+
+                var yPos: int = this.getContentLocalY(touch.globalY);
+                var xPos: int = this.getContentLocalX(touch.globalX);
+
+                var position: Point = new Point(xPos - xPos % Map.TILE_SIZE, yPos - yPos % Map.TILE_SIZE);
                 buyingTowerState.setPosition(position);
             }
         }
@@ -229,25 +238,29 @@ package td.screens {
             } else if (this.state is BuyingTowerState) {
                 var state: BuyingTowerState = this.state as BuyingTowerState;
                 var tower: Tower = state.instantiateTower(this.level);
-                var towerPosition: Point = new Point((int)(touch.globalX / Map.TILE_SIZE), (int)(touch.globalY / Map.TILE_SIZE));
+
+                var yPos: int = touch.globalY / this.content.scaleY;
+                var xPos: int = touch.globalX / this.content.scaleX;
+
+                var towerPosition: Point = new Point((int)(xPos / Map.TILE_SIZE), (int)(yPos / Map.TILE_SIZE));
                 if (!level.addTower(tower, towerPosition)) {
                     return;
                 }
 
-                this.removeChild(level.getOccupationOverlay());
-                this.removeChild(state.getTowerOverlay());
-                this.removeChild(state.getTowerImage());
+                this.content.removeChild(level.getOccupationOverlay());
+                this.content.removeChild(state.getTowerOverlay());
+                this.content.removeChild(state.getTowerImage());
                 this.state = new NormalState();
 
                 tower.setPosition(new Point(towerPosition.x * Map.TILE_SIZE, towerPosition.y * Map.TILE_SIZE));
-                this.addChild(tower);
+                this.content.addChild(tower);
             }
         }
 
         private function onMissileHitTarget(event: MissileHitTargetEvent): void {
             var missile: SimpleMissile = event.data as SimpleMissile;
             missile.hitTarget();
-            this.removeChild(missile);
+            this.content.removeChild(missile);
         }
 
         private function onEnemyDied(event: EnemyDiedEvent): void {
@@ -256,7 +269,7 @@ package td.screens {
             this.dropMoney(enemy.getPosition());
 
             TweenLite.to(enemy, Effects.TIME_ENEMY_DISAPPEAR_ON_DEATH, { ease: Power0.easeNone, alpha: 0.0 });
-            Starling.juggler.delayCall(this.removeChild, Effects.TIME_ENEMY_DISAPPEAR_ON_DEATH, enemy);
+            Starling.juggler.delayCall(this.content.removeChild, Effects.TIME_ENEMY_DISAPPEAR_ON_DEATH, enemy);
         }
 
         private function onMoneyPicked(event: MoneyPickedEvent): void {
@@ -265,7 +278,7 @@ package td.screens {
             this.level.addMoney(amount);
             TweenLite.to(coinSprite, Effects.TIME_COIN_DISAPPEAR_ON_PICK, { ease: Power0.easeNone, scale: Effects.SCALE_COIN_ON_PICK });
             TweenLite.to(coinSprite, Effects.TIME_COIN_DISAPPEAR_ON_PICK, { ease: Power0.easeNone, alpha: 0.0 });
-            Starling.juggler.delayCall(this.removeChild, Effects.TIME_COIN_DISAPPEAR_ON_PICK, coinSprite);
+            Starling.juggler.delayCall(this.content.removeChild, Effects.TIME_COIN_DISAPPEAR_ON_PICK, coinSprite);
         }
 
         private function onLevelFinished(event: LevelFinishedEvent): void {
@@ -275,7 +288,7 @@ package td.screens {
 
         private function finishLevel(levelNumber: int): void {
             var blackOverlay: Primitive = Primitive.createRectangle(0, 0, Context.stage.stageWidth, Context.stage.stageHeight, Colors.BLACK, -1, 0, 0.0);
-            this.addChild(blackOverlay);
+            this.content.addChild(blackOverlay);
             TweenLite.to(blackOverlay, Effects.TIME_LEVEL_BLACKOUT, { ease: Power0.easeNone, alpha: 1.0 });
             Starling.juggler.delayCall(startNextLevel, Effects.TIME_LEVEL_BLACKOUT);
             Context.game.player.finishedLevel(levelNumber);
@@ -290,7 +303,7 @@ package td.screens {
         }
 
         public function addMissile(missile: SimpleMissile): void {
-            this.addChild(missile);
+            this.content.addChild(missile);
         }
 
         private function dropMoney(position: Point): void {
@@ -298,10 +311,18 @@ package td.screens {
                 var moneySprite: Sprite = new MoneySprite(position.x, position.y);
                 const finalY: int = moneySprite.y - 40;
                 const finalX: int = moneySprite.x + 20;
-                this.addChild(moneySprite);
+                this.content.addChild(moneySprite);
                 TweenLite.to(moneySprite, 1.5, { ease: Elastic.easeOut.config(1, 0.3), y: finalY });
                 TweenLite.to(moneySprite, 1.5, { ease: Power1.easeOut, x: finalX});
             }
+        }
+
+        private function getContentLocalY(yPos: int): int {
+            return yPos / this.content.scaleY;
+        }
+
+        private function getContentLocalX(xPos: int): int {
+            return xPos / this.content.scaleX;
         }
 
     }

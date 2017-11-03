@@ -5,7 +5,8 @@ package td.ui
 
 	import td.constants.Colors;
 	import td.constants.Fonts;
-	import td.utils.draw.Primitive;
+    import td.utils.Utils;
+    import td.utils.draw.Primitive;
 	
 	import starling.text.TextField;
 
@@ -19,17 +20,18 @@ package td.ui
 
 		private var enabled: Boolean = true;
 
-		public function TextButton(text: String, fontSize: int, width: int, border: int, onClick: Function, onClickArguments: Object = null)
+		public function TextButton(text: String, fontSize: int, width: int, onClick: Function, onClickArguments: Object = null)
 		{
 			setTouchable(true);
 			
 			this.onClickHandler = onClick;
             this.onClickArguments = onClickArguments;
-			
+
+			fontSize = Utils.getFontSize(fontSize);
 			textField = new TextField(width, fontSize + 10, text, new TextFormat(Fonts.PRIMARY, fontSize, Colors.BLACK));
 			textField.touchable = true;
 
-            borderRectangle = rectangle(0, 0, textField.width + 10, textField.height + 10, Colors.WHITE, border, Colors.PRIMARY);
+            borderRectangle = rectangle(0, 0, textField.width + 10, textField.height + 10, Colors.WHITE, 4, Colors.PRIMARY);
 			
 			textField.x = width / 2 - textField.width / 2;
 			textField.y = height / 2 - textField.height / 2;

@@ -55,7 +55,7 @@ package td.screens
         }
 
         private function setButtons(buttons: Array.<MenuTextButton>): void {
-            var buttonHeight: int = 50;
+            var buttonHeight: int = buttons[0].height + 10;
             var currentY: int = Context.stage.height / 2 - ((buttonHeight*buttons.length) / 2);
 
             for (var i: int = 0; i < buttons.length; ++i) {
