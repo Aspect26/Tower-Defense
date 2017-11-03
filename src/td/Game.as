@@ -12,6 +12,7 @@ package td
 
     import td.map.MapLoader;
     import td.music.MusicManager;
+    import td.music.SoundManager;
     import td.particles.ParticlesManager;
     import td.player.Player;
     import td.screens.MenuScreen;
@@ -90,6 +91,7 @@ package td
 			new ParticlesManager();
             new MapLoader();
             new MusicManager();
+            new SoundManager();
 			
 			// SETS LANGUAGE
 			Context.texts.setLanguage("eng");
@@ -140,7 +142,19 @@ package td
                     Music.HEROIC_DEMISE,
                     Music.BATTLE_THEME_A,
                     Music.IRELANDS_COAST,
-                    Music.THE_DARK_AMULET
+                    Music.THE_DARK_AMULET,
+
+                    Music.SOUND_BUTTON_CLICK,
+                    Music.SOUND_COIN_DROP,
+                    Music.SOUND_COIN_PICK,
+                    Music.SOUND_DEATH_BLOOD_KNIGHT,
+                    Music.SOUND_DEATH_GLAQ,
+                    Music.SOUND_DEATH_SPAWN,
+                    Music.SOUND_SHOT_1,
+                    Music.SOUND_SHOT_2,
+                    Music.SOUND_SHOT_3,
+                    Music.SOUND_SHOT_4,
+                    Music.SOUND_VICTORY
 			);
 
             // TODO: add player load
@@ -157,6 +171,7 @@ package td
 			
 			// -> When the ratio equals '1', we are finished.
 			if (ratio >= 1.0){
+                Context.soundManager.initialize();
 				Starling.juggler.delayCall(startGame, 0.3);
 				TweenLite.to(loadProgressBar, 1, { ease: Expo.easeInOut, alpha: 0 });				
 			}

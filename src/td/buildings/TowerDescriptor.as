@@ -1,11 +1,14 @@
 package td.buildings {
+    import flash.media.Sound;
+
     import td.levels.Level;
     import td.utils.Size;
 
     public class TowerDescriptor {
 
         private var imagePath: String;
-        private var missiliImagePath: String;
+        private var missileImagePath: String;
+        private var missileSound: Sound;
         private var cost: int;
         private var size: Size;
         private var damage: int;
@@ -13,7 +16,8 @@ package td.buildings {
         private var cooldown: Number;
         private var towerClass: Class;
 
-        public function TowerDescriptor(towerClass: Class, cost: int, size: Size, damage: int, range: int, cooldown: Number, imagePath: String, missileImagePath: String) {
+        public function TowerDescriptor(towerClass: Class, cost: int, size: Size, damage: int, range: int, cooldown: Number,
+                                        imagePath: String, missileImagePath: String, missileSound: Sound) {
             this.towerClass = towerClass;
             this.cost = cost;
             this.size = size;
@@ -21,7 +25,8 @@ package td.buildings {
             this.range = range;
             this.cooldown = cooldown;
             this.imagePath = imagePath;
-            this.missiliImagePath = missileImagePath;
+            this.missileImagePath = missileImagePath;
+            this.missileSound = missileSound;
         }
 
         public function getImagePath(): String {
@@ -29,7 +34,11 @@ package td.buildings {
         }
 
         public function getMissileImagePath(): String {
-            return this.missiliImagePath;
+            return this.missileImagePath;
+        }
+
+        public function getMissileSound(): Sound {
+            return this.missileSound;
         }
 
         public function getCost(): int {

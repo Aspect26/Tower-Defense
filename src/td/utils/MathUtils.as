@@ -131,13 +131,15 @@ package td.utils
 			return Math.sqrt((x1-x2) * (x1-x2) + (y1-y2)*(y1-y2));
 		}
 
-		public static function shuffleInPlace(data: Array): void {
+		public static function shuffleInPlace(data: Array): Array {
             for (var i: int = 0; i < data.length - 1; ++i) {
                 var newIndex: int = MathUtils.randomInt(i, data.length - 1);
                 var tmp = data[i];
                 data[i] = data[newIndex];
                 data[newIndex] = tmp;
             }
+
+            return data;
         }
 
 	}

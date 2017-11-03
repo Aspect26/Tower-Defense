@@ -3,8 +3,11 @@ package td.ui
     import starling.events.TouchEvent;
 	import starling.text.TextFormat;
 
-	import td.constants.Colors;
+    import td.Context;
+
+    import td.constants.Colors;
 	import td.constants.Fonts;
+    import td.music.SoundManager;
     import td.utils.Utils;
     import td.utils.draw.Primitive;
 	
@@ -53,6 +56,7 @@ package td.ui
                 if (onClickArguments) {
                     onClickHandler(onClickArguments);
                 } else {
+                    Context.soundManager.playSound(SoundManager.BUTTON_CLICK);
                     onClickHandler();
                 }
 			}

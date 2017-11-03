@@ -6,6 +6,8 @@ package td.levels {
 
     import starling.events.EventDispatcher;
 
+    import td.Context;
+
     import td.buildings.Tower;
     import td.enemies.Enemy;
     import td.enemies.Glaq;
@@ -14,6 +16,7 @@ package td.levels {
     import td.events.LevelFinishedEvent;
     import td.map.Map;
     import td.missiles.SimpleMissile;
+    import td.music.SoundManager;
     import td.screens.LevelScreen;
     import td.utils.draw.Primitive;
 
@@ -123,6 +126,7 @@ package td.levels {
 
         public function createMissile(source: Tower, target: Enemy): void {
             var missile: SimpleMissile = new SimpleMissile(new Point(source.x + source.width / 2, source.y + source.height / 2), source, target, source.getMissileImage());
+            Context.soundManager.playSound(source.getMissileSound());
             this.screen.addMissile(missile);
         }
 

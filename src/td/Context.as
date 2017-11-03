@@ -5,6 +5,7 @@ package td
 
     import td.map.MapLoader;
     import td.music.MusicManager;
+    import td.music.SoundManager;
     import td.screens.ScreenManager;
 	import starling.textures.Texture;
 	import starling.display.Image;
@@ -39,6 +40,9 @@ package td
 
 		/** Gateway to music manager */
 		public static var musicManager: MusicManager;
+
+        /** Gateway to sound manager */
+        public static var soundManager: SoundManager;
 		
 		/** Shortcut for values.v */
 		public static var v: * ;

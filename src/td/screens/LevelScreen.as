@@ -41,6 +41,7 @@ package td.screens {
     import td.map.Map;
     import td.events.MissileHitTargetEvent;
     import td.missiles.SimpleMissile;
+    import td.music.SoundManager;
     import td.states.BuyingTowerState;
     import td.states.IntroState;
     import td.states.NormalState;
@@ -283,7 +284,7 @@ package td.screens {
         }
 
         private function onLevelFinished(event: LevelFinishedEvent): void {
-            // TODO: play some victory sound
+            Context.soundManager.playSound(SoundManager.VICTORY);
             Starling.juggler.delayCall(this.finishLevel, 1.0, event.data);
         }
 

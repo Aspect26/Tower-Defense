@@ -9,6 +9,7 @@ package td.dropable {
     import td.constants.Images;
 
     import td.events.MoneyPickedEvent;
+    import td.music.SoundManager;
     import td.utils.MathUtils;
 
     import td.utils.draw.Primitive;
@@ -23,11 +24,13 @@ package td.dropable {
         }
 
         private function onAddedToStage(event: Event): void {
-            this.addChild(Context.newImage(Images.COIN))
+            this.addChild(Context.newImage(Images.COIN));
+            Context.soundManager.playSound(SoundManager.COIN_DROP);
         }
 
         public override function onClick(event: TouchEvent) : void {
             dispatchEvent(new MoneyPickedEvent(this, MathUtils.randomInt(Game.MONEY_DROP_MIN, Game.MONEY_DROP_MAX), true));
+            Context.soundManager.playSound(SoundManager.COIN_PICK);
         }
 
     }

@@ -1,11 +1,14 @@
 package td.enemies {
     import flash.geom.Point;
+    import flash.media.Sound;
 
     import starling.animation.IAnimatable;
     import starling.core.Starling;
     import starling.display.Image;
     import starling.display.Sprite;
     import starling.events.Event;
+
+    import td.Context;
 
     import td.events.EnemyDiedEvent;
 
@@ -16,6 +19,7 @@ package td.enemies {
         public var onReachedEnd: Function;
 
         private var image: Image;
+        private var deathSound: Sound;
         private var path: Vector.<Point>;
         private var speedFactor: Number;
         private var currentPathIndex: int;
@@ -26,8 +30,9 @@ package td.enemies {
         private var moneyReward: int;
         private var alive: Boolean;
 
-        public function Enemy(image: Image, life: int, moneyReward: int, path: Vector.<Point>, pathOffset: Point, timeOffset: Number, speedFactor: Number) {
+        public function Enemy(image: Image, deathSound: Sound, life: int, moneyReward: int, path: Vector.<Point>, pathOffset: Point, timeOffset: Number, speedFactor: Number) {
             this.image = image;
+            this.deathSound = deathSound;
             this.life = life;
             this.moneyReward = moneyReward;
             this.path = path;
@@ -83,6 +88,7 @@ package td.enemies {
             this.life -= damage;
             if (this.life <= 0) {
                 this.alive = false;
+                Context.soundManager.playSound(this.deathSound);
                 dispatchEvent(new EnemyDiedEvent(true, this));
             }
         }

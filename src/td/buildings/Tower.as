@@ -1,6 +1,7 @@
 package td.buildings {
 
     import flash.geom.Point;
+    import flash.media.Sound;
 
     import starling.animation.IAnimatable;
     import starling.core.Starling;
@@ -20,6 +21,7 @@ package td.buildings {
         private var image: Image;
         private var imagePath: String;
         private var missileImagePath: String;
+        private var missileSound: Sound;
 
         private var damage: int;
         private var cost: int;
@@ -36,6 +38,7 @@ package td.buildings {
             this.cost = towerDescriptor.getCost();
             this.imagePath = towerDescriptor.getImagePath();
             this.missileImagePath = towerDescriptor.getMissileImagePath();
+            this.missileSound = towerDescriptor.getMissileSound();
             this.image = Context.newImage(imagePath);
             this.damage = towerDescriptor.getDamage();
             this.cooldawn = towerDescriptor.getCooldown();
@@ -75,6 +78,10 @@ package td.buildings {
 
         public function getMissileImage(): Image {
             return Context.newImage(this.missileImagePath);
+        }
+
+        public function getMissileSound(): Sound {
+            return this.missileSound;
         }
 
         public function setPosition(position: Point): void {

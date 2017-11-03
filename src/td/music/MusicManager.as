@@ -12,7 +12,7 @@ package td.music {
         private const mainMenuMusic: Array.<Sound> = [createSound(Music.HEROIC_DEMISE)];
 
         private const levelIntroMusic: Sound = createSound(Music.BATTLE_THEME_A);
-        private const levelMusic: Array.<Sound> = [createSound(Music.THE_DARK_AMULET), createSound(Music.DARK_DESCENT),
+        private var levelMusic: Array.<Sound> = [createSound(Music.THE_DARK_AMULET), createSound(Music.DARK_DESCENT),
             createSound(Music.EPIC_BOSS_BATTLE), createSound(Music.HEROES_THEME), createSound(Music.IRELANDS_COAST)
         ];
 
@@ -30,9 +30,10 @@ package td.music {
         }
 
         public function playLevelMusic(): void {
-            var levelPlaylist: Array.<Sound> = [levelIntroMusic];
-            levelPlaylist.push(MathUtils.shuffle(this.levelMusic));
-            
+            this.levelMusic = MathUtils.shuffleInPlace(this.levelMusic);
+
+            var levelPlaylist: Array.<Sound> = [levelIntroMusic].concat(this.levelMusic);
+
             this.musicQueue.changePlaylist(levelPlaylist);
             this.musicQueue.startOver();
         }

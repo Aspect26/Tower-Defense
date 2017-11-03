@@ -3,11 +3,12 @@ package td.enemies {
 
     import td.Context;
     import td.constants.Images;
+    import td.music.SoundManager;
 
     public class SpawnOfZax extends Enemy {
 
         public function SpawnOfZax(path: Vector.<Point>, pathOffset: Point, timeOffset: Number) {
-            super(Context.newImage(Images.ENEMY_SPAWN_OF_ZAX), 28, 5, path, pathOffset, timeOffset, 1.3);
+            super(Context.newImage(Images.ENEMY_SPAWN_OF_ZAX), SoundManager.DEATH_SPAWN, 28, 5, path, pathOffset, timeOffset, 1.3);
         }
 
     }

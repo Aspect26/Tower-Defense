@@ -33,6 +33,7 @@ package td.music {
         }
 
         private function playNextSong(): void {
+            return;
             if (currentSound) {
                 currentSound.stop();
             }
