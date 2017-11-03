@@ -75,6 +75,7 @@ package td.screens {
 
             this.playIntro();
             Starling.juggler.delayCall(this.startLevel, this.getIntroTextTime());
+            Context.musicManager.playLevelMusic();
         }
 
         private function playIntro(): void {

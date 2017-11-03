@@ -8,7 +8,10 @@ package td
 	import flash.events.UncaughtErrorEvent;
 	import flash.system.LoaderContext;
 
+    import td.constants.Music;
+
     import td.map.MapLoader;
+    import td.music.MusicManager;
     import td.particles.ParticlesManager;
     import td.player.Player;
     import td.screens.MenuScreen;
@@ -86,6 +89,7 @@ package td
 			new Values();
 			new ParticlesManager();
             new MapLoader();
+            new MusicManager();
 			
 			// SETS LANGUAGE
 			Context.texts.setLanguage("eng");
@@ -106,29 +110,37 @@ package td
 			loadProgressBar.width = 0;
 			
 			Context.assets.loadAssets(
-				loadProgress,
-				"assets/menu-background.png",
-				"assets/menu-background.xml",
+                    loadProgress,
+                    "assets/menu-background.png",
+                    "assets/menu-background.xml",
 
-				"assets/levels/stage1/tiles.png",
-				"assets/levels/stage1/tiles.xml",
-                "assets/levels/stage1/enemies.png",
-                "assets/levels/stage1/enemies.xml",
-                "assets/levels/stage1/level1.png",
-                "assets/levels/stage1/level1.xml",
-                "assets/levels/stage1/level2.png",
-                "assets/levels/stage1/level2.xml",
-                "assets/levels/stage1/level3.png",
-                "assets/levels/stage1/level3.xml",
+                    "assets/levels/stage1/tiles.png",
+                    "assets/levels/stage1/tiles.xml",
+                    "assets/levels/stage1/enemies.png",
+                    "assets/levels/stage1/enemies.xml",
+                    "assets/levels/stage1/level1.png",
+                    "assets/levels/stage1/level1.xml",
+                    "assets/levels/stage1/level2.png",
+                    "assets/levels/stage1/level2.xml",
+                    "assets/levels/stage1/level3.png",
+                    "assets/levels/stage1/level3.xml",
 
-                "assets/towers/towers.png",
-                "assets/towers/towers.xml",
+                    "assets/towers/towers.png",
+                    "assets/towers/towers.xml",
 
-                "assets/bullets/bullets.png",
-                "assets/bullets/bullets.xml",
+                    "assets/bullets/bullets.png",
+                    "assets/bullets/bullets.xml",
 
-                "assets/miscellaneous/miscellaneous.png",
-                "assets/miscellaneous/miscellaneous.xml"
+                    "assets/miscellaneous/miscellaneous.png",
+                    "assets/miscellaneous/miscellaneous.xml",
+
+                    Music.DARK_DESCENT,
+                    Music.EPIC_BOSS_BATTLE,
+                    Music.HEROES_THEME,
+                    Music.HEROIC_DEMISE,
+                    Music.BATTLE_THEME_A,
+                    Music.IRELANDS_COAST,
+                    Music.THE_DARK_AMULET
 			);
 
             // TODO: add player load

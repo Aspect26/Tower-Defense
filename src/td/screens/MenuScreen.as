@@ -4,8 +4,12 @@ package td.screens
     import com.greensock.TweenLite;
 
 	import flash.events.Event;
+    import flash.media.Sound;
+    import flash.net.URLRequest;
 
-	import td.constants.Images;
+    import td.Context;
+
+    import td.constants.Images;
 	import td.constants.TextIds;
 	import td.levels.LevelManager;
 	import td.ui.MenuTextButton;
@@ -37,6 +41,8 @@ package td.screens
 
 			background.scale = 0;
             TweenLite.to(background, 1.5, { ease: Power4.easeInOut, scale: 1 });
+
+            Context.musicManager.playMainMenuMusicIfNotPlaying();
 		}
 
         private function setBackground(): void {

@@ -4,6 +4,7 @@ package td
 	import starling.display.Stage;
 
     import td.map.MapLoader;
+    import td.music.MusicManager;
     import td.screens.ScreenManager;
 	import starling.textures.Texture;
 	import starling.display.Image;
@@ -35,6 +36,9 @@ package td
 
         /** Gateway to map loading. */
         public static var mapLoader: MapLoader;
+
+		/** Gateway to music manager */
+		public static var musicManager: MusicManager;
 		
 		/** Shortcut for values.v */
 		public static var v: * ;

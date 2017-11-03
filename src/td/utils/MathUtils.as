@@ -130,6 +130,15 @@ package td.utils
 		public static function distance(x1: Number, y1: Number, x2: Number, y2: Number) : Number {
 			return Math.sqrt((x1-x2) * (x1-x2) + (y1-y2)*(y1-y2));
 		}
-		
-	}	
+
+		public static function shuffleInPlace(data: Array): void {
+            for (var i: int = 0; i < data.length - 1; ++i) {
+                var newIndex: int = MathUtils.randomInt(i, data.length - 1);
+                var tmp = data[i];
+                data[i] = data[newIndex];
+                data[newIndex] = tmp;
+            }
+        }
+
+	}
 }
