@@ -149,20 +149,24 @@ package td.screens {
                     // TODO: handle omg
                     continue;
                 }
-                for (var x: int = 0; x < layer.width; ++x) {
-                    for (var y: int = 0; y < layer.height; ++y) {
+                for (var y: int = 0; y < layer.height; ++y) {
+                    for (var x: int = 0; x < layer.width; ++x) {
                         var tileData: TiledTile = layer.data[x][y];
                         if (tileData == null) {
                             // TODO: handle omg
                         } else {
                             var image: Image = Context.newImage(tileData.image.source);
+                            var yOffset: int = -(image.height - Map.TILE_SIZE);
+                            // The yOffset is because of props which are larger than actual tiles. And the problem is,
+                            // that starling pivots image to TOP LEFT CORNER, while Tiled pivots at BOTTOM LEFT TILE.
                             image.x = x * tiledMap.tileWidth;
-                            image.y = y * tiledMap.tileHeight;
+                            image.y = y * tiledMap.tileHeight + yOffset;
                             target.addChild(image);
                         }
                     }
                 }
             }
+            trace("W: " + target.width + ", H:", target.height);
         }
 
         private function drawEnemies(target: Sprite): void {

@@ -118,6 +118,8 @@ package td
 
                     "assets/levels/stage1/tiles.png",
                     "assets/levels/stage1/tiles.xml",
+                    "assets/levels/stage1/props.png",
+                    "assets/levels/stage1/props.xml",
                     "assets/levels/stage1/enemies.png",
                     "assets/levels/stage1/enemies.xml",
                     "assets/levels/stage1/level1.png",

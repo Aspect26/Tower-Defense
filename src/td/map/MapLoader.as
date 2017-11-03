@@ -7,7 +7,9 @@ package td.map
     public class MapLoader
     {
         [Embed(source="../../assets/levels/stage1/tileset.tsx", mimeType="application/octet-stream")]
-        protected const stageOneTileset:Class;
+        protected const stageOneTileset: Class;
+        [Embed(source="../../assets/levels/stage1/props.tsx", mimeType="application/octet-stream")]
+        protected const stageOneProps: Class;
 
         protected const reader: TiledReader = new TiledReader();
 
@@ -15,6 +17,7 @@ package td.map
         {
             // we initialize reader to be ready to serve...
             reader.loadTileSetFromEmbedded("tileset.tsx", stageOneTileset);
+            reader.loadTileSetFromEmbedded("props.tsx", stageOneProps)
 
             // subscribe itself
             Context.mapLoader = this;
