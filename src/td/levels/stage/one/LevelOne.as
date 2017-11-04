@@ -20,9 +20,21 @@ package td.levels.stage.one {
         protected override function createMap(): Map {
             var map: Map = new Map(this.mapFile);
 
+            // PATH
             map.setRectangleOccupied(5, 0, 6, 19);
             map.setRectangleOccupied(11, 13, 25, 6);
             map.setRectangleOccupied(30, 19, 6, 7);
+
+            // PROPS
+            map.setRectangleOccupied(0, 0, 2, 24);
+            map.setRectangleOccupied(13, 0, 26, 2);
+            map.setRectangleOccupied(38, 2, 2, 10);
+            map.setRectangleOccupied(2, 23, 26, 2);
+
+            map.setRectangleOccupied(24, 2, 14, 2);
+            map.setRectangleOccupied(28, 4, 10, 3);
+            map.setRectangleOccupied(34, 7, 4, 2);
+            map.setRectangleOccupied(2, 20, 2, 3);
 
             return map;
         }

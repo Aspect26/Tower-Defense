@@ -166,7 +166,6 @@ package td.screens {
                     }
                 }
             }
-            trace("W: " + target.width + ", H:", target.height);
         }
 
         private function drawEnemies(target: Sprite): void {

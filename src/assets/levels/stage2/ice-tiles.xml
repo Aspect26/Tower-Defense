@@ -1,0 +1,16 @@
+<TextureAtlas imagePath="ice-tiles.png">
+	<SubTexture name="tiles/stage_two/tile_01.png" x="22" y="22" width="20" height="20"/>
+	<SubTexture name="tiles/stage_two/tile_02.png" x="44" y="44" width="20" height="20"/>
+	<SubTexture name="tiles/stage_two/tile_03.png" x="44" y="22" width="20" height="20"/>
+	<SubTexture name="tiles/stage_two/tile_04.png" x="44" y="0" width="20" height="20"/>
+	<SubTexture name="tiles/stage_two/tile_05.png" x="22" y="88" width="20" height="20"/>
+	<SubTexture name="tiles/stage_two/tile_06.png" x="22" y="66" width="20" height="20"/>
+	<SubTexture name="tiles/stage_two/tile_07.png" x="22" y="44" width="20" height="20"/>
+	<SubTexture name="tiles/stage_two/tile_08.png" x="44" y="66" width="20" height="20"/>
+	<SubTexture name="tiles/stage_two/tile_09.png" x="22" y="0" width="20" height="20"/>
+	<SubTexture name="tiles/stage_two/tile_10.png" x="0" y="88" width="20" height="20"/>
+	<SubTexture name="tiles/stage_two/tile_11.png" x="0" y="66" width="20" height="20"/>
+	<SubTexture name="tiles/stage_two/tile_12.png" x="0" y="44" width="20" height="20"/>
+	<SubTexture name="tiles/stage_two/tile_13.png" x="0" y="22" width="20" height="20"/>
+	<SubTexture name="tiles/stage_two/tile_14.png" x="0" y="0" width="20" height="20"/>
+</TextureAtlas>

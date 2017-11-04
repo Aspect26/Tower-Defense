@@ -111,7 +111,10 @@ package td
 			addChild(loadProgressBar);
 			loadProgressBar.width = 0;
 			
-			Context.assets.loadAssets(
+            // TODO: add player load
+            this.player = new Player();
+
+            Context.assets.loadAssets(
                     loadProgress,
                     "assets/menu-background.png",
                     "assets/menu-background.xml",
@@ -128,6 +131,11 @@ package td
                     "assets/levels/stage1/level2.xml",
                     "assets/levels/stage1/level3.png",
                     "assets/levels/stage1/level3.xml",
+
+                    "assets/levels/stage2/ice-tiles.png",
+                    "assets/levels/stage2/ice-tiles.xml",
+                    "assets/levels/stage2/ice-props.png",
+                    "assets/levels/stage2/ice-props.xml",
 
                     "assets/towers/towers.png",
                     "assets/towers/towers.xml",
@@ -157,11 +165,8 @@ package td
                     Music.SOUND_SHOT_3,
                     Music.SOUND_SHOT_4,
                     Music.SOUND_VICTORY
-			);
-
-            // TODO: add player load
-            this.player = new Player();
-		}
+            );
+        }
 		
 		
 		private function loadProgress(ratio:Number):void

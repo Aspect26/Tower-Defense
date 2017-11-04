@@ -59,7 +59,7 @@ package td.screens {
             for (var stage: int = 1; stage < 4; ++stage) {
                 for (var level: int = 1; level < 4; ++level) {
                     var button: TextButton =  new TextButton(Context.text(TextIds.Level) + " " +  level, 20, buttonWidth,
-                            onLevelSelected, {'level': level * stage});
+                            onLevelSelected, {'level': level + (3*(stage-1))});
                     button.x = buttonWidth + (level-1) * (buttonWidth + 15);
                     button.y = 50 + stage * (button.height + 10);
                     button.setEnable(Context.game.player.getUnlockedLevels() >= level + ((stage - 1 ) * 3));
