@@ -57,7 +57,7 @@ package
 
             var screenWidth:int  = this.stage.fullScreenWidth;
             var screenHeight:int = this.stage.fullScreenHeight;
-            var viewPort: Rectangle = new Rectangle(0, 0, screenWidth, screenHeight);
+            var viewPort: Rectangle = new Rectangle(0, 0, this.stage.stageWidth, this.stage.stageHeight);
 
 			Game.starter = this;
 			_starling = new Starling(Game, this.stage, viewPort);
