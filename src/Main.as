@@ -46,11 +46,6 @@ package
 			// default line style
 			this.graphics.lineStyle(1, 0xFFFFFF);
 			
-			
-			//this should remain here, because, this value might change after inicializing starling, keep this
-			var stageWidth:int  = stage.fullScreenWidth;
-			var stageHeight:int = stage.stageHeight;
-			
 			// Scaling of the graphics...
 			stage.scaleMode = "noScale"; // StageScaleMode.NO_SCALE ... See: http://help.adobe.com/en_US/FlashPlatform/reference/actionscript/3/flash/display/StageScaleMode.html
 			
@@ -58,10 +53,14 @@ package
 			stage.align = "TL"; // StageAlign.TOP_LEFT ... See: http://help.adobe.com/en_US/FlashPlatform/reference/actionscript/3/flash/display/StageAlign.html
 
 			// (true - useful on mobile devices)
-			Starling.multitouchEnabled = false; 
-			
+			Starling.multitouchEnabled = false;
+
+            var screenWidth:int  = this.stage.fullScreenWidth;
+            var screenHeight:int = this.stage.fullScreenHeight;
+            var viewPort: Rectangle = new Rectangle(0, 0, screenWidth, screenHeight);
+
 			Game.starter = this;
-			_starling = new Starling(Game, this.stage, new Rectangle(0, 0, this.stage.stageWidth,  this.stage.stageHeight));
+			_starling = new Starling(Game, this.stage, viewPort);
 			_starling.simulateMultitouch = false;
 			_starling.enableErrorChecking = false;
 			_starling.start();

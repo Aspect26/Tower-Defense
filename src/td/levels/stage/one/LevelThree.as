@@ -14,7 +14,7 @@ package td.levels.stage.one {
         protected const mapFile: Class;
 
         public function LevelThree() {
-            super(3, Context.text(TextIds.Stage1Level3Intro));
+            super(3, Context.text(TextIds.Stage1Level3Intro), 50);
         }
 
         protected override function createMap(): Map {
@@ -41,7 +41,17 @@ package td.levels.stage.one {
             var path: Vector.<Point> = this.getEnemyPath();
             var pathOffset: Point = this.getPathOffset();
 
-            addWave(enemies, 5.0, path, pathOffset, 2, 0, 0);
+            addWave(enemies, 5.0, path, pathOffset, 4);
+
+            addWave(enemies, 25.0, path, pathOffset, 5);
+
+            addWave(enemies, 40.0, path, pathOffset, 7);
+
+            addWave(enemies, 65.0, path, pathOffset, 7, 3);
+
+            addWave(enemies, 85.0, path, pathOffset, 10);
+
+            addWave(enemies, 110, path, pathOffset, 10, 0.8);
 
             return enemies;
         }
