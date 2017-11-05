@@ -119,7 +119,7 @@ package td.buildings {
                     if (!enemy.isAlive()) {
                         continue;
                     }
-                    var enemyDistance: int = enemy.getDistanceFrom(this.centeredPosition);
+                    var enemyDistance: int = enemy.getDistanceFrom(this.position.x + this.width / 2, this.position.y + this.height / 2);
                     if (enemyDistance < nearestEnemyDistance) {
                         nearestEnemy = enemy;
                         nearestEnemyDistance = enemyDistance;

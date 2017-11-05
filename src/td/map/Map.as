@@ -1,19 +1,15 @@
 package td.map {
+
     import flash.geom.Point;
-    import flash.utils.Dictionary;
 
     import io.arkeus.tiled.TiledMap;
 
     import starling.display.DisplayObject;
 
     import td.Context;
-
     import td.buildings.Tower;
-
     import td.constants.Colors;
-    import td.utils.Position;
     import td.utils.Size;
-
     import td.utils.draw.Primitive;
 
     public class Map {
@@ -23,7 +19,7 @@ package td.map {
         private static const HEIGHT: int = 25;
         private var occupiedTiles: Array;
         private var occupiedTilesOverlay: Primitive;
-        private var towerOccupationTiles: Object;
+        private var towerOccupationTiles: Array;
 
         private var mapData: TiledMap;
         private var map: Class;
@@ -45,7 +41,7 @@ package td.map {
             }
 
             this.occupiedTilesOverlay = new Primitive();
-            towerOccupationTiles = {};
+            towerOccupationTiles = [];
         }
 
         public function isTileOccupied(x: int, y: int): Boolean {
@@ -89,13 +85,18 @@ package td.map {
                 }
             }
 
-            this.occupiedTilesOverlay.removeChild(this.towerOccupationTiles[tower]);
+            for (i = 0; i < this.towerOccupationTiles.length; ++i) {
+                if (this.towerOccupationTiles[i][0] == tower) {
+                    this.occupiedTilesOverlay.removeChild(this.towerOccupationTiles[i][1]);
+                    this.towerOccupationTiles.removeAt(i);
+                }
+            }
         }
 
         public function addTower(tower: Tower, position: Point): Boolean {
             if (isRectangleEmpty(position, tower.getSize())) {
                 var towerOccupationOverlay: DisplayObject = this.setRectangleOccupied(position.x, position.y, tower.getSize().width, tower.getSize().height)
-                this.towerOccupationTiles[tower] = towerOccupationOverlay;
+                this.towerOccupationTiles.push([tower, towerOccupationOverlay]);
                 return true;
             } else {
                 return false;

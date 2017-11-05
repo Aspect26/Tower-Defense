@@ -44,7 +44,7 @@ package td.missiles {
             var movingDirection: Point = VectorUtils.getNormalizedDirection(currentPosition, target.getPosition(), time * speed);
             this.moveBy(movingDirection);
             this.rotation = Math.atan2(movingDirection.y, movingDirection.x);
-            if (target.getDistanceFrom(this.currentPosition) < hitDistance) {
+            if (target.getDistanceFromPosition(this.currentPosition) < hitDistance) {
                 dispatchEvent(new MissileHitTargetEvent(true, this));
             }
         }

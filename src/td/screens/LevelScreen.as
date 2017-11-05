@@ -209,8 +209,7 @@ package td.screens {
             var yPos: int = this.getContentLocalY(touch.globalY);
             var xPos: int = this.getContentLocalX(touch.globalX);
 
-            var position: Point = new Point(xPos - xPos % Map.TILE_SIZE, yPos - yPos% Map.TILE_SIZE);
-            newState.setPosition(position);
+            newState.setPosition(xPos - xPos % Map.TILE_SIZE, yPos - yPos% Map.TILE_SIZE);
 
             this.content.addChild(newState.getTowerImage());
         }
@@ -234,11 +233,13 @@ package td.screens {
             if (state is BuyingTowerState) {
                 var buyingTowerState: BuyingTowerState = state as BuyingTowerState;
 
-                var yPos: int = this.getContentLocalY(touch.globalY);
-                var xPos: int = this.getContentLocalX(touch.globalX);
+                var tower: TowerDescriptor = buyingTowerState.getTowerDescriptor();
+                var yPos: int = this.getContentLocalY(touch.globalY) - (tower.getSize().width * Map.TILE_SIZE) / 2;
+                var xPos: int = this.getContentLocalX(touch.globalX) - (tower.getSize().height * Map.TILE_SIZE) / 2;
 
-                var position: Point = new Point(xPos - xPos % Map.TILE_SIZE, yPos - yPos % Map.TILE_SIZE);
-                buyingTowerState.setPosition(position);
+                var x: int = xPos - xPos % Map.TILE_SIZE;
+                var y: int = yPos - yPos % Map.TILE_SIZE;
+                buyingTowerState.setPosition(x, y);
             }
         }
 
@@ -249,8 +250,8 @@ package td.screens {
                 var state: BuyingTowerState = this.state as BuyingTowerState;
                 var tower: Tower = state.instantiateTower(this.level);
 
-                var yPos: int = touch.globalY / this.content.scaleY;
-                var xPos: int = touch.globalX / this.content.scaleX;
+                var yPos: int = this.getContentLocalY(touch.globalY) - (tower.getSize().width * Map.TILE_SIZE) / 2;
+                var xPos: int = this.getContentLocalX(touch.globalX) - (tower.getSize().height * Map.TILE_SIZE) / 2;
 
                 var towerPosition: Point = new Point((int)(xPos / Map.TILE_SIZE), (int)(yPos / Map.TILE_SIZE));
                 if (!level.addTower(tower, towerPosition)) {

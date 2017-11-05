@@ -1,11 +1,8 @@
 package td.states {
 
-    import flash.geom.Point;
-
     import starling.display.Image;
 
     import td.Context;
-
     import td.buildings.Tower;
     import td.buildings.TowerDescriptor;
     import td.constants.Colors;
@@ -32,15 +29,19 @@ package td.states {
             return this.towerOccupationOverlay;
         }
 
+        public function getTowerDescriptor(): TowerDescriptor {
+            return this.towerDescriptor;
+        }
+
         public function getTowerImage(): Image {
             return this.towerImage;
         }
 
-        public function setPosition(position: Point): void {
-            this.towerImage.x = position.x;
-            this.towerImage.y = position.y;
-            this.towerOccupationOverlay.x = position.x;
-            this.towerOccupationOverlay.y = position.y;
+        public function setPosition(x: int, y: int): void {
+            this.towerImage.x = x;
+            this.towerImage.y = y;
+            this.towerOccupationOverlay.x = x;
+            this.towerOccupationOverlay.y = y;
         }
 
         public function instantiateTower(level: Level): Tower {
