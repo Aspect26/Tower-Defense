@@ -14,7 +14,7 @@ package td.levels.stage.one {
         protected const mapFile: Class;
 
         public function LevelTwo() {
-            super(2, Context.text(TextIds.Stage1Level2Intro), 200);
+            super(2, Context.text(TextIds.Stage1Level2Intro));
         }
 
         protected override function createMap(): Map {
@@ -45,7 +45,35 @@ package td.levels.stage.one {
             var path: Vector.<Point> = this.getEnemyPath();
             var pathOffset: Point = this.getPathOffset();
 
-            addWave(enemies, 5.0, path, pathOffset, 2, 0, 0);
+            addWave(enemies, 5.0, path, pathOffset, 3);
+
+            addWave(enemies, 25.0, path, pathOffset, 4);
+
+            addWave(enemies, 40.0, path, pathOffset, 4, 1);
+
+            addWave(enemies, 60.0, path, pathOffset, 7, 2);
+
+            addWave(enemies, 85.0, path, pathOffset, 10, 3);
+
+            addWave(enemies, 120.0, path, pathOffset, 0, 6);
+
+            addWave(enemies, 150.0, path, pathOffset, 0, 10);
+
+            addWave(enemies, 180.0, path, pathOffset, 0, 15);
+
+            addWave(enemies, 220.0, path, pathOffset, 20, 0, 0, 0.6);
+
+            addWave(enemies, 260.0, path, pathOffset, 10, 10, 0, 0.8);
+
+            addWave(enemies, 300.0, path, pathOffset, 0, 20, 0, 0.8);
+
+            addWave(enemies, 345.0, path, pathOffset, 0, 25, 0, 0.8);
+
+            addWave(enemies, 390.0, path, pathOffset, 0, 20, 0, 0.3);
+
+            addWave(enemies, 430.0, path, pathOffset, 0, 30, 0, 0.3);
+
+            addWave(enemies, 465.0, path, pathOffset, 0, 45, 0, 0.3);
 
             return enemies;
         }

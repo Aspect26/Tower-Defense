@@ -44,19 +44,29 @@ package td.levels.stage.one {
             var path: Vector.<Point> = this.getEnemyPath();
             var pathOffset: Point = this.getPathOffset();
 
-            addWave(enemies, 5.0, path, pathOffset, 3, 0, 0);
+            addWave(enemies, 5.0, path, pathOffset, 2);
 
-            addWave(enemies, 35.0, path, pathOffset, 6, 0, 0);
+            addWave(enemies, 18.0, path, pathOffset, 3);
 
-            addWave(enemies, 70.0, path, pathOffset, 10, 1, 0);
+            addWave(enemies, 33.0, path, pathOffset, 3, 1);
 
-            addWave(enemies, 115.0, path, pathOffset, 25, 3, 0);
+            addWave(enemies, 50.0, path, pathOffset, 5, 1);
 
-            addWave(enemies, 180.0, path, pathOffset, 15, 20, 5);
+            addWave(enemies, 66.0, path, pathOffset, 7, 1);
 
-            addWave(enemies, 270.0, path, pathOffset, 20, 15, 10);
+            addWave(enemies, 86.0, path, pathOffset, 3, 2);
 
-            addWave(enemies, 360.0, path, pathOffset, 50, 30, 25);
+            addWave(enemies, 101.0, path, pathOffset, 0, 4);
+
+            addWave(enemies, 120.0, path, pathOffset, 15, 0);
+
+            addWave(enemies, 150.0, path, pathOffset, 10, 5);
+
+            addWave(enemies, 180.0, path, pathOffset, 5, 15);
+
+            addWave(enemies, 225.0, path, pathOffset, 5, 25);
+
+            addWave(enemies, 290.0, path, pathOffset, 0, 40);
 
             return enemies;
         }
