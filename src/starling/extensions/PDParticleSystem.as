@@ -22,7 +22,7 @@ package starling.extensions
         
         // emitter configuration                            // .pex element name
         private var _emitterType:int;                       // emitterType
-        private var _emitterXVariance:Number;               // sourcePositionVariance width
+        private var _emitterXVariance:Number;               // sourcePositionVariance x
         private var _emitterYVariance:Number;               // sourcePositionVariance y
         private var _defaultDuration:Number;                // duration
         
@@ -43,7 +43,7 @@ package starling.extensions
         // gravity configuration
         private var _speed:Number;                          // speed
         private var _speedVariance:Number;                  // speedVariance
-        private var _gravityX:Number;                       // gravity width
+        private var _gravityX:Number;                       // gravity x
         private var _gravityY:Number;                       // gravity y
         private var _radialAcceleration:Number;             // radialAcceleration
         private var _radialAccelerationVariance:Number;     // radialAccelerationVariance
@@ -217,9 +217,9 @@ package starling.extensions
         
         private function parseConfig(config:XML):void
         {
-            _emitterXVariance = parseFloat(config.sourcePositionVariance.attribute("width"));
+            _emitterXVariance = parseFloat(config.sourcePositionVariance.attribute("x"));
             _emitterYVariance = parseFloat(config.sourcePositionVariance.attribute("y"));
-            _gravityX = parseFloat(config.gravity.attribute("width"));
+            _gravityX = parseFloat(config.gravity.attribute("x"));
             _gravityY = parseFloat(config.gravity.attribute("y"));
             _emitterType = getIntValue(config.emitterType);
             _lifespan = Math.max(0.01, getFloatValue(config.particleLifeSpan));

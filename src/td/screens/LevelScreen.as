@@ -7,7 +7,6 @@ package td.screens {
 
     import flash.events.Event;
     import flash.geom.Point;
-    import flash.system.Capabilities;
 
     import io.arkeus.tiled.TiledMap;
     import io.arkeus.tiled.TiledTile;
@@ -36,6 +35,8 @@ package td.screens {
     import td.events.EnemyDiedEvent;
     import td.events.LevelFinishedEvent;
     import td.events.MoneyPickedEvent;
+    import td.events.TowerRemoveRequest;
+    import td.events.TowerSelectedEvent;
     import td.levels.Level;
     import td.levels.LevelManager;
     import td.map.Map;
@@ -48,6 +49,7 @@ package td.screens {
     import td.states.State;
     import td.ui.NewTowerButton;
     import td.utils.MathUtils;
+    import td.utils.TowerSelection;
     import td.utils.Utils;
     import td.utils.draw.ImageUtils;
     import td.utils.draw.Primitive;
@@ -61,11 +63,13 @@ package td.screens {
 
         private var level: Level;
         private var state: State;
+        private var towerSelection: TowerSelection;
 
         public function LevelScreen(level: Level)
         {
             this.level = level;
             this.level.setScreen(this);  // TODO: refactor -> level should not know about screen (use event maybe)
+            this.towerSelection = new TowerSelection();
 
             addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
             addEventListener(TouchEvent.TOUCH, onTouch);
@@ -100,11 +104,12 @@ package td.screens {
             this.drawTowerButtons(this.content);
             this.drawEnemies(this.content);
 
-
             this.addEventListener(MissileHitTargetEvent.TYPE, onMissileHitTarget);
             this.addEventListener(EnemyDiedEvent.TYPE, onEnemyDied);
             this.addEventListener(MoneyPickedEvent.TYPE, onMoneyPicked);
             this.addEventListener(LevelFinishedEvent.TYPE, onLevelFinished);
+            this.addEventListener(TowerSelectedEvent.TYPE, onTowerSelected);
+            this.addEventListener(TowerRemoveRequest.TYPE, onTowerRemoveRequest);
 
             ImageUtils.resizeSprite(this.content, Context.stage.stageWidth, Context.stage.stageHeight);
         }
@@ -260,6 +265,8 @@ package td.screens {
                 tower.setPosition(new Point(towerPosition.x * Map.TILE_SIZE, towerPosition.y * Map.TILE_SIZE));
                 this.content.addChild(tower);
             }
+
+            this.unselectTower();
         }
 
         private function onMissileHitTarget(event: MissileHitTargetEvent): void {
@@ -289,6 +296,23 @@ package td.screens {
         private function onLevelFinished(event: LevelFinishedEvent): void {
             Context.soundManager.playSound(SoundManager.VICTORY);
             Starling.juggler.delayCall(this.finishLevel, 1.0, event.data);
+        }
+
+        private function onTowerSelected(event: TowerSelectedEvent): void {
+            this.content.addChild(this.towerSelection);
+            this.towerSelection.select(event.getTower());
+        }
+
+        private function onTowerRemoveRequest(event: TowerRemoveRequest): void {
+            var removingTower: Tower = event.getTower();
+            this.level.removeTower(removingTower);
+            this.content.removeChild(removingTower);
+            this.unselectTower();
+        }
+
+        private function unselectTower(): void {
+            this.towerSelection.unselect();
+            this.content.removeChild(this.towerSelection);
         }
 
         private function finishLevel(levelNumber: int): void {

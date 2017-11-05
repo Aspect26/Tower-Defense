@@ -21,6 +21,7 @@ package td.constants {
         public static const MISSILE_WATCH_TOWER: String = "bullets/yellow.png";
 
         public static const COIN: String = "miscellaneous/coin.png";
+        public static const CROSS: String = "miscellaneous/cross.png";
     }
 
 }

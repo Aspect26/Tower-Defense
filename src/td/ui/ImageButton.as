@@ -14,7 +14,7 @@ package td.ui
 		private var onClickHandler: Function;
 		private var image: Image;
 
-		public function ImageButton(imagePath: String, x: int, y: int, width: int, height: int, onClick: Function)
+		public function ImageButton(imagePath: String, x: int, y: int, width: int, height: int, onClick: Function, onlyImage: Boolean = false)
 		{
 			setTouchable(true);
 
@@ -25,7 +25,9 @@ package td.ui
 			ImageUtils.resize(this.image, width, height);
             this.onClickHandler = onClick;
 
-            rectangle(0, 0, width, height, Colors.WHITE, 2, Colors.PRIMARY);
+			if (!onlyImage) {
+                rectangle(0, 0, width, height, Colors.WHITE, 2, Colors.PRIMARY);
+            }
             this.addChild(this.image);
 		}
 

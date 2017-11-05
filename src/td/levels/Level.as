@@ -111,6 +111,10 @@ package td.levels {
             return false;
         }
 
+        public function removeTower(tower: Tower): void {
+            this.map.removeTower(tower);
+        }
+
         public function addMoney(money: int): void {
             this.actualMoney += money;
             this.screen.setMoney(this.actualMoney);

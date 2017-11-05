@@ -4,15 +4,11 @@ package td.screens
     import com.greensock.TweenLite;
 
 	import flash.events.Event;
-    import flash.media.Sound;
-    import flash.net.URLRequest;
-
-    import td.Context;
 
     import td.constants.Images;
 	import td.constants.TextIds;
 	import td.levels.LevelManager;
-	import td.ui.MenuTextButton;
+    import td.ui.MenuTextButton;
 	import td.Context;
     import td.utils.draw.ImageUtils;
 
@@ -28,9 +24,9 @@ package td.screens
 		{
 			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 		}
-		
+
 		private function onAddedToStage(e: * = null) : void {
-			removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+            removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 
             this.setBackground();
             this.setButtons([

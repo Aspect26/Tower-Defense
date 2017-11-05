@@ -1,7 +1,10 @@
 package td.map {
     import flash.geom.Point;
+    import flash.utils.Dictionary;
 
     import io.arkeus.tiled.TiledMap;
+
+    import starling.display.DisplayObject;
 
     import td.Context;
 
@@ -20,6 +23,7 @@ package td.map {
         private static const HEIGHT: int = 25;
         private var occupiedTiles: Array;
         private var occupiedTilesOverlay: Primitive;
+        private var towerOccupationTiles: Object;
 
         private var mapData: TiledMap;
         private var map: Class;
@@ -41,6 +45,7 @@ package td.map {
             }
 
             this.occupiedTilesOverlay = new Primitive();
+            towerOccupationTiles = {};
         }
 
         public function isTileOccupied(x: int, y: int): Boolean {
@@ -62,23 +67,43 @@ package td.map {
             return this.occupiedTilesOverlay;
         }
 
-        public function setRectangleOccupied(x: int, y: int, width: int, height: int): void {
+        public function setRectangleOccupied(x: int, y: int, width: int, height: int): DisplayObject {
             for (var i: int = x; i < width + x; ++i) {
                 for (var j: int = y; j < height + y; ++j) {
                     this.occupiedTiles[i][j] = true;
                 }
             }
-            this.occupiedTilesOverlay.addChild(this.occupiedTilesOverlay.rectangle(x * TILE_SIZE, y * TILE_SIZE, (x+width) * TILE_SIZE,
+            return this.occupiedTilesOverlay.addChild(this.occupiedTilesOverlay.rectangle(x * TILE_SIZE, y * TILE_SIZE, (x+width) * TILE_SIZE,
                     (y + height) * TILE_SIZE, Colors.OCCUPATION_OVERLAY, 0, 0, 0.2));
+        }
+
+        public function unoccupyTowerTiles(tower: Tower): void {
+            var x: int = tower.getPosition().x / TILE_SIZE;
+            var y: int = tower.getPosition().y / TILE_SIZE;
+
+            var size: Size = tower.getSize();
+
+            for (var i: int = x; i < x + size.width; ++i) {
+                for (var j: int = y; j < y + size.height; ++j) {
+                    this.occupiedTiles[i][j] = false;
+                }
+            }
+
+            this.occupiedTilesOverlay.removeChild(this.towerOccupationTiles[tower]);
         }
 
         public function addTower(tower: Tower, position: Point): Boolean {
             if (isRectangleEmpty(position, tower.getSize())) {
-                this.setRectangleOccupied(position.x, position.y, tower.getSize().width, tower.getSize().height);
+                var towerOccupationOverlay: DisplayObject = this.setRectangleOccupied(position.x, position.y, tower.getSize().width, tower.getSize().height)
+                this.towerOccupationTiles[tower] = towerOccupationOverlay;
                 return true;
             } else {
                 return false;
             }
+        }
+
+        public function removeTower(tower: Tower): void {
+            this.unoccupyTowerTiles(tower);
         }
 
         private function isRectangleEmpty(position: Point, size: Size): Boolean {

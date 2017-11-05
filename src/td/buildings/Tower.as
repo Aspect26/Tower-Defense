@@ -8,11 +8,16 @@ package td.buildings {
     import starling.display.Image;
     import starling.display.Sprite;
     import starling.events.Event;
+    import starling.events.Touch;
+    import starling.events.TouchEvent;
+    import starling.events.TouchPhase;
 
     import td.Context;
     import td.enemies.Enemy;
+    import td.events.TowerSelectedEvent;
     import td.levels.Level;
     import td.map.Map;
+    import td.utils.Position;
     import td.utils.Size;
     import td.utils.draw.ImageUtils;
 
@@ -49,15 +54,22 @@ package td.buildings {
 
             ImageUtils.resize(this.image, this.size.width * Map.TILE_SIZE, this.size.height * Map.TILE_SIZE);
             addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+            addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
         }
 
         private function onAddedToStage(event = null): void {
             // TODO: visualize ranges
             removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+            addEventListener(TouchEvent.TOUCH, onTouch);
+
             Starling.juggler.add(this);
             this.addChild(this.image);
             this.x = position.x;
             this.y = position.y;
+        }
+
+        private function onRemovedFromStage(event): void {
+            Starling.juggler.remove(this);
         }
 
         public function getSize(): Size {
@@ -74,6 +86,10 @@ package td.buildings {
 
         public function getImagePath(): String {
             return this.imagePath;
+        }
+
+        public function getPosition(): Point {
+            return this.position;
         }
 
         public function getMissileImage(): Image {
@@ -115,6 +131,15 @@ package td.buildings {
                 }
             }
         }
+
+        private function onTouch(event: TouchEvent): void {
+            var touch: Touch = event.getTouch(this);
+            if (touch && touch.phase == TouchPhase.ENDED) {
+                this.dispatchEvent(new TowerSelectedEvent(this));
+            }
+        }
+
+
     }
 
 }
