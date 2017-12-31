@@ -132,7 +132,7 @@ package td.screens {
         private function drawMoneyText(target: Sprite): void {
             var fontSize: int = 20;
 
-            moneyTextField = new TextField(10, 10, this.level.getMoney() + " €");
+            moneyTextField = new TextField(10, 10, "Coins " + this.level.getMoney());
             moneyTextField.format.color = Colors.YELLOW;
             moneyTextField.format.size = fontSize;
             moneyTextField.autoSize = TextFieldAutoSize.BOTH_DIRECTIONS;
@@ -329,7 +329,7 @@ package td.screens {
         }
 
         public function setMoney(money: int): void {
-            this.moneyTextField.text = money + " €";
+            this.moneyTextField.text = "Coins: " + money;
         }
 
         public function addMissile(missile: SimpleMissile): void {
