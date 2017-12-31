@@ -1,0 +1,4 @@
+<TextureAtlas imagePath="miscellaneous.png">
+	<SubTexture name="miscellaneous/coin.png" x="0" y="130" width="16" height="16"/>
+	<SubTexture name="miscellaneous/cross.png" x="0" y="0" width="128" height="128"/>
+</TextureAtlas>

@@ -50,7 +50,6 @@ package td.screens
             this.addChild(background);
 
             this.backgroundImg = Context.newImage(Images.MENU_BACKGROUND);
-            ImageUtils.resize(backgroundImg, Context.stage.stageWidth, Context.stage.stageHeight);
             this.background.addChild(backgroundImg);
 
             this.background.alignPivot();
@@ -58,7 +57,7 @@ package td.screens
 
         private function setButtons(buttons: Array.<MenuTextButton>): void {
             var buttonHeight: int = buttons[0].height + 10;
-            var currentY: int = Context.stage.height / 2 - ((buttonHeight*buttons.length) / 2);
+            var currentY: int = Context.stage.height / 2 - ((buttonHeight*buttons.length) / 2) + 10;
 
             for (var i: int = 0; i < buttons.length; ++i) {
                 var button: MenuTextButton = buttons[i];
