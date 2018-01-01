@@ -8,9 +8,9 @@ package td
 	{
 		public var manager:AssetManager;
 		
-		private var _stageWidth:int;
-		private var _stageHeight:int;
-		private var _screenRatio:Number;
+		private var _stageWidth: int;
+		private var _stageHeight: int;
+		private var _screenRatio: Number;
 		
 		public function Assets()
 		{
@@ -19,16 +19,20 @@ package td
 			_stageHeight = Starling.current.stage.stageHeight;
 			_screenRatio = stageHeight / stageWidth;
 			manager = new AssetManager(1);
-		}	
+		}
+
+		public function setScaleFactor(scaleFactor: Number): void {
+			manager.scaleFactor = scaleFactor;
+		}
 
 		/**
 		 * Load specified assets, items expects paths to assets.
 		 */ 
-		public function loadAssets(onProgress:Function,...items):void {
-			if( items.length <= 0 ) return;
-			
-			for each( var item:String in items ){
-				manager.enqueue( item );
+		public function loadAssets(onProgress:Function,...items): void {
+			if(items.length <= 0) return;
+
+			for each (var item:String in items) {
+				manager.enqueue(item);
 			}
 			manager.loadQueue(onProgress);
 		}

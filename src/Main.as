@@ -12,7 +12,7 @@ package
 	/**
 	 * Entry point of the application.
 	 */
-	[SWF(width="800", height="500", frameRate="60", backgroundColor="#0")]
+	[SWF(width="1920", height="1080", frameRate="60", backgroundColor="#0")]
 	public class Main extends Sprite 
 	{
 		private var _starling:Starling;
@@ -57,10 +57,12 @@ package
 
             var screenWidth:int  = this.stage.fullScreenWidth;
             var screenHeight:int = this.stage.fullScreenHeight;
-            var viewPort: Rectangle = new Rectangle(0, 0, this.stage.stageWidth, this.stage.stageHeight);
+            var viewPort: Rectangle = new Rectangle(0, 0, screenWidth, screenHeight);
 
 			Game.starter = this;
 			_starling = new Starling(Game, this.stage, viewPort);
+			_starling.stage.stageWidth = 320;
+			_starling.stage.stageHeight = 200;
 			_starling.simulateMultitouch = false;
 			_starling.enableErrorChecking = false;
 			_starling.start();

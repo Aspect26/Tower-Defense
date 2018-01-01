@@ -117,7 +117,7 @@ package td.enemies {
 
         private function getMovingDirection(timeDelta: Number): Point {
             var movingDirection: Point = this.path[this.currentPathIndex].subtract(this.currentPosition);
-            movingDirection.normalize(30.0 * timeDelta * this.speedFactor);
+            movingDirection.normalize(12.0 * timeDelta * this.speedFactor);
             return movingDirection;
         }
 

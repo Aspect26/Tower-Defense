@@ -17,10 +17,10 @@ package td.utils {
 
         public function TowerSelection() {
             this.particles = new SelectionParticles();
-            this.particles.scale = 0.2;
+            this.particles.scale = 0.09;
             this.particles.start();
 
-            this.removeButton = new ImageButton(Images.CROSS, 0, 0, 30, 30, onRemoveClicked, true);
+            this.removeButton = new ImageButton(Images.CROSS, 0, 0, 15, 15, onRemoveClicked, true);
         }
 
         public function select(tower: Tower): void {
@@ -30,8 +30,8 @@ package td.utils {
             this.particles.y = tower.y + tower.height / 2;
             this.addChild(this.particles);
 
-            this.removeButton.x = tower.x + tower.width;
-            this.removeButton.y = tower.y - 20;
+            this.removeButton.x = tower.x + tower.width - 10;
+            this.removeButton.y = tower.y - 10;
             this.addChild(this.removeButton);
         }
 

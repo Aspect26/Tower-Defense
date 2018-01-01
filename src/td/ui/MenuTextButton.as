@@ -4,7 +4,7 @@ package td.ui
 
     public class MenuTextButton extends TextButton
 	{
-        private static const FONT_SIZE: int = 20;
+        private static const FONT_SIZE: int = 5;
         private static const WIDTH: Number = 0.6;
 
 		public function MenuTextButton(text: String, onClick: Function, onClickArguments: Object = null) {

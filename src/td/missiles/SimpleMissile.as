@@ -15,8 +15,8 @@ package td.missiles {
 
     public class SimpleMissile extends Sprite implements IAnimatable {
 
-        private static var speed: Number = 100.0;
-        private static var hitDistance: Number = 25.0;
+        private static var speed: Number = 40.0;
+        private static var hitDistance: Number = 10.0;
 
         private var source: Tower;
         private var target: Enemy;

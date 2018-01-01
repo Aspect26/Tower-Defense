@@ -32,7 +32,7 @@ package td
     public class Game extends Sprite
     {
 		/** Good to have around for your testers... */
-		public static const APP_VERSION:String = "0.0.1";
+		public static const APP_VERSION:String = "0.8.1";
 		
 		/** Here we save whether we're running within DEBUG version of Flash Player */
 		public static var DEBUG:Boolean;
@@ -114,37 +114,13 @@ package td
             // TODO: add player load
             this.player = new Player();
 
+            var scale: Number = Starling.contentScaleFactor; // TODO: what if it is too high?? we do not have textures for that
+            Context.assets.setScaleFactor(scale);
+
             Context.assets.loadAssets(
                     loadProgress,
-                    "assets/menu-background.png",
-                    "assets/menu-background.xml",
-
-                    "assets/levels/stage1/tiles.png",
-                    "assets/levels/stage1/tiles.xml",
-                    "assets/levels/stage1/props.png",
-                    "assets/levels/stage1/props.xml",
-                    "assets/levels/stage1/enemies.png",
-                    "assets/levels/stage1/enemies.xml",
-                    "assets/levels/stage1/level1.png",
-                    "assets/levels/stage1/level1.xml",
-                    "assets/levels/stage1/level2.png",
-                    "assets/levels/stage1/level2.xml",
-                    "assets/levels/stage1/level3.png",
-                    "assets/levels/stage1/level3.xml",
-
-                    "assets/levels/stage2/ice-tiles.png",
-                    "assets/levels/stage2/ice-tiles.xml",
-                    "assets/levels/stage2/ice-props.png",
-                    "assets/levels/stage2/ice-props.xml",
-
-                    "assets/towers/towers.png",
-                    "assets/towers/towers.xml",
-
-                    "assets/bullets/bullets.png",
-                    "assets/bullets/bullets.xml",
-
-                    "assets/miscellaneous/miscellaneous.png",
-                    "assets/miscellaneous/miscellaneous.xml",
+                    "assets/textures/" + scale + "x/sprites.png",
+                    "assets/textures/" + scale + "x/sprites.xml",
 
                     Music.DARK_DESCENT,
                     Music.EPIC_BOSS_BATTLE,

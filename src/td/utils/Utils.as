@@ -808,7 +808,7 @@ package td.utils
 		}
 
         public static function getFontSize(size: int): int {
-            return size + (Capabilities.screenDPI / 10);
+            return size;
         }
 		
 	}
