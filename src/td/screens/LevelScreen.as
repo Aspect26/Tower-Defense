@@ -30,8 +30,6 @@ package td.screens {
     import td.constants.Colors;
     import td.constants.Effects;
     import td.constants.Game;
-    import td.constants.Images;
-    import td.dropable.CoinSprite;
     import td.dropable.CoinSprite;
     import td.enemies.Enemy;
     import td.events.EnemyDiedEvent;
@@ -54,7 +52,6 @@ package td.screens {
     import td.utils.TowerSelection;
     import td.utils.Utils;
     import td.utils.draw.Primitive;
-    import td.utils.pools.ObjectPool;
 
     public class LevelScreen extends Sprite
     {
@@ -65,14 +62,11 @@ package td.screens {
         private var state: State;
         private var towerSelection: TowerSelection;
 
-        private var coinsObjectPool: ObjectPool;
-
         public function LevelScreen(level: Level)
         {
             this.level = level;
             this.level.setScreen(this);  // TODO: refactor -> level should not know about screen (use event maybe)
             this.towerSelection = new TowerSelection();
-            this.coinsObjectPool = new ObjectPool("Coin", "Droppable", function(): CoinSprite { return new CoinSprite()});
 
             addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
             addEventListener(TouchEvent.TOUCH, onTouch);
@@ -291,7 +285,7 @@ package td.screens {
             TweenLite.to(coinSprite, Effects.TIME_COIN_DISAPPEAR_ON_PICK, { ease: Power0.easeNone, alpha: 0.0 });
             Starling.juggler.delayCall(function(coinSprite: CoinSprite): void {
                 removeChild(coinSprite);
-                coinsObjectPool.back(coinSprite);
+                Context.coinsObjectPool.back(coinSprite);
             }, Effects.TIME_COIN_DISAPPEAR_ON_PICK, coinSprite);
         }
 
@@ -339,7 +333,7 @@ package td.screens {
 
         private function dropCoin(x: int, y: int): void {
             if (MathUtils.randomInt(1, 100) < Game.ADDITIONAL_MONEY_DROP_CHANCE) {
-                var coinSprite: CoinSprite = this.coinsObjectPool.get();
+                var coinSprite: CoinSprite = Context.coinsObjectPool.get();
                 coinSprite.reinitialize(x, y);
                 const finalY: int = coinSprite.y - 10;
                 const finalX: int = coinSprite.x + 5;

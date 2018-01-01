@@ -1,11 +1,12 @@
 package td 
 {
-    import flash.geom.Point;
-
     import starling.display.Sprite;
 	import starling.display.Stage;
 
+    import td.dropable.CoinSprite;
+
     import td.map.MapLoader;
+    import td.missiles.SimpleMissile;
     import td.music.MusicManager;
     import td.music.SoundManager;
     import td.screens.ScreenManager;
@@ -51,11 +52,13 @@ package td
 		/** Shortcut for values.v */
 		public static var v: * ;
 
-		public static var pointObjectPool: ObjectPool = new ObjectPool("Point", "Utils", function(): Point {
-			return new Point();
-		});
-		pointObjectPool.maxSize = 100;
+        public static var missilesObjectPool: ObjectPool = new ObjectPool("Missile", "Missiles", function(): SimpleMissile {
+            return new SimpleMissile()
+        });
 
+        public static var coinsObjectPool: ObjectPool = new ObjectPool("Coin", "Droppable", function(): CoinSprite {
+			return new CoinSprite()
+		});
 		// ASSETS - SHORTCUTS
 
 		public static function getTexture(name: String) : Texture {
