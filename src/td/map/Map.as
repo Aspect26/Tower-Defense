@@ -14,7 +14,7 @@ package td.map {
 
     public class Map {
 
-        public static const TILE_SIZE: int = 20;
+        public static const TILE_SIZE: int = 8;
         private static const WIDTH: int = 40;
         private static const HEIGHT: int = 25;
         private var occupiedTiles: Array;

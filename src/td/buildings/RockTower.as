@@ -11,7 +11,7 @@ package td.buildings {
         }
 
         public static function getDescriptor(): TowerDescriptor {
-            return new TowerDescriptor(RockTower, 50, new Size(3, 3), 5, 130, 1.3, Images.TOWER_ROCK,
+            return new TowerDescriptor(RockTower, 50, new Size(3, 3), 5, 52, 1.3, Images.TOWER_ROCK,
                     Images.MISSILE_ROCK_TOWER, SoundManager.SHOT_2);
         }
     }

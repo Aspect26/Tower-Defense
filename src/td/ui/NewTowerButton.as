@@ -3,7 +3,7 @@ package td.ui {
 
     public class NewTowerButton extends ImageButton {
 
-        private static const SIZE: int = 70;
+        private static const SIZE: int = 30;
 
         private var towerDescriptor: TowerDescriptor;
 

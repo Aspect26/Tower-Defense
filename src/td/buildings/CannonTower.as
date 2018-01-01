@@ -12,7 +12,7 @@ package td.buildings {
         }
 
         public static function getDescriptor(): TowerDescriptor {
-            return new TowerDescriptor(CannonTower, 100, new Size(3, 3), 8, 150, 2.0, Images.TOWER_CANNON,
+            return new TowerDescriptor(CannonTower, 100, new Size(3, 3), 8, 60, 2.0, Images.TOWER_CANNON,
                     Images.MISSILE_CANNON_TOWER, SoundManager.SHOT_3);
         }
 

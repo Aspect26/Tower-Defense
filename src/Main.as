@@ -62,7 +62,7 @@ package
 			Game.starter = this;
 			_starling = new Starling(Game, this.stage, viewPort);
 			_starling.stage.stageWidth = 320;
-			_starling.stage.stageHeight = 180;
+			_starling.stage.stageHeight = 200;
 			_starling.simulateMultitouch = false;
 			_starling.enableErrorChecking = false;
 			_starling.start();

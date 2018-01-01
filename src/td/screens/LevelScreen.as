@@ -30,6 +30,7 @@ package td.screens {
     import td.constants.Colors;
     import td.constants.Effects;
     import td.constants.Game;
+    import td.constants.Images;
     import td.dropable.MoneySprite;
     import td.enemies.Enemy;
     import td.events.EnemyDiedEvent;
@@ -51,13 +52,10 @@ package td.screens {
     import td.utils.MathUtils;
     import td.utils.TowerSelection;
     import td.utils.Utils;
-    import td.utils.draw.ImageUtils;
     import td.utils.draw.Primitive;
 
     public class LevelScreen extends Sprite
     {
-        private var content: Sprite;
-
         private var introTextField: TextField;
         private var moneyTextField: TextField;
 
@@ -96,13 +94,10 @@ package td.screens {
             this.state = new NormalState();
             this.removeChild(introTextField);
 
-            this.content = new Sprite();
-            this.addChild(content);
-
-            this.drawMap(this.content);
-            this.drawMoneyText(this.content);
-            this.drawTowerButtons(this.content);
-            this.drawEnemies(this.content);
+            this.drawMap(this);
+            this.drawMoneyText(this);
+            this.drawTowerButtons(this);
+            this.drawEnemies(this);
 
             this.addEventListener(MissileHitTargetEvent.TYPE, onMissileHitTarget);
             this.addEventListener(EnemyDiedEvent.TYPE, onEnemyDied);
@@ -110,12 +105,10 @@ package td.screens {
             this.addEventListener(LevelFinishedEvent.TYPE, onLevelFinished);
             this.addEventListener(TowerSelectedEvent.TYPE, onTowerSelected);
             this.addEventListener(TowerRemoveRequest.TYPE, onTowerRemoveRequest);
-
-            ImageUtils.resizeSprite(this.content, Context.stage.stageWidth, Context.stage.stageHeight);
         }
 
         private function drawIntroTextField(target: Sprite): void {
-            var padding: int = 220;
+            var padding: int = 40;
             var fontSize: int = Utils.getFontSize(10);
 
             introTextField = new TextField(Context.stage.stageWidth - 2 * padding, 0, this.level.getIntroText());
@@ -141,9 +134,9 @@ package td.screens {
         }
 
         private function drawTowerButtons(target: Sprite): void {
-            target.addChild(new NewTowerButton(WatchTower.getDescriptor(), 20, this.content.height - 90, newTowerClicked));
-            target.addChild(new NewTowerButton(RockTower.getDescriptor(), 100, this.content.height - 90, newTowerClicked));
-            target.addChild(new NewTowerButton(CannonTower.getDescriptor(), 180, this.content.height - 90, newTowerClicked));
+            target.addChild(new NewTowerButton(WatchTower.getDescriptor(), 10, target.height - 40, newTowerClicked));
+            target.addChild(new NewTowerButton(RockTower.getDescriptor(), 45, target.height - 40, newTowerClicked));
+            target.addChild(new NewTowerButton(CannonTower.getDescriptor(), 80, target.height - 40, newTowerClicked));
         }
 
         private function drawMap(target: Sprite): void {
@@ -164,8 +157,8 @@ package td.screens {
                             var yOffset: int = -(image.height - Map.TILE_SIZE);
                             // The yOffset is because of props which are larger than actual tiles. And the problem is,
                             // that starling pivots image to TOP LEFT CORNER, while Tiled pivots at BOTTOM LEFT TILE.
-                            image.x = x * tiledMap.tileWidth;
-                            image.y = y * tiledMap.tileHeight + yOffset;
+                            image.x = x * Map.TILE_SIZE;
+                            image.y = y * Map.TILE_SIZE + yOffset;
                             target.addChild(image);
                         }
                     }
@@ -183,7 +176,7 @@ package td.screens {
 
         private function getIntroTextTime() : int {
             var scrollPathLength: int = Context.stage.stageHeight + introTextField.height;
-            return scrollPathLength / 30;
+            return scrollPathLength / 10;
         }
 
         private function skipIntro(): void {
@@ -201,8 +194,8 @@ package td.screens {
             var newState: BuyingTowerState = new BuyingTowerState(towerDescriptor);
             this.state = newState;
 
-            this.content.addChild(this.level.getOccupationOverlay());
-            this.content.addChild(newState.getTowerOverlay());
+            this.addChild(this.level.getOccupationOverlay());
+            this.addChild(newState.getTowerOverlay());
 
             var touch: Touch = event.getTouch(Context.stage);
 
@@ -211,7 +204,7 @@ package td.screens {
 
             newState.setPosition(xPos - xPos % Map.TILE_SIZE, yPos - yPos% Map.TILE_SIZE);
 
-            this.content.addChild(newState.getTowerImage());
+            this.addChild(newState.getTowerImage());
         }
 
         private function onTouch(event: TouchEvent): void {
@@ -258,13 +251,13 @@ package td.screens {
                     return;
                 }
 
-                this.content.removeChild(level.getOccupationOverlay());
-                this.content.removeChild(state.getTowerOverlay());
-                this.content.removeChild(state.getTowerImage());
+                this.removeChild(level.getOccupationOverlay());
+                this.removeChild(state.getTowerOverlay());
+                this.removeChild(state.getTowerImage());
                 this.state = new NormalState();
 
                 tower.setPosition(new Point(towerPosition.x * Map.TILE_SIZE, towerPosition.y * Map.TILE_SIZE));
-                this.content.addChild(tower);
+                this.addChild(tower);
             }
 
             this.unselectTower();
@@ -273,7 +266,7 @@ package td.screens {
         private function onMissileHitTarget(event: MissileHitTargetEvent): void {
             var missile: SimpleMissile = event.data as SimpleMissile;
             missile.hitTarget();
-            this.content.removeChild(missile);
+            this.removeChild(missile);
         }
 
         private function onEnemyDied(event: EnemyDiedEvent): void {
@@ -282,7 +275,7 @@ package td.screens {
             this.dropMoney(enemy.getPosition());
 
             TweenLite.to(enemy, Effects.TIME_ENEMY_DISAPPEAR_ON_DEATH, { ease: Power0.easeNone, alpha: 0.0 });
-            Starling.juggler.delayCall(this.content.removeChild, Effects.TIME_ENEMY_DISAPPEAR_ON_DEATH, enemy);
+            Starling.juggler.delayCall(this.removeChild, Effects.TIME_ENEMY_DISAPPEAR_ON_DEATH, enemy);
         }
 
         private function onMoneyPicked(event: MoneyPickedEvent): void {
@@ -291,7 +284,7 @@ package td.screens {
             this.level.addMoney(amount);
             TweenLite.to(coinSprite, Effects.TIME_COIN_DISAPPEAR_ON_PICK, { ease: Power0.easeNone, scale: Effects.SCALE_COIN_ON_PICK });
             TweenLite.to(coinSprite, Effects.TIME_COIN_DISAPPEAR_ON_PICK, { ease: Power0.easeNone, alpha: 0.0 });
-            Starling.juggler.delayCall(this.content.removeChild, Effects.TIME_COIN_DISAPPEAR_ON_PICK, coinSprite);
+            Starling.juggler.delayCall(this.removeChild, Effects.TIME_COIN_DISAPPEAR_ON_PICK, coinSprite);
         }
 
         private function onLevelFinished(event: LevelFinishedEvent): void {
@@ -300,25 +293,25 @@ package td.screens {
         }
 
         private function onTowerSelected(event: TowerSelectedEvent): void {
-            this.content.addChild(this.towerSelection);
+            this.addChild(this.towerSelection);
             this.towerSelection.select(event.getTower());
         }
 
         private function onTowerRemoveRequest(event: TowerRemoveRequest): void {
             var removingTower: Tower = event.getTower();
             this.level.removeTower(removingTower);
-            this.content.removeChild(removingTower);
+            this.removeChild(removingTower);
             this.unselectTower();
         }
 
         private function unselectTower(): void {
             this.towerSelection.unselect();
-            this.content.removeChild(this.towerSelection);
+            this.removeChild(this.towerSelection);
         }
 
         private function finishLevel(levelNumber: int): void {
             var blackOverlay: Primitive = Primitive.createRectangle(0, 0, Context.stage.stageWidth, Context.stage.stageHeight, Colors.BLACK, -1, 0, 0.0);
-            this.content.addChild(blackOverlay);
+            this.addChild(blackOverlay);
             TweenLite.to(blackOverlay, Effects.TIME_LEVEL_BLACKOUT, { ease: Power0.easeNone, alpha: 1.0 });
             Starling.juggler.delayCall(startNextLevel, Effects.TIME_LEVEL_BLACKOUT);
             Context.game.player.finishedLevel(levelNumber);
@@ -333,26 +326,26 @@ package td.screens {
         }
 
         public function addMissile(missile: SimpleMissile): void {
-            this.content.addChild(missile);
+            this.addChild(missile);
         }
 
         private function dropMoney(position: Point): void {
             if (MathUtils.randomInt(1, 100) < Game.ADDITIONAL_MONEY_DROP_CHANCE) {
                 var moneySprite: Sprite = new MoneySprite(position.x, position.y);
-                const finalY: int = moneySprite.y - 40;
-                const finalX: int = moneySprite.x + 20;
-                this.content.addChild(moneySprite);
+                const finalY: int = moneySprite.y - 10;
+                const finalX: int = moneySprite.x + 5;
+                this.addChild(moneySprite);
                 TweenLite.to(moneySprite, 1.5, { ease: Elastic.easeOut.config(1, 0.3), y: finalY });
                 TweenLite.to(moneySprite, 1.5, { ease: Power1.easeOut, x: finalX});
             }
         }
 
         private function getContentLocalY(yPos: int): int {
-            return yPos / this.content.scaleY;
+            return yPos / this.scaleY;
         }
 
         private function getContentLocalX(xPos: int): int {
-            return xPos / this.content.scaleX;
+            return xPos / this.scaleX;
         }
 
     }
