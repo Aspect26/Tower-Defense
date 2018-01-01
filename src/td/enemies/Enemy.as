@@ -11,13 +11,12 @@ package td.enemies {
     import td.Context;
 
     import td.events.EnemyDiedEvent;
+    import td.events.EnemyReachedEndEvent;
     import td.utils.Utils;
 
     public class Enemy extends Sprite implements IAnimatable {
 
         private static const NEW_PATH_POINT_LAMBDA: Number = 3;
-
-        public var onReachedEnd: Function;
 
         private var image: Image;
         private var deathSound: Sound;
@@ -115,9 +114,7 @@ package td.enemies {
                 if (this.path.length - 1 == this.currentPathIndex) {
                     Starling.juggler.remove(this);
                     this.removeChild(image);
-                    if (onReachedEnd) {
-                        onReachedEnd(this);
-                    }
+                    dispatchEvent(new EnemyReachedEndEvent(this));
                 } else {
                     this.currentPathIndex++;
                 }

@@ -33,6 +33,7 @@ package td.screens {
     import td.dropable.CoinSprite;
     import td.enemies.Enemy;
     import td.events.EnemyDiedEvent;
+    import td.events.EnemyReachedEndEvent;
     import td.events.LevelFinishedEvent;
     import td.events.MoneyPickedEvent;
     import td.events.TowerRemoveRequest;
@@ -100,6 +101,7 @@ package td.screens {
 
             this.addEventListener(MissileHitTargetEvent.TYPE, onMissileHitTarget);
             this.addEventListener(EnemyDiedEvent.TYPE, onEnemyDied);
+            this.addEventListener(EnemyReachedEndEvent.TYPE, onEnemyReachedEnd);
             this.addEventListener(MoneyPickedEvent.TYPE, onCoinPicked);
             this.addEventListener(LevelFinishedEvent.TYPE, onLevelFinished);
             this.addEventListener(TowerSelectedEvent.TYPE, onTowerSelected);
@@ -277,6 +279,13 @@ package td.screens {
             Starling.juggler.delayCall(this.removeChild, Effects.TIME_ENEMY_DISAPPEAR_ON_DEATH, enemy);
         }
 
+        private function onEnemyReachedEnd(event: EnemyReachedEndEvent): void {
+            var blackOverlay: Primitive = Primitive.createRectangle(0, 0, Context.stage.stageWidth, Context.stage.stageHeight, Colors.BLACK, -1, 0, 0.0);
+            this.addChild(blackOverlay);
+            TweenLite.to(blackOverlay, Effects.TIME_LEVEL_BLACKOUT, { ease: Power0.easeNone, alpha: 1.0 });
+            Starling.juggler.delayCall(returnToMenuScreen, Effects.TIME_LEVEL_FAILED_BLACKOUT);
+        }
+
         private function onCoinPicked(event: MoneyPickedEvent): void {
             var amount: int = event.data as int;
             var coinSprite: CoinSprite = event.moneySprite;
@@ -321,6 +330,10 @@ package td.screens {
 
         private function startNextLevel(): void {
             Context.screenManager.showScreen(new LevelScreen(LevelManager.createLevel(this.level.getLevelNumber() + 1)))
+        }
+
+        private function returnToMenuScreen(): void {
+            Context.screenManager.showScreen(new MenuScreen())
         }
 
         public function setMoney(money: int): void {
