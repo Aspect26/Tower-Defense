@@ -19,6 +19,7 @@ package td.levels {
     import td.music.SoundManager;
     import td.screens.LevelScreen;
     import td.utils.draw.Primitive;
+    import td.utils.pools.ObjectPool;
 
     public class Level {
 
@@ -129,9 +130,15 @@ package td.levels {
         }
 
         public function createMissile(source: Tower, target: Enemy): void {
-            var missile: SimpleMissile = new SimpleMissile(new Point(source.x + source.width / 2, source.y + source.height / 2), source, target, source.getMissileImage());
+            var missile: SimpleMissile = Context.missilesObjectPool.get();
+            missile.reinitialize(source.x + source.width / 2, source.y + source.height / 2, source, target);
             Context.soundManager.playSound(source.getMissileSound());
             this.screen.addMissile(missile);
+        }
+
+        public function missileHitTarget(missile: SimpleMissile): void {
+            missile.hitTarget();
+            Context.missilesObjectPool.back(missile);
         }
 
         public static function addGlaqs(enemies: Vector.<Enemy>, startTime: Number, count: int, path: Vector.<Point>, pathOffset: Point): void {

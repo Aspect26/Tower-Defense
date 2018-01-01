@@ -1,16 +1,21 @@
 package td 
 {
-	import starling.display.Sprite;
+    import starling.display.Sprite;
 	import starling.display.Stage;
 
+    import td.dropable.CoinSprite;
+
     import td.map.MapLoader;
+    import td.missiles.SimpleMissile;
     import td.music.MusicManager;
     import td.music.SoundManager;
     import td.screens.ScreenManager;
 	import starling.textures.Texture;
 	import starling.display.Image;
-	
-	/**
+
+    import td.utils.pools.ObjectPool;
+
+    /**
 	 * Always good to have some global class containing statics of useful game stuff.
 	 */
 	public class Context 
@@ -46,9 +51,16 @@ package td
 		
 		/** Shortcut for values.v */
 		public static var v: * ;
-		
+
+        public static var missilesObjectPool: ObjectPool = new ObjectPool("Missile", "Missiles", function(): SimpleMissile {
+            return new SimpleMissile()
+        });
+
+        public static var coinsObjectPool: ObjectPool = new ObjectPool("Coin", "Droppable", function(): CoinSprite {
+			return new CoinSprite()
+		});
 		// ASSETS - SHORTCUTS
-		
+
 		public static function getTexture(name: String) : Texture {
 			return assets.getTextureFromAtlas(name);
 		}
@@ -67,11 +79,11 @@ package td
 		
 		// UTILITIES
 				
-		public static function newImage(texName: String) : Image {
+		public static function newImage(texName: String): Image {
 			var tex: Texture = getTexture(texName);
 			return new Image(tex);
 		}
-		
+
 	}
 
 }

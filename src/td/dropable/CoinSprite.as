@@ -14,9 +14,12 @@ package td.dropable {
 
     import td.utils.draw.Primitive;
 
-    public class MoneySprite extends Primitive {
+    public class CoinSprite extends Primitive {
 
-        public function MoneySprite(x: int, y: int) {
+        public function CoinSprite() {
+        }
+
+        public function reinitialize(x: int, y: int): void {
             this.x = x;
             this.y = y;
             this.setTouchable(true);
@@ -24,6 +27,7 @@ package td.dropable {
         }
 
         private function onAddedToStage(event: Event): void {
+            this.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
             this.addChild(Context.newImage(Images.COIN));
             Context.soundManager.playSound(SoundManager.COIN_DROP);
         }

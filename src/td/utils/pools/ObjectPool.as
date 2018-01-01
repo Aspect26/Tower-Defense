@@ -87,7 +87,6 @@ package td.utils.pools
 			++_returned;
 			
 			if (_pool.lastIndexOf(object)>=0) {
-				throw new Error("The object: " + object + " was already back()ed!");
 				return;
 			}
 			

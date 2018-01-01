@@ -3,11 +3,10 @@ package td.utils {
 
     public class VectorUtils {
 
-        public static function getNormalizedDirection(_from: Point, _to: Point, _normalizeBy: Number): Point {
-            var vector: Point = _to.subtract(_from);
-            vector.normalize(_normalizeBy);
-
-            return vector;
+        public static function getNormalizedDirection(result: Point, from_x: int, from_y: int, to_x: int, to_y: int, _normalizeBy: Number): void {
+            result.x = to_x - from_x;
+            result.y = to_y - from_y;
+            result.normalize(_normalizeBy);
         }
 
     }
