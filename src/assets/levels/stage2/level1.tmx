@@ -1007,8 +1007,8 @@
   </data>
  </layer>
  <objectgroup name="Path">
-  <object id="2" x="4" y="359">
-   <polyline points="0,0 99,-1 121,-9 132,-24 132,-41 132,-189 143,-204 164,-213 184,-219 781,-224"/>
+  <object id="2" x="2" y="144">
+   <polyline points="0,0 40,0 48,-4 53,-10 53,-16 53,-76 57,-82 66,-85 74,-88 312,-90"/>
   </object>
  </objectgroup>
  <layer name="Props" width="40" height="25">
