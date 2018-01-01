@@ -22,27 +22,56 @@ package td.missiles {
         private var target: Enemy;
         private var currentPosition: Point;
         private var image: Image;
+        private var active: Boolean;
+        private var movingDirection: Point;
 
-        public function SimpleMissile(position: Point, source: Tower, target: Enemy, image: Image) {
+        public function SimpleMissile() {
+            this.currentPosition = new Point();
+            this.movingDirection = new Point();
+        }
+
+        public function reinitialize(x: int, y: int, source: Tower, target: Enemy): void {
             this.source = source;
             this.target = target;
-            this.currentPosition = position;
-            this.image = image;
+            this.image = source.getMissileImage();
+            this.active = false;
+
+            this.movingDirection.x = 0;
+            this.movingDirection.y = 0;
+
+            this.currentPosition.x = x;
+            this.currentPosition.y = y;
 
             this.x = currentPosition.x;
             this.y = currentPosition.y;
 
             this.addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+            this.addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage)
         }
 
         private function onAddedToStage(event: Event): void {
+            this.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
             this.addChild(this.image);
+            this.active = true;
             Starling.juggler.add(this);
         }
 
+        private function onRemovedFromStage(event: Event): void {
+            this.removeEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
+            this.active = false;
+        }
+
+        public function getCurrentPosition(): Point {
+            return this.currentPosition;
+        }
+
         public function advanceTime(time: Number): void {
-            var movingDirection: Point = VectorUtils.getNormalizedDirection(currentPosition, target.getPosition(), time * speed);
-            this.moveBy(movingDirection);
+            if (!this.active) {
+                return;
+            }
+
+            VectorUtils.getNormalizedDirection(this.movingDirection, currentPosition.x, currentPosition.y, target.getX(), target.getY(), time * speed);
+            this.move();
             this.rotation = Math.atan2(movingDirection.y, movingDirection.x);
             if (target.getDistanceFromPosition(this.currentPosition) < hitDistance) {
                 dispatchEvent(new MissileHitTargetEvent(true, this));
@@ -53,12 +82,12 @@ package td.missiles {
             this.target.hit(this.source.getDamage());
         }
 
-        private function moveBy(directionVector: Point): void {
-            this.currentPosition.x += directionVector.x;
-            this.currentPosition.y += directionVector.y;
+        private function move(): void {
+            this.currentPosition.x += this.movingDirection.x;
+            this.currentPosition.y += this.movingDirection.y;
 
-            this.x += directionVector.x;
-            this.y += directionVector.y;
+            this.x += movingDirection.x;
+            this.y += movingDirection.y;
         }
     }
 

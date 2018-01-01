@@ -95,7 +95,7 @@ package td.map {
 
         public function addTower(tower: Tower, position: Point): Boolean {
             if (isRectangleEmpty(position, tower.getSize())) {
-                var towerOccupationOverlay: DisplayObject = this.setRectangleOccupied(position.x, position.y, tower.getSize().width, tower.getSize().height)
+                var towerOccupationOverlay: DisplayObject = this.setRectangleOccupied(position.x, position.y, tower.getSize().width, tower.getSize().height);
                 this.towerOccupationTiles.push([tower, towerOccupationOverlay]);
                 return true;
             } else {

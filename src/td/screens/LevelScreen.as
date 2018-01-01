@@ -31,7 +31,8 @@ package td.screens {
     import td.constants.Effects;
     import td.constants.Game;
     import td.constants.Images;
-    import td.dropable.MoneySprite;
+    import td.dropable.CoinSprite;
+    import td.dropable.CoinSprite;
     import td.enemies.Enemy;
     import td.events.EnemyDiedEvent;
     import td.events.LevelFinishedEvent;
@@ -53,6 +54,7 @@ package td.screens {
     import td.utils.TowerSelection;
     import td.utils.Utils;
     import td.utils.draw.Primitive;
+    import td.utils.pools.ObjectPool;
 
     public class LevelScreen extends Sprite
     {
@@ -63,11 +65,14 @@ package td.screens {
         private var state: State;
         private var towerSelection: TowerSelection;
 
+        private var coinsObjectPool: ObjectPool;
+
         public function LevelScreen(level: Level)
         {
             this.level = level;
             this.level.setScreen(this);  // TODO: refactor -> level should not know about screen (use event maybe)
             this.towerSelection = new TowerSelection();
+            this.coinsObjectPool = new ObjectPool("Coin", "Droppable", function(): CoinSprite { return new CoinSprite()});
 
             addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
             addEventListener(TouchEvent.TOUCH, onTouch);
@@ -101,7 +106,7 @@ package td.screens {
 
             this.addEventListener(MissileHitTargetEvent.TYPE, onMissileHitTarget);
             this.addEventListener(EnemyDiedEvent.TYPE, onEnemyDied);
-            this.addEventListener(MoneyPickedEvent.TYPE, onMoneyPicked);
+            this.addEventListener(MoneyPickedEvent.TYPE, onCoinPicked);
             this.addEventListener(LevelFinishedEvent.TYPE, onLevelFinished);
             this.addEventListener(TowerSelectedEvent.TYPE, onTowerSelected);
             this.addEventListener(TowerRemoveRequest.TYPE, onTowerRemoveRequest);
@@ -265,26 +270,29 @@ package td.screens {
 
         private function onMissileHitTarget(event: MissileHitTargetEvent): void {
             var missile: SimpleMissile = event.data as SimpleMissile;
-            missile.hitTarget();
+            level.missileHitTarget(missile);
             this.removeChild(missile);
         }
 
         private function onEnemyDied(event: EnemyDiedEvent): void {
             var enemy: Enemy = event.data as Enemy;
             this.level.killEnemy(enemy);
-            this.dropMoney(enemy.getPosition());
+            this.dropCoin(enemy.getX(), enemy.getY());
 
             TweenLite.to(enemy, Effects.TIME_ENEMY_DISAPPEAR_ON_DEATH, { ease: Power0.easeNone, alpha: 0.0 });
             Starling.juggler.delayCall(this.removeChild, Effects.TIME_ENEMY_DISAPPEAR_ON_DEATH, enemy);
         }
 
-        private function onMoneyPicked(event: MoneyPickedEvent): void {
+        private function onCoinPicked(event: MoneyPickedEvent): void {
             var amount: int = event.data as int;
-            var coinSprite: MoneySprite = event.moneySprite;
+            var coinSprite: CoinSprite = event.moneySprite;
             this.level.addMoney(amount);
             TweenLite.to(coinSprite, Effects.TIME_COIN_DISAPPEAR_ON_PICK, { ease: Power0.easeNone, scale: Effects.SCALE_COIN_ON_PICK });
             TweenLite.to(coinSprite, Effects.TIME_COIN_DISAPPEAR_ON_PICK, { ease: Power0.easeNone, alpha: 0.0 });
-            Starling.juggler.delayCall(this.removeChild, Effects.TIME_COIN_DISAPPEAR_ON_PICK, coinSprite);
+            Starling.juggler.delayCall(function(coinSprite: CoinSprite): void {
+                removeChild(coinSprite);
+                coinsObjectPool.back(coinSprite);
+            }, Effects.TIME_COIN_DISAPPEAR_ON_PICK, coinSprite);
         }
 
         private function onLevelFinished(event: LevelFinishedEvent): void {
@@ -329,14 +337,15 @@ package td.screens {
             this.addChild(missile);
         }
 
-        private function dropMoney(position: Point): void {
+        private function dropCoin(x: int, y: int): void {
             if (MathUtils.randomInt(1, 100) < Game.ADDITIONAL_MONEY_DROP_CHANCE) {
-                var moneySprite: Sprite = new MoneySprite(position.x, position.y);
-                const finalY: int = moneySprite.y - 10;
-                const finalX: int = moneySprite.x + 5;
-                this.addChild(moneySprite);
-                TweenLite.to(moneySprite, 1.5, { ease: Elastic.easeOut.config(1, 0.3), y: finalY });
-                TweenLite.to(moneySprite, 1.5, { ease: Power1.easeOut, x: finalX});
+                var coinSprite: CoinSprite = this.coinsObjectPool.get();
+                coinSprite.reinitialize(x, y);
+                const finalY: int = coinSprite.y - 10;
+                const finalX: int = coinSprite.x + 5;
+                this.addChild(coinSprite);
+                TweenLite.to(coinSprite, 1.5, { ease: Elastic.easeOut.config(1, 0.3), y: finalY });
+                TweenLite.to(coinSprite, 1.5, { ease: Power1.easeOut, x: finalX});
             }
         }
 

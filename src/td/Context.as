@@ -1,6 +1,8 @@
 package td 
 {
-	import starling.display.Sprite;
+    import flash.geom.Point;
+
+    import starling.display.Sprite;
 	import starling.display.Stage;
 
     import td.map.MapLoader;
@@ -9,8 +11,10 @@ package td
     import td.screens.ScreenManager;
 	import starling.textures.Texture;
 	import starling.display.Image;
-	
-	/**
+
+    import td.utils.pools.ObjectPool;
+
+    /**
 	 * Always good to have some global class containing statics of useful game stuff.
 	 */
 	public class Context 
@@ -46,9 +50,14 @@ package td
 		
 		/** Shortcut for values.v */
 		public static var v: * ;
-		
+
+		public static var pointObjectPool: ObjectPool = new ObjectPool("Point", "Utils", function(): Point {
+			return new Point();
+		});
+		pointObjectPool.maxSize = 100;
+
 		// ASSETS - SHORTCUTS
-		
+
 		public static function getTexture(name: String) : Texture {
 			return assets.getTextureFromAtlas(name);
 		}
@@ -67,11 +76,11 @@ package td
 		
 		// UTILITIES
 				
-		public static function newImage(texName: String) : Image {
+		public static function newImage(texName: String): Image {
 			var tex: Texture = getTexture(texName);
 			return new Image(tex);
 		}
-		
+
 	}
 
 }

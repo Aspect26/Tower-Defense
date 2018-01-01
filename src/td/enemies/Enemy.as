@@ -11,6 +11,7 @@ package td.enemies {
     import td.Context;
 
     import td.events.EnemyDiedEvent;
+    import td.utils.Utils;
 
     public class Enemy extends Sprite implements IAnimatable {
 
@@ -29,6 +30,7 @@ package td.enemies {
         private var life: int;
         private var moneyReward: int;
         private var alive: Boolean;
+        private var movingDirection: Point;
 
         public function Enemy(image: Image, deathSound: Sound, life: int, moneyReward: int, path: Vector.<Point>, pathOffset: Point, timeOffset: Number, speedFactor: Number) {
             this.image = image;
@@ -41,6 +43,7 @@ package td.enemies {
             this.timeOffset = timeOffset;
             this.alive = false;
             this.currentPathIndex = 1;
+            this.movingDirection = new Point();
             addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
         }
 
@@ -63,8 +66,12 @@ package td.enemies {
             return Math.sqrt(Math.pow(myY - y, 2) + Math.pow(myX - x, 2));
         }
 
-        public function getPosition(): Point {
-            return new Point(this.x + this.width / 2, this.y + this.height / 2);
+        public function getX(): int {
+            return this.x + this.width / 2;
+        }
+
+        public function getY(): int {
+            return this.y + this.height / 2;
         }
 
         public function getMoneyReward(): int {
@@ -84,7 +91,8 @@ package td.enemies {
                 }
             } else {
                 this.checkIfNewPathIndex();
-                this.moveBy(this.getMovingDirection(delta));
+                this.computeMovingDirection(delta);
+                this.move();
             }
         }
 
@@ -101,7 +109,8 @@ package td.enemies {
         }
 
         private function checkIfNewPathIndex(): void {
-            var distance: Number = Math.abs(Point.distance(this.currentPosition, this.path[this.currentPathIndex]));
+            var distance: Number = Utils.getDistance(this.currentPosition.x, this.currentPosition.y,
+                    this.path[this.currentPathIndex].x, this.path[this.currentPathIndex].y);
             if (distance < NEW_PATH_POINT_LAMBDA) {
                 if (this.path.length - 1 == this.currentPathIndex) {
                     Starling.juggler.remove(this);
@@ -115,10 +124,11 @@ package td.enemies {
             }
         }
 
-        private function getMovingDirection(timeDelta: Number): Point {
-            var movingDirection: Point = this.path[this.currentPathIndex].subtract(this.currentPosition);
-            movingDirection.normalize(12.0 * timeDelta * this.speedFactor);
-            return movingDirection;
+        private function computeMovingDirection(timeDelta: Number): void {
+            this.movingDirection.x = this.path[this.currentPathIndex].x - this.currentPosition.x;
+            this.movingDirection.y = this.path[this.currentPathIndex].y - this.currentPosition.y;
+
+            this.movingDirection.normalize(12.0 * timeDelta * this.speedFactor);
         }
 
         private function setPosition(position: Point): void {
@@ -127,9 +137,9 @@ package td.enemies {
             this.y = position.y + this.pathOffset.y - this.height / 2;
         }
 
-        private function moveBy(vector: Point): void {
-            this.currentPosition.x += vector.x;
-            this.currentPosition.y += vector.y;
+        private function move(): void {
+            this.currentPosition.x += this.movingDirection.x;
+            this.currentPosition.y += this.movingDirection.y;
             this.setPosition(this.currentPosition);
         }
 
