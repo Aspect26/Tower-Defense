@@ -2,8 +2,7 @@ package td.player {
 
     public class Player {
 
-        // TODO: change on release to 1
-        private var currentLevel: int = 6;
+        private var currentLevel: int = 1;
 
         public function Player() {
 

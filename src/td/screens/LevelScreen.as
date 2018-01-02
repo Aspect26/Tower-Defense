@@ -145,15 +145,12 @@ package td.screens {
             for (var layerIndex: int = 0; layerIndex < tiledMap.layers.getAllLayers().length; ++layerIndex) {
                 var layer: TiledTileLayer = tiledMap.layers.layers[layerIndex] as TiledTileLayer;
                 if (layer == null) {
-                    // TODO: handle omg
                     continue;
                 }
                 for (var y: int = 0; y < layer.height; ++y) {
                     for (var x: int = 0; x < layer.width; ++x) {
                         var tileData: TiledTile = layer.data[x][y];
-                        if (tileData == null) {
-                            // TODO: handle omg
-                        } else {
+                        if (tileData != null) {
                             var image: Image = Context.newImage(tileData.image.source);
                             var yOffset: int = -(image.height - Map.TILE_SIZE);
                             // The yOffset is because of props which are larger than actual tiles. And the problem is,
@@ -280,9 +277,6 @@ package td.screens {
         }
 
         private function onEnemyReachedEnd(event: EnemyReachedEndEvent): void {
-            // TODO: remove this!!!!!
-            return;
-
             this.removeEventListener(EnemyReachedEndEvent.TYPE, onEnemyReachedEnd);
             var blackOverlay: Primitive = Primitive.createRectangle(0, 0, Context.stage.stageWidth, Context.stage.stageHeight, Colors.BLACK, -1, 0, 0.0);
             this.addChild(blackOverlay);

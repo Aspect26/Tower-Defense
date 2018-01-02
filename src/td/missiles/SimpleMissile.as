@@ -73,7 +73,7 @@ package td.missiles {
             VectorUtils.getNormalizedDirection(this.movingDirection, currentPosition.x, currentPosition.y, target.getX(), target.getY(), time * speed);
             this.move();
             this.rotation = Math.atan2(movingDirection.y, movingDirection.x);
-            if (target.getDistanceFromPosition(this.currentPosition) < hitDistance) {
+            if (target.getDistanceFrom(this.currentPosition.x, this.currentPosition.y) < hitDistance) {
                 dispatchEvent(new MissileHitTargetEvent(true, this));
             }
         }

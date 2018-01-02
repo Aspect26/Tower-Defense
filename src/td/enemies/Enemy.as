@@ -53,13 +53,6 @@ package td.enemies {
             Starling.juggler.add(this);
         }
 
-        public function getDistanceFromPosition(position: Point): int {
-            // TODO: remove this function
-            var y: int = this.y + this.width / 2;
-            var x: int = this.x + this.height / 2;
-            return Math.sqrt(Math.pow(y - position.y, 2) + Math.pow(x - position.x, 2));
-        }
-
         public function getDistanceFrom(x: int, y: int): int {
             var myY: int = this.y + this.width / 2;
             var myX: int = this.x + this.height / 2;

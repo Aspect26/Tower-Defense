@@ -2,13 +2,13 @@ package td.utils.draw
 {
 	import starling.display.Quad;
 	import starling.display.Sprite;
-	
+
 	public class Rectangle extends Primitive
 	{
 		private var baseQuad:Quad;
 		private var _thickness:Number = 1;
 		private var _color:uint = 0x000000;
-		private var lines;  // TODO: type
+		private var lines: Array;
 
 		public function Rectangle(width: Number, height: Number, color: uint = 0x000000, colorLine: uint = 0x000000, lineThickness: Number = -1)
 		{
