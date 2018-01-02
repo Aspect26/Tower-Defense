@@ -280,6 +280,10 @@ package td.screens {
         }
 
         private function onEnemyReachedEnd(event: EnemyReachedEndEvent): void {
+            // TODO: remove this!!!!!
+            return;
+
+            this.removeEventListener(EnemyReachedEndEvent.TYPE, onEnemyReachedEnd);
             var blackOverlay: Primitive = Primitive.createRectangle(0, 0, Context.stage.stageWidth, Context.stage.stageHeight, Colors.BLACK, -1, 0, 0.0);
             this.addChild(blackOverlay);
             TweenLite.to(blackOverlay, Effects.TIME_LEVEL_BLACKOUT, { ease: Power0.easeNone, alpha: 1.0 });

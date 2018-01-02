@@ -160,18 +160,18 @@ package td.levels {
         }
 
         public static function addWave(enemies: Vector.<Enemy>, startTime: Number, path: Vector.<Point>, pathOffset: Point,
-                                       glaqs: int, spawns: int = 0, bloodKnights: int = 0, timeFactor: Number = 1.0): void {
+                                       glaqs: int, spawns: int = 0, bloodKnights: int = 0, timeFactor: Number = 1.0, boost: Number = 1.0): void {
             var currentTime: Number = startTime;
             for (var i: int = 0; i < spawns; ++i, currentTime += 2 * timeFactor) {
-                enemies.push(new SpawnOfZax(path, pathOffset, currentTime));
+                enemies.push(new SpawnOfZax(path, pathOffset, currentTime, boost));
             }
 
             for (i = 0; i < glaqs; ++i, currentTime += 1.4 * timeFactor) {
-                enemies.push(new Glaq(path, pathOffset, currentTime));
+                enemies.push(new Glaq(path, pathOffset, currentTime, boost));
             }
 
             for (i = 0; i < bloodKnights; ++i, currentTime += 2 * timeFactor) {
-                enemies.push(new GlaqnaxBloodKnight(path, pathOffset, currentTime));
+                enemies.push(new GlaqnaxBloodKnight(path, pathOffset, currentTime, boost));
             }
         }
 

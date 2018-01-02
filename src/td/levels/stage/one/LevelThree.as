@@ -49,9 +49,37 @@ package td.levels.stage.one {
 
             addWave(enemies, 65.0, path, pathOffset, 7, 3);
 
-            addWave(enemies, 85.0, path, pathOffset, 10);
+            addWave(enemies, 88.0, path, pathOffset, 10);
 
-            addWave(enemies, 110, path, pathOffset, 10, 0.8);
+            addWave(enemies, 115, path, pathOffset, 10, 0, 0, 0.6);
+
+            addWave(enemies, 140, path, pathOffset, 10, 5, 0, 0.6);
+
+            addWave(enemies, 175, path, pathOffset, 0, 12, 0, 0.6, 1.5);
+
+            addWave(enemies, 215, path, pathOffset, 0, 19, 0, 0.6, 1.5);
+
+            addWave(enemies, 272, path, pathOffset, 9, 11, 0, 0.3, 1.5);
+
+            addWave(enemies, 320, path, pathOffset, 15, 16, 0, 0.3, 1.5);
+
+            addWave(enemies, 375, path, pathOffset, 0, 34, 0, 0.3, 1.5);
+
+            addWave(enemies, 435, path, pathOffset, 20, 14, 5, 0.2, 1.5);
+
+            addWave(enemies, 510, path, pathOffset, 0, 30, 0, 0.2, 1.5);
+
+            addWave(enemies, 560, path, pathOffset, 0, 28, 7, 0.2, 1.5);
+
+            addWave(enemies, 635, path, pathOffset, 30, 13, 5, 0.1, 1.5);
+
+            addWave(enemies, 705, path, pathOffset, 0, 20, 0, 0.1, 1.5);
+
+            addWave(enemies, 755,  path, pathOffset, 30, 15, 6, 0.1, 1.5);
+
+            addWave(enemies, 820, path, pathOffset, 25, 17, 6, 0.1, 1.5);
+
+            addWave(enemies, 890, path, pathOffset, 0, 0, 7, 0.1, 2.0);
 
             return enemies;
         }

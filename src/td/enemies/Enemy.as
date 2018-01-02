@@ -31,14 +31,15 @@ package td.enemies {
         private var alive: Boolean;
         private var movingDirection: Point;
 
-        public function Enemy(image: Image, deathSound: Sound, life: int, moneyReward: int, path: Vector.<Point>, pathOffset: Point, timeOffset: Number, speedFactor: Number) {
+        public function Enemy(image: Image, deathSound: Sound, life: int, moneyReward: int, path: Vector.<Point>,
+                              pathOffset: Point, timeOffset: Number, speedFactor: Number, boost: Number) {
             this.image = image;
             this.deathSound = deathSound;
-            this.life = life;
+            this.life = life * boost;
             this.moneyReward = moneyReward;
             this.path = path;
             this.pathOffset = pathOffset;
-            this.speedFactor = speedFactor;
+            this.speedFactor = speedFactor * (1.0 + ((boost - 1.0) / 2));
             this.timeOffset = timeOffset;
             this.alive = false;
             this.currentPathIndex = 1;
