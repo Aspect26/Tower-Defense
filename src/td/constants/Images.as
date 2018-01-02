@@ -14,6 +14,7 @@ package td.constants {
         public static const ENEMY_GLAQ: String = "glaq.png";
         public static const ENEMY_GLAQNAX_BLOOD_KNIGHT: String = "glaqnax_blood_knight.png";
         public static const ENEMY_SPAWN_OF_ZAX: String = "spawn_of_zax.png";
+        public static const ENEMY_MAGE: String = "mage.png";
 
         public static const MISSILE_UNKNOWN: String = "red.png";
         public static const MISSILE_CANNON_TOWER: String = "green.png";

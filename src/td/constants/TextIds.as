@@ -16,6 +16,7 @@ package td.constants {
         public static const Stage1Level1Intro: String = 's1l1i';
         public static const Stage1Level2Intro: String = 's1l2i';
         public static const Stage1Level3Intro: String = 's1l3i';
+        public static const Stage2Level1Intro: String = 's2l1i';
     }
 
 }

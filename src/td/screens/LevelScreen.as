@@ -303,6 +303,7 @@ package td.screens {
         }
 
         private function onLevelFinished(event: LevelFinishedEvent): void {
+            this.removeEventListener(LevelFinishedEvent.TYPE, onLevelFinished);
             Context.soundManager.playSound(SoundManager.VICTORY);
             Starling.juggler.delayCall(this.finishLevel, 1.0, event.data);
         }
@@ -328,6 +329,11 @@ package td.screens {
             var blackOverlay: Primitive = Primitive.createRectangle(0, 0, Context.stage.stageWidth, Context.stage.stageHeight, Colors.BLACK, -1, 0, 0.0);
             this.addChild(blackOverlay);
             TweenLite.to(blackOverlay, Effects.TIME_LEVEL_BLACKOUT, { ease: Power0.easeNone, alpha: 1.0 });
+            if (levelNumber == 4) {
+                // TODO: remove this upon implementing all levels
+                this.returnToMenuScreen();
+                return;
+            }
             Starling.juggler.delayCall(startNextLevel, Effects.TIME_LEVEL_BLACKOUT);
             Context.game.player.finishedLevel(levelNumber);
         }

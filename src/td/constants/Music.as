@@ -18,6 +18,7 @@ package td.constants {
         public static const SOUND_DEATH_BLOOD_KNIGHT: String = soundLocation + "death-bk.mp3";
         public static const SOUND_DEATH_GLAQ: String = soundLocation + "death-glaq.mp3";
         public static const SOUND_DEATH_SPAWN: String = soundLocation + "death-spawn.mp3";
+        public static const SOUND_DEATH_MAGE: String = soundLocation + "death-spawn.mp3"; // TODO: use some original sound
         public static const SOUND_BUTTON_CLICK: String = soundLocation + "menu-select.mp3";
         public static const SOUND_SHOT_1: String = soundLocation + "shot1.mp3";
         public static const SOUND_SHOT_2: String = soundLocation + "shot2.mp3";

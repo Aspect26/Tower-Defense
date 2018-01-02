@@ -12,6 +12,7 @@ package td.music {
         public static var DEATH_BLOOD_KNIGHT: Sound;
         public static var DEATH_GLAQ: Sound;
         public static var DEATH_SPAWN: Sound;
+        public static var DEATH_MAGE: Sound;
         public static var BUTTON_CLICK: Sound;
         public static var SHOT_1: Sound;
         public static var SHOT_2: Sound;
@@ -29,6 +30,7 @@ package td.music {
             DEATH_BLOOD_KNIGHT = createSound(Music.SOUND_DEATH_BLOOD_KNIGHT);
             DEATH_GLAQ = createSound(Music.SOUND_DEATH_GLAQ);
             DEATH_SPAWN = createSound(Music.SOUND_DEATH_SPAWN);
+            DEATH_MAGE = createSound(Music.SOUND_DEATH_MAGE);
             BUTTON_CLICK = createSound(Music.SOUND_BUTTON_CLICK);
             SHOT_1 = createSound(Music.SOUND_SHOT_1);
             SHOT_2 = createSound(Music.SOUND_SHOT_2);

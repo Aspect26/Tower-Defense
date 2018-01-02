@@ -11,6 +11,8 @@
         <s1l1i value="Nedokonceny preklad" />
 		<s1l2i value="Nedokonceny preklad" />
 		<s1l3i value="Nedokonceny preklad" />
+		
+		<s2l1i value="Nedokonceny preklad" />
     </cze>
     <eng>
         <button-play value="Play!" />
@@ -22,7 +24,10 @@
 		<stage value="Stage" />
 
         <s1l1i value="War! Hordes of Glaqnax warriors have appeared on the western shores of Qar kingdom. They sacked most of the seaside villages and started to assemble their forces near The First Gates to the kingdom. Stop them before they reach it!" />
-		<s1l2i value="Although you were successful in defending The First Gates on the western walls from the enemy, they were only a decoy. A new group of enemies has appeared on the other side of the island. You have to quickly build new defenses on the eastern shore. Shall they breach the wall, we will not be able to quickly form our militia and call allies for help." />
-		<s1l3i value="The allies have come just in time! We have held off the enemy forces, at least for now. A massive fleet has appeared on the horizon during the night. They must have come here only for one reason. Demolish everything that stands in their way. But we do not run! We do NOT surrender. This is our home, and we will fight for it until we win, or there is noone to fight for! There is still time to reinforce our defenses. Build as much towers as possible until the enemy fleet reaches our land." />
+		<s1l2i value="Although you were successful in defending The First Gates on the western walls, the enemy there was only a decoy. A new group of enemies has appeared on the other side of the island. You have to quickly build new defenses on the eastern shore. Shall they breach the wall, we will not be able to quickly form our militia and call allies for help." />
+		<s1l3i value="The allies have come just in time! We held off the enemy forces, at least for now. A massive fleet has appeared on the horizon during the night. They must have come here only for one reason. Demolish everything that stands in their way. But we do not run! We do NOT surrender. This is our home, and we will fight for it until we win, or there is noone to fight for! There is still time to reinforce our defenses. Build as much towers as possible until the enemy fleet reaches our land." />
+		
+		<s2l1i value="The defense towers that you have built have held the enemies for multiple days. However, the enemy's numbers are still increasing and we are unable to stop them. They seem to be limitless. Our scouts have reported a suspicious magic activities on the  nearby island. They reckon that it may be the place from where the Glaqnaxx army is entering our world. Lead a small group of our defensive forces there and if you find our suspicions to be true, build a base there." />
+		
 	</eng>
 </i18n>
