@@ -115,6 +115,10 @@ package td
             this.player = new Player();
 
             var scale: Number = Starling.contentScaleFactor; // TODO: what if it is too high?? we do not have textures for that
+			if (scale < 1.25) scale = 1.0;
+			else if (scale < 1.75) scale = 1.5;
+			else scale = Math.round(scale);
+
             Context.assets.setScaleFactor(scale);
 
             Context.assets.loadAssets(
