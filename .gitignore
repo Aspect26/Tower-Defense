@@ -4,3 +4,5 @@ html-template
 *.iml
 *original-image*
 *screens*
+src/assets/textures/*/original-image*
+src/assets/textures/all/*
