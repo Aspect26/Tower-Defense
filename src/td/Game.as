@@ -111,8 +111,8 @@ package td
 			addChild(loadProgressBar);
 			loadProgressBar.width = 0;
 			
-            // TODO: add player load
             this.player = new Player();
+			this.player.load();
 
             var scale: Number = Starling.contentScaleFactor; // TODO: what if it is too high?? we do not have textures for that
 			if (scale < 1.25) scale = 1.0;
